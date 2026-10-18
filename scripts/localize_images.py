@@ -34,6 +34,35 @@ MOF_COVER = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/
 MOF_BG = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1100140/page_bg_raw.jpg?t=1667958836"
 MOF_HEADER = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1100140/header.jpg?t=1667958836"
 MOF_COMMUNITY = "https://shared.akamai.steamstatic.com/community_assets/images/apps/1100140/802f806ca642360e40cc2405e8df8e93d83083af.jpg"
+EOSD_LB_PAGE = "https://gamesdb.launchbox-app.com/games/images/7337-touhou-06-the-embodiment-of-scarlet-devil"
+PCB_LB_PAGE = "https://gamesdb.launchbox-app.com/games/images/7341-touhou-07-perfect-cherry-blossom"
+IN_LB_PAGE = "https://gamesdb.launchbox-app.com/games/images/7347-touhou-08-imperishable-night"
+PC98_LB_PAGE = "https://gamesdb.launchbox-app.com/games/images/72360-touhou-01-the-highly-responsive-to-prayers"
+MOF_LB_PAGE = "https://gamesdb.launchbox-app.com/games/images/7363-touhou-10-mountain-of-faith"
+EOSD_COVER = "https://images.launchbox-app.com/8669e740-a842-45ca-8de6-d33fef9d765b.jpg"
+EOSD_GAMEPLAY = "https://images.launchbox-app.com/a5fe3f9e-74ed-45c9-8b47-b4c7d445ca42.png"
+EOSD_GAMEPLAY_ALT = "https://images.launchbox-app.com/0877ceaa-5c69-4b68-a31b-460e9706879d.jpg"
+EOSD_GAMESELECT = "https://images.launchbox-app.com/3c8c7bf7-ab39-434f-89c1-c0f15297bc6b.png"
+EOSD_BG_1 = "https://images.launchbox-app.com/fa2f9c66-2f13-4635-99d9-a7c07c140cdb.jpg"
+EOSD_GAMEOVER = "https://images.launchbox-app.com/108f181f-01d2-4bf4-b147-3033f86d7a80.png"
+EOSD_BG_2 = "https://images.launchbox-app.com/12a38156-8dbf-435d-8f3b-07931d943e3c.png"
+EOSD_TITLE = "https://images.launchbox-app.com/4293464b-03ef-4acc-9782-2cefc1d724bb.png"
+PCB_COVER = "https://images.launchbox-app.com/b16b0e15-aa40-466c-933e-b32a334703e9.jpg"
+PCB_GAMEPLAY = "https://images.launchbox-app.com/b0bbe39f-cd11-4124-b85b-81f779064819.jpg"
+PCB_BG = "https://images.launchbox-app.com/2375b680-83fc-44cf-980b-03a2b20730b4.jpg"
+IN_COVER = "https://images.launchbox-app.com/b148dcbf-19a9-4d7d-937e-8c5ee85522b2.jpg"
+IN_GAMEPLAY = "https://images.launchbox-app.com/cb6adb01-2500-45fb-a7ed-b668b23d8596.jpg"
+IN_BG = "https://images.launchbox-app.com/3f215b25-d781-4aac-9798-4eb5a4272110.jpg"
+PC98_COVER = "https://images.launchbox-app.com/r2_edfdd1dc-9837-4062-ade8-ee267097c3c1.png"
+PC98_GAMEPLAY = "https://images.launchbox-app.com/f6a6647b-0ca8-4336-b331-92be51622ad8.png"
+MOF_LB_COVER = "https://images.launchbox-app.com/de77b746-5bd3-4e59-b25a-287ebb80fa05.jpg"
+MOF_LB_GAMEPLAY = "https://images.launchbox-app.com/501440fd-ec5b-4313-aedc-0ece45e15d0a.jpg"
+MOF_LB_BG = "https://images.launchbox-app.com/fd02b35c-1c38-4885-b2c4-5bab08ff8e4c.jpg"
+SA_BG = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1100150/page_bg_raw.jpg?t=1668044738"
+UFO_BG = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1100160/page_bg_raw.jpg?t=1668044181"
+TD_BG = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1043230/page_bg_raw.jpg?t=1667959374"
+DDC_BG = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1043240/page_bg_raw.jpg?t=1667958801"
+UM_GAMEPLAY = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1566410/ss_15d15f3a77af97854472272613889fbef273f158.1920x1080.jpg?t=1621839528"
 PMISS_COVER = "https://www.neowing.co.jp/pictures/l/02/03/NEOBK-395940.jpg?v=1"
 FORBIDDEN_SCROLLERY = "https://images.yenpress.com/imgs/9780316511971.jpg?w=408&h=612&type=books&s=0e7823442f2a29bc6b0b8147a3b18fc1"
 SILENT_SINNER = "https://shop.akbh.jp/cdn/shop/products/9784758060899.jpg?v=1722506128"
@@ -45,24 +74,24 @@ KANAKO_ART = "https://i.redd.it/zbb0y9ujn27g1.png"
 # Official game/publisher images are preferred; community images are explicitly credited.
 IMAGE_ALIASES = {
     "Th06cover.jpg": {
-        "url": COVER, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official cover artwork for Touhou Koumakyou: the Embodiment of Scarlet Devil."
+        "url": EOSD_COVER, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Original Japanese box-front artwork for Touhou 6: Embodiment of Scarlet Devil."
     },
     "Th06screenLayout.jpg": {
-        "url": SHOT_NEW, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Gameplay screenshot from the official Touhou Koumakyou: New Classic website."
+        "url": EOSD_GAMEPLAY, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Gameplay screenshot of Touhou 6: Embodiment of Scarlet Devil."
     },
     "Th10YoukaiMountain.jpg": {
-        "url": MOF_BG, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
-        "alt": "Mountain of Faith store artwork, used as a representative visual for Youkai Mountain."
+        "url": MOF_LB_BG, "source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith",
+        "alt": "Background artwork associated with Touhou 10: Mountain of Faith, used to illustrate Youkai Mountain."
     },
     "Th06Reimu.png": {
         "url": REIMU, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
         "alt": "Reimu Hakurei character portrait from the official Touhou Koumakyou: New Classic website."
     },
     "Th06titlescreen.jpg": {
-        "url": TITLE_LOGO, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Title logo for the official Touhou Koumakyou: New Classic release."
+        "url": EOSD_TITLE, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Title-screen image from Touhou 6: Embodiment of Scarlet Devil."
     },
     "Thgscover.jpg": {
         "url": PMISS_COVER, "source_page": "https://www.neowing.co.jp/product/NEOBK-395940",
@@ -74,20 +103,20 @@ IMAGE_ALIASES = {
         "alt": "Reimu Hakurei character portrait from the official Touhou Koumakyou: New Classic website."
     },
     "Th06stage1title.jpg": {
-        "url": SHOT_CLASSIC, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Gameplay image from the official Touhou Koumakyou: New Classic site, used as stage-context imagery."
+        "url": EOSD_GAMEPLAY_ALT, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Gameplay screenshot from Touhou 6: Embodiment of Scarlet Devil."
     },
     "Th10MoriyaShrineEntrance.jpg": {
-        "url": MOF_COMMUNITY, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
-        "alt": "Mountain of Faith game artwork from Steam, used as representative imagery for the Moriya Shrine section."
+        "url": MOF_LB_GAMEPLAY, "source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith",
+        "alt": "Gameplay screenshot from Touhou 10: Mountain of Faith, used as game-specific setting imagery."
     },
     "Th06stage2title.jpg": {
-        "url": SHOT_SYSTEM, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official Touhou Koumakyou gameplay screenshot, used as stage-context imagery."
+        "url": EOSD_GAMESELECT, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Game-selection screen from Touhou 6: Embodiment of Scarlet Devil."
     },
     "Th06stage3title.jpg": {
-        "url": SHOT_NEW, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official Touhou Koumakyou gameplay screenshot, used as soundtrack-related game imagery."
+        "url": EOSD_BG_1, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6 artwork",
+        "alt": "Community-contributed background artwork associated with Touhou 6: Embodiment of Scarlet Devil."
     },
     "FS Tankebon1 cover.jpg": {
         "url": FORBIDDEN_SCROLLERY, "source_page": "https://yenpress.com/titles/9780316511971-forbidden-scrollery-vol-1",
@@ -99,8 +128,8 @@ IMAGE_ALIASES = {
         "alt": "Moonlit background art from the official Touhou Koumakyou: New Classic website."
     },
     "Th06SDMInterior.jpg": {
-        "url": FOG_4, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Atmospheric mist background from the official Touhou Koumakyou: New Classic website."
+        "url": EOSD_BG_2, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6 artwork",
+        "alt": "Community-contributed background artwork associated with Touhou 6, used for atmosphere rather than as a verified floor plan."
     },
     "Th06Marisa.png": {
         "url": MARISA, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
@@ -111,32 +140,40 @@ IMAGE_ALIASES = {
         "alt": "Atmospheric fog background from the official Touhou Koumakyou: New Classic website."
     },
     "Th105Hakugyokurou.jpg": {
-        "url": MOON_BG, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Moonlit official Touhou background used as an atmospheric illustration for the Netherworld."
+        "url": PCB_COVER, "source_page": PCB_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 7: Perfect Cherry Blossom",
+        "alt": "Original box-front artwork for Touhou 7: Perfect Cherry Blossom."
     },
     "Th105BambooForest.jpg": {
-        "url": FOG_1, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Misty setting artwork from the official Touhou Koumakyou: New Classic website."
+        "url": IN_COVER, "source_page": IN_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
+        "alt": "Original box-front artwork for Touhou 8: Imperishable Night."
     },
     "Th10cover.jpg": {
-        "url": MOF_COVER, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
-        "alt": "Store cover artwork for Touhou Fuujinroku: Mountain of Faith."
+        "url": MOF_LB_COVER, "source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith",
+        "alt": "Original Japanese box-front artwork for Touhou 10: Mountain of Faith."
     },
     "Th06MistyLake.jpg": {
-        "url": FOG_3, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Misty atmospheric background from the official Touhou Koumakyou: New Classic website."
+        "url": IN_BG, "source_page": IN_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
+        "alt": "Background artwork associated with Touhou 8: Imperishable Night, used as atmospheric Gensokyo scenery."
     },
     "Th10YoukaiForest.jpg": {
         "url": MOF_BG, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
-        "alt": "Mountain of Faith store background, used as representative Gensokyo environment imagery."
+        "alt": "Official Mountain of Faith store background artwork, used as representative Gensokyo scenery."
     },
     "Th06stage4title.jpg": {
-        "url": SHOT_SYSTEM, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official Touhou Koumakyou gameplay screenshot, used as stage-context imagery."
+        "url": EOSD_GAMEOVER, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Game-over screen from Touhou 6: Embodiment of Scarlet Devil, used to illustrate game-state terminology."
     },
     "Th06stage6title.jpg": {
         "url": SHOT_CLASSIC, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official Touhou Koumakyou gameplay screenshot, used to evoke a boss-stage setting."
+        "alt": "Classic-mode gameplay screenshot from the official Touhou Koumakyou: New Classic website."
+    },
+    "Th06Cirno.png": {
+        "url": CIRNO, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
+        "alt": "Cirno character portrait from the official Touhou Koumakyou: New Classic website."
+    },
+    "Th06Meiling.png": {
+        "url": MEILING, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
+        "alt": "Hong Meiling character portrait from the official Touhou Koumakyou: New Classic website."
     },
     "Th06Flandre.png": {
         "url": FLANDRE, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
@@ -148,16 +185,16 @@ IMAGE_ALIASES = {
         "alt": "Community illustration of Remilia Scarlet, sourced from the Touhou Translations character gallery."
     },
     "Th06stage5title.jpg": {
-        "url": SHOT_NEW, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official Touhou Koumakyou gameplay screenshot, used as stage-context imagery."
+        "url": EOSD_TITLE, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Title-screen image from Touhou 6: Embodiment of Scarlet Devil, used for game-history context."
     },
     "Th06SDMLibrary1.jpg": {
         "url": FOG_4, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
         "alt": "Atmospheric background art from the official Touhou Koumakyou: New Classic website, used as setting imagery."
     },
     "Th06SDMLibrary2.jpg": {
-        "url": FOG_3, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Atmospheric fog background from the official Touhou Koumakyou: New Classic website."
+        "url": FOG_1, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
+        "alt": "Distinct misty background art from the official Touhou Koumakyou: New Classic website."
     },
     "Th105Aya.png": {
         "url": AYA_ART, "source_page": "https://aenigmatrices.github.io/touhou-translations/gallery/characters/aya/",
@@ -171,11 +208,11 @@ IMAGE_ALIASES = {
     },
     "Th105HakureiShrineBird'sEye.jpg": {
         "url": MOF_COMMUNITY, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
-        "alt": "Mountain of Faith game artwork from Steam, used as representative setting imagery rather than a literal shrine map."
+        "alt": "Mountain of Faith game artwork used as illustrative Gensokyo scenery rather than a literal shrine map."
     },
     "Th01Cover.jpg": {
-        "url": TITLE_LOGO, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
-        "alt": "Official Touhou title artwork used as a visual marker in the chronology section."
+        "url": PC98_COVER, "source_page": PC98_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 1: Highly Responsive to Prayers",
+        "alt": "Japanese box-front artwork for Touhou 1: Highly Responsive to Prayers, the first Touhou game."
     },
 }
 # External publisher/retailer image used in the current HTML already has a real product source.
@@ -187,6 +224,11 @@ IMAGE_ALIASES["9784758060899.jpg"] = {
 
 # Alternatives keep the workflow resilient if one image host blocks automated downloads.
 FALLBACKS = {
+    EOSD_LB_PAGE: [EOSD_COVER, EOSD_GAMEPLAY, EOSD_GAMEPLAY_ALT, EOSD_TITLE, EOSD_GAMESELECT],
+    PCB_LB_PAGE: [PCB_COVER, PCB_GAMEPLAY, PCB_BG],
+    IN_LB_PAGE: [IN_COVER, IN_GAMEPLAY, IN_BG],
+    PC98_LB_PAGE: [PC98_COVER, PC98_GAMEPLAY],
+    MOF_LB_PAGE: [MOF_LB_COVER, MOF_LB_GAMEPLAY, MOF_LB_BG],
     OFFICIAL_PAGE: [COVER, SHOT_NEW, SHOT_SYSTEM, SHOT_CLASSIC, MOON_BG, FOG_1, FOG_3, FOG_4],
     MOF_PAGE: [MOF_COVER, MOF_BG, MOF_HEADER, SHOT_NEW, FOG_1],
     "https://aenigmatrices.github.io/touhou-translations/gallery/characters/remilia/": [REMILIA_ART, FOG_4, MOON_BG],
@@ -211,6 +253,17 @@ URL_CREDIT.setdefault(SILENT_SINNER, {"source_page": "https://shop.akbh.jp/en/pr
 URL_CREDIT.setdefault(REMILIA_ART, {"source_page": "https://aenigmatrices.github.io/touhou-translations/gallery/characters/remilia/", "credit": "Touhou Translations community gallery", "alt": "Community illustration of Remilia Scarlet."})
 URL_CREDIT.setdefault(AYA_ART, {"source_page": "https://aenigmatrices.github.io/touhou-translations/gallery/characters/aya/", "credit": "Touhou Translations community gallery", "alt": "Community illustration of Aya Shameimaru."})
 URL_CREDIT.setdefault(KANAKO_ART, {"source_page": "https://aenigmatrices.github.io/touhou-translations/gallery/characters/kanako/", "credit": "Touhou Translations community gallery", "alt": "Community illustration featuring Kanako Yasaka."})
+for url in [EOSD_COVER, EOSD_GAMEPLAY, EOSD_GAMEPLAY_ALT, EOSD_GAMESELECT, EOSD_BG_1, EOSD_GAMEOVER, EOSD_BG_2, EOSD_TITLE]:
+    URL_CREDIT.setdefault(url, {"source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil", "alt": "Touhou 6 game artwork or screenshot."})
+for url in [PCB_COVER, PCB_GAMEPLAY, PCB_BG]:
+    URL_CREDIT.setdefault(url, {"source_page": PCB_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 7: Perfect Cherry Blossom", "alt": "Touhou 7 game artwork."})
+for url in [IN_COVER, IN_GAMEPLAY, IN_BG]:
+    URL_CREDIT.setdefault(url, {"source_page": IN_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night", "alt": "Touhou 8 game artwork."})
+for url in [PC98_COVER, PC98_GAMEPLAY]:
+    URL_CREDIT.setdefault(url, {"source_page": PC98_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 1: Highly Responsive to Prayers", "alt": "PC-98-era Touhou game artwork."})
+for url in [MOF_LB_COVER, MOF_LB_GAMEPLAY, MOF_LB_BG]:
+    URL_CREDIT.setdefault(url, {"source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith", "alt": "Touhou 10 game artwork."})
+
 
 IMG_TAG_RE = re.compile(r"<img\b[^>]*>", re.IGNORECASE | re.DOTALL)
 IMG_SRC_RE = re.compile(r'\bsrc\s*=\s*(["\'])(.*?)\1', re.IGNORECASE | re.DOTALL)
@@ -351,7 +404,7 @@ def rewrite_sources_section(content: str) -> str:
         "Displayed images are downloaded during the GitHub Pages build and served from this website’s own /assets/images/ path. A visitor’s browser therefore never hotlinks directly to Touhou Wiki or another image host. Image captions link to the actual source page for the displayed visual."
     )
     content = content.replace(
-        "Touhou Wiki’s file pages identify the source and any licensing information provided for each image. Image rights can differ by file, and many assets depict copyrighted Touhou characters or game art. Check the individual file page and applicable rights before reusing an image elsewhere. One book cover on the print-works page remains linked to its retailer listing for accurate bibliographic identification.",
+        "Touhou Wiki's file pages identify the source and any licensing information provided for each image. Image rights can differ by file, and many assets depict copyrighted Touhou characters or game art. Check the individual file page and applicable rights before reusing an image elsewhere. One book cover on the print-works page remains linked to its retailer listing for accurate bibliographic identification.",
         "The site uses official promotional/game imagery where available, publisher or retailer cover images for print works, and a small number of clearly labelled community illustrations for characters absent from the official promotional materials. Rights remain with the respective creators and publishers; credit links identify the displayed image’s source, and inclusion here does not imply that every image has a blanket reuse licence."
     )
     credits = """<h3>Image sources used</h3><ul class="source-list">
