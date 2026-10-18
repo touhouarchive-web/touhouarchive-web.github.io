@@ -287,6 +287,17 @@ def is_external_image(url: str) -> bool:
 
 
 def resolve_source(url: str) -> dict[str, str | list[str]]:
+    # Contextual source overrides (for a single page/card) are pre-registered here.
+    if url in URL_CREDIT:
+        metadata = dict(URL_CREDIT[url])
+        metadata.update({
+            "url": url,
+            "source_page": str(metadata["source_page"]),
+            "reference_url": url,
+            "original_name": unquote(urlsplit(url).path).rstrip("/").rsplit("/", 1)[-1],
+            "fallback_urls": list(FALLBACKS.get(str(metadata["source_page"]), [])),
+        })
+        return metadata
     name = wiki_filename(url)
     if name and name in IMAGE_ALIASES:
         result = dict(IMAGE_ALIASES[name])
@@ -425,6 +436,83 @@ def rewrite_sources_section(content: str) -> str:
     return content
 
 
+
+PAGE_CONTEXT_OVERRIDES = {
+    "pages/locations.html": [
+        {
+            "heading": "Outside World & the Barrier",
+            "old_filename": "Th105BambooForest.jpg",
+            "new_url": IN_BG,
+            "source_page": IN_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
+            "alt": "Night-sky background artwork associated with Touhou 8: Imperishable Night, used as an atmospheric illustration for the boundary between Gensokyo and the Outside World.",
+        }
+    ],
+    "pages/chronology.html": [
+        {
+            "heading": "A cautious chronology",
+            "old_filename": "Th06screenLayout.jpg",
+            "new_url": PC98_GAMEPLAY,
+            "source_page": PC98_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 1: Highly Responsive to Prayers",
+            "alt": "PC-98-era gameplay screenshot from Touhou 1: Highly Responsive to Prayers, used to introduce release history.",
+        }
+    ],
+    "pages/music.html": [
+        {
+            "heading": "Shanghai Teahouse ~ Chinese Tea",
+            "old_filename": "Th06stage3title.jpg",
+            "new_url": MEILING,
+            "source_page": OFFICIAL_PAGE,
+            "credit": "Official Touhou New Classic site",
+            "alt": "Hong Meiling character portrait from the official Touhou Koumakyou: New Classic website, matching the Shanghai Teahouse theme card.",
+        }
+    ],
+}
+
+
+def apply_context_overrides(relative_path: str, content: str) -> str:
+    for override in PAGE_CONTEXT_OVERRIDES.get(relative_path, []):
+        old_url = "https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(
+            override["old_filename"], safe="()'!._-"
+        )
+        new_url = str(override["new_url"])
+        source_page = str(override["source_page"])
+        credit = str(override["credit"])
+        alt = str(override["alt"])
+        # Ensure direct-URL references inherit exact source metadata when localized.
+        URL_CREDIT[new_url] = {
+            "source_page": source_page,
+            "credit": credit,
+            "alt": alt,
+        }
+        def replace_article(match: re.Match[str]) -> str:
+            article = match.group(0)
+            if override["heading"] not in html.unescape(article):
+                return article
+            article = article.replace(old_url, new_url)
+            article = re.sub(
+                r'\balt\s*=\s*(["\']).*?\1',
+                lambda m: 'alt="' + alt.replace("&", "&amp;").replace('"', "&quot;") + '"',
+                article,
+                count=1,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+            # Keep the card's source link aligned with its replacement image.
+            image_source_link = re.compile(
+                r'<a\s+href="https://en\.touhouwiki\.net/wiki/File:[^"]+"[^>]*>Touhou Wiki file ↗</a>',
+                re.IGNORECASE,
+            )
+            article = image_source_link.sub(
+                '<a href="' + source_page + '" target="_blank" rel="noopener">' + credit + ' ↗</a>',
+                article,
+                count=1,
+            )
+            return article
+        content = re.sub(r'<article\b[\s\S]*?</article>', replace_article, content, flags=re.IGNORECASE)
+    return content
+
+
 def main() -> None:
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
     html_css_files = [
@@ -439,6 +527,10 @@ def main() -> None:
     references: dict[str, dict[str, str | list[str]]] = {}
     for path in html_css_files:
         content = path.read_text(encoding="utf-8")
+        if path.suffix.lower() == ".html":
+            relative_path = path.relative_to(ROOT).as_posix()
+            content = apply_context_overrides(relative_path, content)
+            path.write_text(content, encoding="utf-8")
         urls: list[str] = []
         if path.suffix.lower() == ".html":
             urls.extend(m.group(2) for tag in IMG_TAG_RE.findall(content) if (m := IMG_SRC_RE.search(tag)))
