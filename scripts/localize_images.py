@@ -153,8 +153,8 @@ IMAGE_ALIASES = {
         "alt": "Original Japanese box-front artwork for Touhou 10: Mountain of Faith."
     },
     "Th06MistyLake.jpg": {
-        "url": IN_BG, "source_page": IN_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
-        "alt": "Background artwork associated with Touhou 8: Imperishable Night, used as atmospheric Gensokyo scenery."
+        "url": MOON_BG, "source_page": OFFICIAL_PAGE, "credit": "Official Touhou New Classic site",
+        "alt": "Moonlit and misty atmospheric background from the official Touhou Koumakyou: New Classic website, used to evoke the Misty Lake."
     },
     "Th10YoukaiForest.jpg": {
         "url": MOF_BG, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
@@ -451,7 +451,8 @@ PAGE_CONTEXT_OVERRIDES = {
     ],
     "pages/chronology.html": [
         {
-            "heading": "A cautious chronology",
+            "heading": "",
+            "container": "figure",
             "old_filename": "Th06screenLayout.jpg",
             "new_url": PC98_GAMEPLAY,
             "source_page": PC98_LB_PAGE,
@@ -487,30 +488,41 @@ def apply_context_overrides(relative_path: str, content: str) -> str:
             "credit": credit,
             "alt": alt,
         }
-        def replace_article(match: re.Match[str]) -> str:
-            article = match.group(0)
-            if override["heading"] not in html.unescape(article):
-                return article
-            article = article.replace(old_url, new_url)
-            article = re.sub(
+        def replace_container(match: re.Match[str]) -> str:
+            container = match.group(0)
+            heading = str(override.get("heading", ""))
+            if heading and heading not in html.unescape(container):
+                return container
+            if old_url not in container:
+                return container
+            container = container.replace(old_url, new_url)
+            container = re.sub(
                 r'\balt\s*=\s*(["\']).*?\1',
                 lambda m: 'alt="' + alt.replace("&", "&amp;").replace('"', "&quot;") + '"',
-                article,
+                container,
                 count=1,
                 flags=re.IGNORECASE | re.DOTALL,
             )
-            # Keep the card's source link aligned with its replacement image.
+            # Keep the source link aligned with the image actually displayed.
             image_source_link = re.compile(
                 r'<a\s+href="https://en\.touhouwiki\.net/wiki/File:[^"]+"[^>]*>Touhou Wiki file ↗</a>',
                 re.IGNORECASE,
             )
-            article = image_source_link.sub(
+            container = image_source_link.sub(
                 '<a href="' + source_page + '" target="_blank" rel="noopener">' + credit + ' ↗</a>',
-                article,
+                container,
                 count=1,
             )
-            return article
-        content = re.sub(r'<article\b[\s\S]*?</article>', replace_article, content, flags=re.IGNORECASE)
+            return container
+        if override.get("container") == "figure":
+            content = re.sub(r'<figure\b[\s\S]*?</figure>', replace_container, content, count=1, flags=re.IGNORECASE)
+        else:
+            content = re.sub(
+                r'<article\b[^>]*class="[^"]*archive-card[^"]*"[^>]*>[\s\S]*?</article>',
+                replace_container,
+                content,
+                flags=re.IGNORECASE,
+            )
     return content
 
 
