@@ -471,10 +471,16 @@ def main() -> None:
         content = path.read_text(encoding="utf-8")
         if path.suffix.lower() == ".html":
             content = IMG_TAG_RE.sub(replace_image_tag, content)
-            content = FILE_LINK_RE.sub(
-                lambda m: '<a href="' + str(resolve_source("https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(unquote(m.group(1).replace("_", " ")), safe=" /'()"))["actual_source_page"] if "actual_source_page" in resolve_source("https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(unquote(m.group(1).replace("_", " ")), safe=" /'()")) else str(resolve_source("https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(unquote(m.group(1).replace("_", " ")), safe=" /'()"))["source_page"]) + '" target="_blank" rel="noopener">' + str(resolve_source("https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(unquote(m.group(1).replace("_", " ")), safe=" /'()"))["credit"]) + ' ↗</a>',
-                content,
-            )
+            def replace_file_link(match: re.Match[str]) -> str:
+                name = unquote(match.group(1)).replace("_", " ")
+                meta = IMAGE_ALIASES.get(name)
+                if not meta:
+                    return match.group(0)
+                href = str(meta["source_page"]).replace("&", "&amp;").replace('"', "&quot;")
+                credit = str(meta["credit"]).replace("&", "&amp;")
+                return f'<a href="{href}" target="_blank" rel="noopener">{credit} ↗</a>'
+
+            content = FILE_LINK_RE.sub(replace_file_link, content)
             if path.name == "sources.html":
                 content = rewrite_sources_section(content)
         content = CSS_URL_RE.sub(replace_css_url, content)
