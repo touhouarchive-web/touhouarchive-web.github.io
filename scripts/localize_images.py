@@ -890,7 +890,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Games &amp; incidents", "old_filename": "Th06stage1title.jpg",
+            "heading": "Games & incidents", "old_filename": "Th06stage1title.jpg",
             "new_url": EOSD_GAMEOVER, "source_page": EOSD_LB_PAGE,
             "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
             "alt": "Game-state screen from Touhou 6: Embodiment of Scarlet Devil.",
@@ -911,7 +911,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Music &amp; themes", "old_filename": "Th06stage3title.jpg",
+            "heading": "Music & themes", "old_filename": "Th06stage3title.jpg",
             "new_url": UM_SOUNDTRACK_COVER,
             "source_page": "https://music.apple.com/us/album/touhou-koryudo-unconnected-marketeers-soundtrack/1580542145",
             "credit": "Apple Music — Touhou 18: Unconnected Marketeers Soundtrack",
@@ -992,7 +992,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Outside World &amp; the Barrier", "old_filename": "Th105BambooForest.jpg",
+            "heading": "Outside World & the Barrier", "old_filename": "Th105BambooForest.jpg",
             "new_url": UFO_BG, "source_page": "https://store.steampowered.com/app/1100160/Touhou_Seirensen_Undefined_Fantastic_Object/",
             "credit": "Steam — Undefined Fantastic Object",
             "alt": "Touhou environment artwork used as a visual metaphor for Gensokyo's boundary, not a map of the Barrier.",
@@ -1015,7 +1015,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Boss phases &amp; difficulty", "old_filename": "Th06stage6title.jpg",
+            "heading": "Boss phases & difficulty", "old_filename": "Th06stage6title.jpg",
             "new_url": IN_GAMEPLAY, "source_page": IN_LB_PAGE,
             "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
             "alt": "Gameplay screenshot from Touhou 8, used to illustrate game-stage and boss-phase context.",
@@ -1159,7 +1159,7 @@ def apply_context_overrides(relative_path: str, content: str) -> str:
             )
             return container
         if override.get("container") == "figure":
-            content = re.sub(r'<figure\b[\s\S]*?</figure>', replace_container, content, count=1, flags=re.IGNORECASE)
+            content = re.sub(r'<figure\b[\s\S]*?</figure>', replace_container, content, flags=re.IGNORECASE)
         else:
             content = re.sub(
                 r'<article\b[^>]*class="[^"]*archive-card[^"]*"[^>]*>[\s\S]*?</article>|<a\b[^>]*class="[^"]*archive-card[^"]*"[^>]*>[\s\S]*?</a>',
