@@ -169,7 +169,7 @@
  .map-index-phase-heading h3{font:500 clamp(22px,3vw,28px)/1.18 Georgia,serif;letter-spacing:-.035em;color:#f4f4f5;margin:7px 0 0}
  .map-index-phase-heading p{max-width:660px;margin:8px 0 0;color:#858592;font-size:10px;line-height:1.8}
  .map-phase-badge{flex:0 0 auto;border:1px solid rgba(196,181,253,.18);border-radius:8px;padding:9px 10px;color:#bdb2e4;background:rgba(196,181,253,.04);font:800 8px/1.5 ui-monospace,monospace;letter-spacing:.08em}
- .map-location-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) minmax(170px,.55fr) auto;align-items:end;gap:9px;margin-bottom:11px}
+ .map-location-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) minmax(170px,.55fr) auto auto;align-items:end;gap:9px;margin-bottom:11px}
  .map-location-search,.map-region-select{display:grid;gap:6px;min-width:0;color:#90909c;font-size:9px}
  .map-location-search input,.map-region-select select{width:100%;min-width:0;min-height:42px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:#111214;color:#e6e4ee;padding:10px 11px;font:inherit;font-size:11px}
  .map-location-search input::placeholder{color:#656571}
@@ -186,6 +186,17 @@
  .map-index-copy small{font-size:8px;line-height:1.4;color:#777782}
  .map-index-arrow{margin-left:auto;color:#8175a7;font-size:13px;flex:0 0 auto}
  .map-index-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.1);border-radius:10px;padding:16px;color:#8a8996;font-size:10px;line-height:1.7}
+ .map-detail-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+ .map-detail-top .place-group{min-width:0;line-height:1.7}
+ .map-favorite-action{flex:0 0 auto;border:1px solid rgba(196,181,253,.22);border-radius:8px;background:rgba(196,181,253,.05);color:#cfc4f0;padding:8px 9px;font-size:9px;line-height:1.35;cursor:pointer}
+ .map-favorite-action[aria-pressed=true]{border-color:rgba(250,204,21,.4);background:rgba(250,204,21,.07);color:#fde68a}
+ .map-related-place-list{display:grid;gap:7px}
+ .map-related-place{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;width:100%;border:1px solid rgba(196,181,253,.12);border-radius:9px;padding:9px 10px;background:rgba(196,181,253,.025);color:#d9d5e9;text-align:left;cursor:pointer}
+ .map-related-place:hover{border-color:rgba(196,181,253,.35);background:rgba(196,181,253,.05)}
+ .map-related-place strong{font:500 14px/1.25 Georgia,serif}
+ .map-related-place small{color:#868392;font-size:8px;line-height:1.55}
+ .map-related-note{margin:8px 0 0;color:#656574;font-size:8px;line-height:1.7}
+ .map-favorite-count{color:#e8d79b}
  @media(max-width:900px){.community-map-explorer-layout{grid-template-columns:1fr}.community-map-explorer-layout>.map-detail{position:static}.map-index-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
  @media(max-width:650px){.map-index-phase{padding:13px}.map-index-phase-heading{align-items:stretch;flex-direction:column}.map-phase-badge{align-self:flex-start}.map-location-toolbar{grid-template-columns:1fr}.map-location-search input,.map-region-select select{font-size:16px}.map-reset-button{width:100%}.image-map-marker{width:32px;height:32px;font-size:9px}.map-index-list{grid-template-columns:repeat(2,minmax(0,1fr))}.community-map-explorer-layout{padding:0 7px 10px}}
  @media(max-width:390px){.map-index-list{grid-template-columns:1fr}.image-map-marker{width:30px;height:30px}.map-index-phase{padding:11px}}
@@ -285,8 +296,8 @@
   </section>
   <section class="map-index-phase" aria-labelledby="location-index-title">
    <div class="map-index-phase-heading">
-    <div><div class="section-kicker">PHASE II · MAP-FIRST EXPLORER</div><h3 class="serif" id="location-index-title">Interactive location index</h3><p>Search the archive's places, filter by region, then select a numbered result to highlight its pin on Armixi's map and open connected lore.</p></div>
-    <span class="map-phase-badge">19 PLACES INDEXED</span>
+    <div><div class="section-kicker">PHASE III · LOCATION CONNECTIONS</div><h3 class="serif" id="location-index-title">Interactive location index &amp; lore links</h3><p>Star favourite places, filter the index, and follow connections based on shared Touhou stories, characters, and tags. These are lore links, not invented travel routes.</p></div>
+    <span class="map-phase-badge">SAVE · FILTER · CONNECT</span>
    </div>
    <div class="map-location-toolbar">
     <label class="map-location-search"><span>Find a place</span><input type="search" id="map-location-search" placeholder="Try “Human Village” or “Moon”…" autocomplete="off" aria-label="Search mapped locations"></label>
@@ -300,6 +311,7 @@
      <option value="offworld">Moon / off-world</option>
      <option value="hidden">Hidden realms</option>
     </select></label>
+    <button type="button" class="map-reset-button" id="map-favorites-toggle" aria-pressed="false">☆ Favorites only</button>
     <button type="button" class="map-reset-button" id="map-reset-filters">Reset filters</button>
    </div>
    <div class="map-index-status" id="map-index-count" role="status" aria-live="polite">19 of 19 places shown</div>
@@ -1045,6 +1057,26 @@ function openDrawer(id,trigger){
 let sortMode='path';
 let activeToolTab='characters';
 let activeLocation='hakurei';
+const MAP_FAVORITES_STORAGE_KEY='gensokyoArchiveMapFavoritesV1';
+function readMapFavorites(){
+ try{
+  const value=JSON.parse(localStorage.getItem(MAP_FAVORITES_STORAGE_KEY)||'[]');
+  return Array.isArray(value)?value.filter(id=>LOCATIONS.some(location=>location.id===id)):[];
+ }catch(_){return [];}
+}
+let mapFavorites=readMapFavorites();
+let showMapFavoritesOnly=false;
+function writeMapFavorites(){
+ try{localStorage.setItem(MAP_FAVORITES_STORAGE_KEY,JSON.stringify(mapFavorites));}catch(_){}
+}
+function toggleMapFavorite(id){
+ if(!LOCATIONS.some(location=>location.id===id))return;
+ const set=new Set(mapFavorites);
+ if(set.has(id))set.delete(id);else set.add(id);
+ mapFavorites=Array.from(set);
+ writeMapFavorites();
+ renderMapIndex();
+}
 function readShelfState(){
  try{
   const raw=localStorage.getItem('gensokyoArchiveShelfV1');
@@ -1100,8 +1132,9 @@ function getVisibleLocations(){
  return LOCATIONS.filter(l=>{
   const meta=IMAGE_MAP_POSITIONS[l.id]||{region:'core'};
   const matchesRegion=region==='all'||meta.region===region;
+  const matchesFavorite=!showMapFavoritesOnly||mapFavorites.includes(l.id);
   const haystack=[l.name,l.group,l.description,l.status,...l.characters,...l.tags,...l.entries,MAP_REGION_LABELS[meta.region]||''].join(' ').toLowerCase();
-  return matchesRegion&&(!query||haystack.includes(query));
+  return matchesRegion&&matchesFavorite&&(!query||haystack.includes(query));
  });
 }
 function renderMap(){
@@ -1118,7 +1151,12 @@ function renderMapIndex(){
  const visible=getVisibleLocations();
  if(visible.length&&!visible.some(l=>l.id===activeLocation))activeLocation=visible[0].id;
  const count=$('map-index-count');
- if(count)count.textContent=visible.length+' of '+LOCATIONS.length+' places shown';
+ if(count)count.innerHTML=visible.length+' of '+LOCATIONS.length+' places shown <span class="map-favorite-count">· '+mapFavorites.length+' starred</span>';
+ const favoriteButton=$('map-favorites-toggle');
+ if(favoriteButton){
+  favoriteButton.setAttribute('aria-pressed',String(showMapFavoritesOnly));
+  favoriteButton.textContent=showMapFavoritesOnly?'★ Showing favourites':'☆ Favorites only';
+ }
  const list=$('map-index-list');
  list.innerHTML=visible.length?visible.map(l=>{
   const index=LOCATIONS.findIndex(x=>x.id===l.id)+1;
@@ -1133,11 +1171,30 @@ function renderMapIndex(){
  });
  renderMapDetail();
 }
+function getRelatedLocations(location){
+ const words=(location.tags||[]).map(tag=>tag.toLowerCase());
+ return LOCATIONS.filter(other=>other.id!==location.id).map(other=>{
+  const sharedEntries=location.entries.filter(id=>other.entries.includes(id));
+  const sharedTags=(location.tags||[]).filter(tag=>(other.tags||[]).some(value=>value.toLowerCase()===tag.toLowerCase()));
+  const sharedCharacters=(location.characters||[]).filter(name=>(other.characters||[]).includes(name));
+  const score=sharedEntries.length*4+sharedCharacters.length*3+sharedTags.length*2;
+  const reasons=[];
+  if(sharedEntries.length){
+   const codes=sharedEntries.map(id=>TIMELINE.find(entry=>entry.id===id)?.code||id.toUpperCase());
+   reasons.push('Shared stories: '+codes.join(', '));
+  }
+  if(sharedCharacters.length)reasons.push('Shared characters: '+sharedCharacters.slice(0,2).join(', '));
+  if(sharedTags.length)reasons.push('Shared themes: '+sharedTags.slice(0,2).join(', '));
+  return {location:other,score,reasons};
+ }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score||a.location.name.localeCompare(b.location.name)).slice(0,4);
+}
 function renderMapDetail(){
  const l=LOCATIONS.find(x=>x.id===activeLocation)||LOCATIONS[0];
  const pos=IMAGE_MAP_POSITIONS[l.id]||{region:'core'};
+ const isFavorite=mapFavorites.includes(l.id);
+ const related=getRelatedLocations(l);
  document.querySelectorAll('[data-location]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.location===l.id)));
- $('map-detail').innerHTML='<div class="place-group">'+esc(MAP_REGION_LABELS[pos.region]||l.group)+' · '+esc(l.group)+'</div><h4>'+esc(l.name)+'</h4><p>'+esc(l.description)+'</p><div class="canon-badge">'+esc(l.status)+'</div><div class="detail-subhead">Characters in this archive</div><div class="character-links">'+(l.characters.length?l.characters.map(name=>'<span class="entry-chip">'+esc(name)+'</span>').join(''):'<span class="shelf-empty">No character profile attached yet.</span>')+'</div><div class="detail-subhead">Related reading</div><div class="character-links">'+(l.entries.length?l.entries.map(entryChip).join(''):'<span class="shelf-empty">No full lore entry is connected to this location yet.</span>')+'</div>';
+ $('map-detail').innerHTML='<div class="map-detail-top"><div class="place-group">'+esc(MAP_REGION_LABELS[pos.region]||l.group)+' · '+esc(l.group)+'</div><button type="button" class="map-favorite-action" data-toggle-place-favorite="'+esc(l.id)+'" aria-pressed="'+String(isFavorite)+'">'+(isFavorite?'★ Saved place':'☆ Save place')+'</button></div><h4>'+esc(l.name)+'</h4><p>'+esc(l.description)+'</p><div class="canon-badge">'+esc(l.status)+'</div><div class="detail-subhead">Characters in this archive</div><div class="character-links">'+(l.characters.length?l.characters.map(name=>'<span class="entry-chip">'+esc(name)+'</span>').join(''):'<span class="shelf-empty">No character profile attached yet.</span>')+'</div><div class="detail-subhead">Related reading</div><div class="character-links">'+(l.entries.length?l.entries.map(entryChip).join(''):'<span class="shelf-empty">No full lore entry is connected to this location yet.</span>')+'</div><div class="detail-subhead">Lore-connected places</div><div class="map-related-place-list">'+(related.length?related.map(item=>'<button type="button" class="map-related-place" data-location="'+esc(item.location.id)+'"><strong>'+esc(item.location.name)+'</strong><small>'+esc(item.reasons.join(' · '))+'</small></button>').join(''):'<div class="shelf-empty">No strong shared-story or shared-tag connections are indexed yet.</div>')+'</div><p class="map-related-note">Connections come from shared stories, characters, or tags. They are reading suggestions, not claims about physical distance or travel routes.</p>';
 }
 function renderIncidents(){
  $('incident-grid').innerHTML=INCIDENTS.map(i=>{
@@ -1178,7 +1235,8 @@ $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value
 $('character-search').addEventListener('input',renderCharacterAtlas);
 $('map-location-search').addEventListener('input',renderMapIndex);
 $('map-region-filter').addEventListener('change',renderMapIndex);
-$('map-reset-filters').addEventListener('click',()=>{$('map-location-search').value='';$('map-region-filter').value='all';renderMapIndex();$('map-location-search').focus();});
+$('map-favorites-toggle').addEventListener('click',()=>{showMapFavoritesOnly=!showMapFavoritesOnly;renderMapIndex();});
+$('map-reset-filters').addEventListener('click',()=>{$('map-location-search').value='';$('map-region-filter').value='all';showMapFavoritesOnly=false;renderMapIndex();$('map-location-search').focus();});
 $('search-clear').addEventListener('click',()=>{searchText='';$('search').value='';renderTimeline();$('search').focus();});
 $('reset-view').addEventListener('click',()=>{filters.game=filters.print=filters.music=true;searchText='';$('search').value='';renderAll();});
 $('filter-toggle').addEventListener('click',()=>{filterExpanded=!filterExpanded;$('filter-content').classList.toggle('hidden',!filterExpanded);$('filter-toggle').setAttribute('aria-expanded',String(filterExpanded));$('chevron').textContent=filterExpanded?'⌄':'›';});
@@ -1189,6 +1247,8 @@ document.addEventListener('keydown',event=>{if(!selectedId)return;if(event.key==
 $('archive-tools').addEventListener('click',event=>{
  const tab=event.target.closest('[data-tool-tab]');
  if(tab){activeToolTab=tab.dataset.toolTab;updateToolTabs();return;}
+ const favorite=event.target.closest('[data-toggle-place-favorite]');
+ if(favorite){toggleMapFavorite(favorite.dataset.togglePlaceFavorite);return;}
  const pin=event.target.closest('[data-location]');
  if(pin){activeLocation=pin.dataset.location;renderMapDetail();return;}
  const searchCharacter=event.target.closest('[data-search-character]');
