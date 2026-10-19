@@ -570,6 +570,62 @@ register_custom_image(SILENT_SINNER, "https://shop.akbh.jp/en/products/978475806
     "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 1", "print", "cover",
     "Retail cover for Silent Sinner in Blue, volume 1.")
 
+register_custom_image("https://images.yenpress.com/imgs/9781975303525.jpg?w=408&h=612&type=books&s=75f6970b0c59c1a304418b52cf6114bf",
+    "https://yenpress.com/titles/9781975303525-forbidden-scrollery-vol-7",
+    "Yen Press — Forbidden Scrollery, Vol. 7", "print", "cover",
+    "Publisher cover for Forbidden Scrollery, volume 7.")
+
+# Additional print-work cover images from distinct products on the official AKIBA-HOBBY Touhou shop.
+# These add enough unique book jackets that a print-work image never has to borrow a game screenshot.
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758012225.jpg?v=1722506116&width=800",
+    "https://shop.akbh.jp/en/products/9784758012225",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 1", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 1.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758012621.jpg?v=1722506396&width=800",
+    "https://shop.akbh.jp/en/products/9784758012621",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 2", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 2.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758013178.jpg?v=1722506118&width=800",
+    "https://shop.akbh.jp/en/products/9784758013178",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 3", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 3.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758013741.jpg?v=1666996655&width=800",
+    "https://shop.akbh.jp/en/products/9784758013741",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 4", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 4.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758014199.jpg?v=1722507175&width=800",
+    "https://shop.akbh.jp/en/products/9784758014199",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 5", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 5.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758014847.jpg?v=1722506934&width=800",
+    "https://shop.akbh.jp/en/products/9784758014847",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 6", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 6.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758015349.jpg?v=1722507040&width=800",
+    "https://shop.akbh.jp/en/products/9784758015349",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 7", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 7.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758015738.jpg?v=1722507172&width=800",
+    "https://shop.akbh.jp/en/products/9784758015738",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 8", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 8.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758016100.jpg?v=1722507037&width=800",
+    "https://shop.akbh.jp/en/products/9784758016100",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 9", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 9.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758016629.jpg?v=1722507178&width=800",
+    "https://shop.akbh.jp/en/products/9784758016629",
+    "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 10", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Wild and Horned Hermit, volume 10.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758061247.jpg?v=1722506398&width=800",
+    "https://shop.akbh.jp/en/products/9784758061247",
+    "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 2", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Silent Sinner in Blue, volume 2.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758061698.jpg?v=1722505911&width=800",
+    "https://shop.akbh.jp/en/products/9784758061698",
+    "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 3", "print", "cover",
+    "Japanese retail cover of the official Touhou manga Silent Sinner in Blue, volume 3.")
+
 # Official visuals remain in the source pool, but each one is assigned to at most
 # one non-character image slot.
 for _url, _label, _kind, _alt in [
