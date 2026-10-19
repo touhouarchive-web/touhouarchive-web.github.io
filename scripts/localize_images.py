@@ -983,12 +983,15 @@ def choose_distinct_image(context: str, relative_path: str, used_assets: set[str
         display_context = Path(relative_path).stem.replace("-", " ").title()
 
     used_print_section = (
-        "print-works" in basename
-        or any(term in clean_context for term in (
-            "print works", "perfect memento", "forbidden scrollery", "silent sinner in blue",
-            "bohemian archive", "symposium of post-mysticism", "wild and horned hermit",
-            "lotus eater",
-        ))
+        not background
+        and (
+            "print-works" in basename
+            or any(term in clean_context for term in (
+                "print works", "perfect memento", "forbidden scrollery", "silent sinner in blue",
+                "bohemian archive", "symposium of post-mysticism", "wild and horned hermit",
+                "lotus eater",
+            ))
+        )
     )
 
     available = [
