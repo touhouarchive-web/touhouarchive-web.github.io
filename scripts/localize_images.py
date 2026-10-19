@@ -1119,7 +1119,9 @@ def choose_distinct_image(context: str, relative_path: str, used_assets: set[str
             default=0,
         )
         quality_score = 3 if candidate["kind"] in ("cover", "screenshot", "background", "artwork") else 0
-        return (topic_score + game_score, kind_score, quality_score)
+        # Subject matter first, then media type, then game. Otherwise a game-title
+        # match can outrank a much better-fit background/cover and mix up sections.
+        return (topic_score, kind_score, game_score, quality_score)
 
     chosen = max(eligible, key=score)
     used_assets.add(_image_identity(chosen["url"]))
@@ -1163,6 +1165,10 @@ def attribute_image_container(
     # attribution or blocked image variant can override the actual displayed asset.
     tag = re.sub(r'\sdata-wiki-file=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
     tag = re.sub(r'\s+srcset=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+    # A card/figure image is selected once. Mark it so the later orphan-image
+    # pass cannot replace it a second time using only nearby, unrelated page text.
+    if not re.search(r'\bdata-image-processed\s*=', tag, flags=re.IGNORECASE):
+        tag = tag[:-1] + ' data-image-processed="true">'
     container = container[:match.start()] + tag + container[match.end():]
 
     source_link = f'<a href="{safe_source}" target="_blank" rel="noopener">{safe_credit} ↗</a>'
@@ -1297,6 +1303,10 @@ def diversify_page_images(relative_path: str, content: str, used_assets: set[str
     # Handle any remaining image tags not inside a card or figure.
     def replace_orphan_img(match: re.Match[str]) -> str:
         tag = match.group(0)
+        # Card/figure images have already been context-matched and attributed.
+        # Do not process those image tags twice.
+        if re.search(r'\bdata-image-processed\s*=', tag, flags=re.IGNORECASE):
+            return tag
         src_match = IMG_SRC_RE.search(tag)
         if not src_match:
             return tag
@@ -1424,6 +1434,8 @@ def main() -> None:
             tag = tag[:-1] + f' title="Image source: {credit}">'
         # Remove stale wiki-specific metadata to avoid suggesting a substituted asset is the wiki file.
         tag = re.sub(r'\sdata-wiki-file=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+        # This is build-only metadata; the published site does not need it.
+        tag = re.sub(r'\sdata-image-processed=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
         return tag
 
     def replace_css_url(match: re.Match[str]) -> str:
