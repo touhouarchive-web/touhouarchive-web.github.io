@@ -406,7 +406,7 @@ register_game_gallery("th06", "Touhou 6: Embodiment of Scarlet Devil",
     (EOSD_GAMEPLAY, "Screenshot - Gameplay (Japan)"),
     (EOSD_GAMEPLAY_ALT, "Screenshot - Gameplay"),
     ("https://images.launchbox-app.com/1da13c92-9a5d-4bc7-8328-9432948f9e64.png", "Disc (World)"),
-    (EOSD_GAMESELECT, "Screenshot - Game Select (Japan)"),
+    (EOSD_GAMESELECT, "Clear Logo (Game Select Graphic)"),
     ("https://images.launchbox-app.com/6e456ffd-bf5b-4560-a5d2-8a6b425613d1.jpg", "Box - Spine (Japan)"),
     ("https://images.launchbox-app.com/306ef84c-41af-4e6f-8563-3438d807c890.jpg", "Box - Back (Japan)"),
     (EOSD_BG_1, "Fanart - Background (World)"),
@@ -999,6 +999,23 @@ def choose_distinct_image(context: str, relative_path: str, used_assets: set[str
     # No game cover, logo, or disc is allowed to leak into a location/spell-card
     # slot merely because the better matching pictures have already been used.
     eligible = [candidate for candidate in available if candidate["kind"] in desired_kinds]
+    spell_context = (
+        "spell-cards" in basename
+        or any(term in clean_context for term in (
+            "spell cards", "spell-card", "spell card", "danmaku", "boss pattern",
+            "projectile", "bullet pattern", "attack pattern",
+        ))
+    )
+    if spell_context:
+        # Menus, game-over panels and title screens are not spell-card visuals.
+        eligible = [
+            candidate for candidate in eligible
+            if not (
+                candidate["kind"] == "screenshot"
+                and any(term in str(candidate.get("label", "")).lower()
+                        for term in ("game select", "game title", "game over", "title screen"))
+            )
+        ]
     if used_print_section:
         eligible = [
             candidate for candidate in eligible
@@ -1162,6 +1179,17 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
             return False
         if is_print_context and not (candidate["game"] == "print" and candidate["kind"] == "cover"):
             return False
+        spell_context = (
+            "spell-cards" in Path(relative_path).name.lower()
+            or any(term in clean_context for term in (
+                "spell cards", "spell-card", "spell card", "danmaku", "boss pattern",
+                "projectile", "bullet pattern", "attack pattern",
+            ))
+        )
+        if spell_context and candidate["kind"] == "screenshot":
+            label = str(candidate.get("label", "")).lower()
+            if any(term in label for term in ("game select", "game title", "game over", "title screen")):
+                return False
         return True
 
     # First honour a known Touhou Wiki filename's carefully reviewed replacement.
