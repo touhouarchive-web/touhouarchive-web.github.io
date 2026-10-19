@@ -124,6 +124,39 @@
 .entry-state-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
 .entry-state{display:inline-block;border:1px solid rgba(110,231,183,.16);background:rgba(110,231,183,.035);border-radius:6px;padding:4px 6px;color:#9ecdb6;font-size:8px}
 .entry-state.saved{border-color:rgba(196,181,253,.19);background:rgba(196,181,253,.035);color:#c4b5fd}
+
+.community-map-card{margin:18px 0 25px;overflow:hidden;border:1px solid rgba(196,181,253,.19);border-radius:17px;background:linear-gradient(155deg,rgba(196,181,253,.055),rgba(255,255,255,.012) 38%,rgba(255,255,255,.008));box-shadow:0 16px 42px rgba(0,0,0,.12)}
+.community-map-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:19px 20px 15px}
+.community-map-eyebrow{font:800 8px/1.5 ui-monospace,monospace;letter-spacing:.16em;color:#aaa0dc}
+.community-map-header h3{font:500 clamp(23px,3vw,31px)/1.15 Georgia,serif;letter-spacing:-.04em;color:#f2f0f8;margin:9px 0 7px}
+.community-map-header p{max-width:660px;font-size:10px;line-height:1.8;color:#91919e;margin:0}
+.community-map-resolution{flex:0 0 auto;padding:8px 10px;border:1px solid rgba(196,181,253,.16);border-radius:9px;color:#a6a1bc;font:8px/1.7 ui-monospace,monospace;text-align:right}
+.community-map-figure{margin:0;padding:0 12px 12px}
+.community-map-figure>a{display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#090a0d;text-decoration:none;cursor:zoom-in}
+.community-map-image{display:block;max-width:100%;max-height:min(78vh,920px);width:auto;height:auto;object-fit:contain}
+.community-map-footer{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:18px;align-items:start;padding:15px 19px;border-top:1px solid rgba(255,255,255,.055)}
+.community-map-credit{display:grid;gap:6px}
+.community-map-credit strong{font:500 15px/1.3 Georgia,serif;color:#ddd9ee}
+.community-map-credit span{font-size:9px;line-height:1.7;color:#777783}
+.community-map-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+.community-map-links a{display:inline-flex;align-items:center;border:1px solid rgba(196,181,253,.16);border-radius:8px;padding:8px 10px;color:#c8bee9;background:rgba(196,181,253,.035);font-size:9px;line-height:1.4;text-decoration:none}
+.community-map-links a:hover{border-color:rgba(196,181,253,.4);color:#fff}
+.community-map-research{margin:0 19px 18px;border:1px solid rgba(255,255,255,.06);border-radius:10px;background:rgba(0,0,0,.13)}
+.community-map-research summary{padding:11px 13px;color:#bbb5d3;font-size:10px;cursor:pointer;list-style-position:inside}
+.community-map-notes{padding:0 13px 13px}
+.community-map-notes p{margin:9px 0 0;color:#8b8b98;font-size:10px;line-height:1.85}
+.community-map-notes strong{color:#ccc5e7;font-weight:600}
+.map-explorer-intro{margin:6px 0 15px;padding-top:1px}
+@media(max-width:650px){
+ .community-map-header{flex-direction:column;gap:12px;padding:15px 14px 12px}
+ .community-map-resolution{align-self:flex-start;text-align:left}
+ .community-map-figure{padding:0 7px 7px}
+ .community-map-image{max-height:70vh}
+ .community-map-footer{grid-template-columns:1fr;gap:12px;padding:13px 14px}
+ .community-map-links{justify-content:flex-start}
+ .community-map-links a{padding:8px 9px}
+ .community-map-research{margin:0 12px 13px}
+}
 @media(max-width:1000px){.character-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.map-layout{grid-template-columns:1fr}.map-board{min-height:440px}.map-detail{min-height:0}}
 @media(max-width:650px){.tools-heading{grid-template-columns:1fr}.progress-card{max-width:none}.panel-intro{align-items:stretch;flex-direction:column}.atlas-search{width:100%}.character-grid,.incident-grid,.thread-list,.shelf-grid{grid-template-columns:1fr}.map-board{min-height:390px}.map-pin{max-width:112px;padding:6px 7px;font-size:8px}.route-row{align-items:flex-start;flex-direction:column}.route-controls{width:100%;justify-content:space-between}.sort-control select{max-width:135px}.tool-tabs button{padding:10px 11px}.archive-tools{margin-top:31px;padding-top:22px}}
 @media(max-width:390px){.map-board{min-height:370px}.map-pin{max-width:94px;gap:4px;padding:5px 6px;font-size:7px}.map-pin .pin-dot{flex-basis:5px;width:5px;height:5px}.map-detail{padding:14px}.character-card{padding:12px}}
@@ -164,7 +197,45 @@
   <div id="character-count" class="panel-count"></div><div class="character-grid" id="character-grid"></div>
  </section>
  <section class="tool-panel hidden" id="map-panel" role="tabpanel">
-  <div class="panel-intro"><div><div class="section-kicker">Places and story geography</div><h3 class="serif">A constellation of places</h3><p>Choose a marker to see why the place matters and which archive entries discuss it.</p></div><span class="map-legend"><i></i> Selected location</span></div>
+  <div class="panel-intro"><div><div class="section-kicker">Places and story geography</div><h3 class="serif">Gensokyo map room</h3><p>The detailed community map you shared is now here. Below it, explore a separate interactive index of locations and the stories connected to them.</p></div><span class="map-legend"><i></i> Select a location below</span></div>
+
+  <section class="community-map-card" aria-labelledby="community-map-title">
+   <div class="community-map-header">
+    <div>
+     <div class="community-map-eyebrow">REFERENCE CARTOGRAPHY · VERSION 2.0</div>
+     <h3 class="serif" id="community-map-title">Gensokyo's Map v2.0</h3>
+     <p>A detailed fan-made map by Armixi, opened from the image link you shared. Tap the map to view the full-resolution image.</p>
+    </div>
+    <span class="community-map-resolution">4096 × 3413 px<br>Community reconstruction</span>
+   </div>
+   <figure class="community-map-figure">
+    <a href="https://i.redd.it/t118a4520yna1.jpg" target="_blank" rel="noopener noreferrer" aria-label="Open the full-resolution Gensokyo map image">
+     <img class="community-map-image" src="https://i.redd.it/t118a4520yna1.jpg" alt="High-resolution fan-made Gensokyo map v2.0 by Armixi, showing Gensokyo's terrain, landmarks, and surrounding realms." loading="lazy" decoding="async" referrerpolicy="no-referrer" data-image-pinned="armixi-gensokyo-map-v2">
+    </a>
+   </figure>
+   <div class="community-map-footer">
+    <div class="community-map-credit">
+     <strong>Map artwork: Armixi</strong>
+     <span>Community fan art · not an official Team Shanghai Alice map</span>
+    </div>
+    <div class="community-map-links">
+     <a href="https://www.artstation.com/artwork/JvEdrA?album_id=8788868" target="_blank" rel="noopener noreferrer">Artist's original on ArtStation ↗</a>
+     <a href="https://www.reddit.com/r/touhou/comments/11s447e/gensokyos-map-v20-by-armixi/" target="_blank" rel="noopener noreferrer">Version 2.0 changelog & discussion ↗</a>
+     <a href="https://en.touhouwiki.net/wiki/Strange_Creators_of_Outer_World/Gensokyo_Geography" target="_blank" rel="noopener noreferrer">Touhou geography research ↗</a>
+    </div>
+   </div>
+   <details class="community-map-research">
+    <summary>What I researched about this map</summary>
+    <div class="community-map-notes">
+     <p><strong>Why this version is useful:</strong> Armixi's ArtStation page describes the piece as a detailed map of Gensokyo, and the Reddit post links its version 2.0 update notes. The update says its topography was redrawn using the real topography of the Yatsugatake Mountains as a basis, with more detail and an added map of Makai.</p>
+     <p><strong>Geography notes from the v2.0 changelog:</strong> Higan is placed outside Gensokyo, north of the main land; the Sanzu River sits north of Gensokyo behind Youkai Mountain; Muenzuka is placed near the meeting of Gensokyo, the Outside World, and Higan; the Forest of Magic is close to the Human Village; and the Garden of the Sun and Hill of the Nameless lie farther south.</p>
+     <p><strong>Canon caution:</strong> Treat this as a researched fan reconstruction, not a definitive official map. Touhou's games and print works establish important spatial relationships, but not every distance or exact coordinate. The linked <em>Strange Creators of Outer World</em> geography articles examine the setting using game and official-text clues; those are the better cross-check for canon details.</p>
+    </div>
+   </details>
+  </section>
+  <div class="panel-intro map-explorer-intro">
+   <div><div class="section-kicker">Interactive location index</div><h3 class="serif">Explore the places</h3><p>The schematic below is a clickable guide to the archive's locations, not a scale-accurate map. Select a marker to see related lore entries.</p></div>
+  </div>
   <div class="map-layout"><div class="map-board" id="map-board" aria-label="Schematic map of selected Touhou locations"><svg class="map-lines" viewBox="0 0 800 500" aria-hidden="true"><path d="M120 360 C190 315 230 250 370 210 S540 155 650 100" /><path d="M120 360 C220 370 280 300 390 295 S550 320 660 385" /><path d="M190 180 C280 195 335 250 385 295" /><path d="M385 295 C420 265 430 225 470 190 S580 130 650 100" /><path d="M385 295 C420 350 410 400 345 442" /><path d="M385 295 C480 270 560 250 650 245" /></svg></div><aside class="map-detail" id="map-detail" aria-live="polite"></aside></div>
   <p class="map-disclaimer">Schematic only: positions and connecting lines help explain reading relationships; they are not official distances, routes, borders, or a complete world map. The Lunar Sea is shown off-map in spirit even though it shares this display.</p>
  </section>
