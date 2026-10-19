@@ -2124,15 +2124,16 @@ function casebookReportMarkdown(item){
 function importCasebookData(data){
  const candidates=Array.isArray(data?.cases)?data.cases:(data&&data.title?[data]:[]);
  if(!candidates.length){setCasebookStatus('No case files found in that JSON. Import a casebook backup exported from this page.');return;}
- let imported=0;
- candidates.slice(0,30).forEach(item=>{
+ const slots=Math.max(0,30-casebookState.cases.length);
+ if(!slots){setCasebookStatus('This casebook already has 30 case files. Delete an unused case before importing more.');return;}
+ let imported=0,skipped=0;
+ candidates.slice(0,slots).forEach(item=>{
   const cleaned=cleanCaseData({...item,id:caseId()},imported);
-  if(!cleaned)return;
+  if(!cleaned){skipped++;return;}
   cleaned.id=caseId();cleaned.updatedAt=new Date().toISOString();
   casebookState.cases.push(cleaned);imported++;
  });
- casebookState.cases=casebookState.cases.slice(0,30);
- if(imported){casebookState.activeId=casebookState.cases[casebookState.cases.length-1].id;saveCasebook();renderCasebookUI(true);setCasebookStatus('Imported '+imported+' case file'+(imported===1?'':'s')+'. Check the case selector to switch between them.');}
+ if(imported){casebookState.activeId=casebookState.cases[casebookState.cases.length-1].id;saveCasebook();renderCasebookUI(true);setCasebookStatus('Imported '+imported+' case file'+(imported===1?'':'s')+(skipped?'; skipped '+skipped+' invalid entr'+(skipped===1?'y':'ies'):'')+(candidates.length>slots?'; stopped at the 30-case limit':'')+'. Check the case selector to switch between them.');}
  else setCasebookStatus('No valid case files found. Each case needs a title; pinned records can be imported with the case.');
 }
 function initCommandCenterControls(){
@@ -2187,11 +2188,18 @@ function initCommandCenterControls(){
   reader.readAsText(file);event.target.value='';
  });
  document.addEventListener('keydown',event=>{
-  if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey){
-   const node=event.target,tag=(node&&node.tagName||'').toLowerCase();
-   if(tag!=='input'&&tag!=='textarea'&&tag!=='select'&&!node?.isContentEditable){event.preventDefault();activeToolTab='command';updateToolTabs();$('command-search').focus();}
+  const node=event.target,tag=(node&&node.tagName||'').toLowerCase();
+  const typing=['input','textarea','select'].includes(tag)||!!node?.isContentEditable;
+  const slashKey=event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey;
+  const commandKey=(event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k';
+  if((slashKey||commandKey)&&!typing){
+   event.preventDefault();
+   activeToolTab='command';
+   updateToolTabs();
+   const input=$('command-search');
+   if(input){input.focus();input.select();}
   }
- });
+ },true);
 }
 
 function renderThreads(){
