@@ -107,6 +107,45 @@
 .incident-tags{display:flex;flex-wrap:wrap;gap:5px;margin:11px 0}
 .incident-tags span{border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:4px 6px;color:#777782;font-size:8px}
 .open-entry-link{border:0;border-bottom:1px solid rgba(196,181,253,.3);background:none;color:#c4b5fd;padding:7px 0 3px;margin-top:9px;font-size:9px;cursor:pointer;text-align:left}
+/* Phase V · incident archive */
+.incident-summary-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:16px 0}
+.incident-summary-stats>div{display:grid;gap:5px;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px;background:rgba(255,255,255,.012)}
+.incident-summary-stats strong{font:500 22px/1 Georgia,serif;color:#e4d9fb}.incident-summary-stats span{font-size:8px;letter-spacing:.04em;color:#888795}
+.incident-toolbar{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(125px,.7fr) minmax(125px,.7fr) auto auto;gap:9px;align-items:end;border:1px solid rgba(196,181,253,.12);border-radius:13px;padding:12px;background:rgba(196,181,253,.025)}
+.incident-search-field,.incident-filter-field{display:grid;gap:6px;min-width:0;color:#92909e;font-size:9px}
+.incident-search-field input,.incident-filter-field select{width:100%;min-width:0;min-height:40px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#111214;color:#e6e4ee;padding:9px 10px;font:inherit;font-size:10px}
+.incident-tool-button{min-height:40px;border:1px solid rgba(196,181,253,.17);border-radius:8px;background:rgba(196,181,253,.035);color:#cfc4f0;padding:9px 10px;font-size:9px;white-space:nowrap;cursor:pointer}
+.incident-tool-button[aria-pressed=true]{border-color:rgba(250,204,21,.4);background:rgba(250,204,21,.07);color:#fde68a}
+.incident-archive-count{margin:12px 0;color:#777783;font:9px/1.6 ui-monospace,monospace}
+.incident-archive-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:12px;align-items:start}
+.incident-grid{display:grid;grid-template-columns:1fr;gap:9px;align-content:start}
+.incident-card{padding:0;overflow:hidden;transition:border-color .15s,background .15s}
+.incident-card.is-active{border-color:rgba(196,181,253,.44);background:linear-gradient(140deg,rgba(139,110,190,.09),rgba(255,255,255,.008))}
+.incident-card-select{display:block;width:100%;border:0;background:none;color:inherit;padding:14px 14px 8px;text-align:left;cursor:pointer}
+.incident-card-select:focus-visible,.incident-tool-button:focus-visible,.incident-card-action:focus-visible{outline:2px solid #c4b5fd;outline-offset:2px}
+.incident-card-select h4{margin:10px 0 8px}.incident-card-select p{margin:0}
+.incident-card-actions{display:flex;flex-wrap:wrap;gap:11px;align-items:center;padding:0 14px 12px}
+.incident-card-action{border:0;border-bottom:1px solid rgba(196,181,253,.24);background:none;color:#bdb1dd;padding:5px 0 3px;font-size:9px;cursor:pointer;text-align:left}
+.incident-card-action[aria-pressed=true]{color:#fde68a;border-color:rgba(250,204,21,.4)}
+.incident-empty{border:1px dashed rgba(255,255,255,.11);border-radius:12px;padding:18px;color:#8b8997;font-size:10px;line-height:1.8}
+.incident-detail-panel{position:sticky;top:14px;min-width:0;border:1px solid rgba(196,181,253,.16);border-radius:14px;background:linear-gradient(145deg,rgba(196,181,253,.04),rgba(255,255,255,.008));padding:16px}
+.incident-detail-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.incident-detail-kicker{font:800 8px/1.5 ui-monospace,monospace;letter-spacing:.12em;color:#a99bcf;text-transform:uppercase}
+.incident-detail-title{margin:8px 0 9px;font:500 24px/1.18 Georgia,serif;color:#f0edf7;overflow-wrap:anywhere}
+.incident-detail-summary{font-size:10px;line-height:1.9;color:#aaa8b5;margin:0}
+.incident-detail-meta{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.incident-detail-meta span{border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:5px 7px;font-size:8px;color:#aaa6b7}
+.incident-detail-section{margin-top:17px;padding-top:14px;border-top:1px solid rgba(255,255,255,.065)}
+.incident-detail-section h5{margin:0 0 9px;font-size:8px;letter-spacing:.12em;color:#c8bbeb;text-transform:uppercase}
+.incident-cast-list,.incident-place-list,.incident-thread-list{display:grid;gap:7px}
+.incident-person,.incident-place-link{display:flex;align-items:flex-start;gap:8px;width:100%;border:1px solid rgba(255,255,255,.065);border-radius:8px;background:rgba(255,255,255,.012);color:#d5d1df;text-align:left;padding:8px 9px;font-size:9px;line-height:1.5}
+button.incident-person,button.incident-place-link{cursor:pointer}button.incident-person:hover,button.incident-place-link:hover{border-color:rgba(196,181,253,.3)}
+.incident-person small,.incident-place-link small{display:block;color:#81808f;font-size:8px;line-height:1.6;margin-top:2px}
+.incident-mini-dot{flex:0 0 6px;width:6px;height:6px;border-radius:50%;background:#b7a2e9;margin-top:5px}
+.incident-tag-list{display:flex;flex-wrap:wrap;gap:5px}.incident-tag-list span{border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:5px 7px;color:#9390a0;font-size:8px}
+.incident-thread-card{border-left:2px solid rgba(196,181,253,.28);padding:3px 0 4px 9px}.incident-thread-card strong{display:block;color:#d9d2ed;font:500 12px/1.4 Georgia,serif}.incident-thread-card p{margin:4px 0 0;color:#858391;font-size:9px;line-height:1.7}
+.incident-detail-source{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.incident-detail-source .open-entry-link{display:inline-block;margin:0}.incident-source-note{margin:11px 0 0;color:#757382;font-size:8px;line-height:1.7}
+@media(max-width:1000px){.incident-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.incident-search-field{grid-column:1/-1}.incident-archive-layout{grid-template-columns:minmax(0,1fr)}.incident-detail-panel{position:static}.incident-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.incident-summary-stats{gap:6px}.incident-summary-stats>div{padding:9px}.incident-summary-stats strong{font-size:19px}.incident-summary-stats span{font-size:7px}.incident-toolbar{grid-template-columns:1fr 1fr;padding:10px}.incident-search-field{grid-column:1/-1}.incident-archive-layout{grid-template-columns:1fr}.incident-grid{grid-template-columns:1fr}.incident-detail-panel{padding:13px}.incident-detail-title{font-size:22px}.incident-search-field input,.incident-filter-field select{font-size:16px}}
 .thread-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .thread-label{display:inline-block;border:1px solid rgba(196,181,253,.17);background:rgba(196,181,253,.035);color:#bdb1e4;border-radius:7px;padding:6px 8px;font-size:8px;line-height:1.5}
 .thread-entry-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
@@ -379,8 +418,16 @@
   </section>
  </section>
  <section class="tool-panel hidden" id="incidents-panel" role="tabpanel">
-  <div class="panel-intro"><div><div class="section-kicker">What happened, and where to read it</div><h3 class="serif">Incident archive</h3><p>A compact record of the incidents covered by the current entries. Incident summaries are paraphrases; each opens the source article.</p></div></div>
-  <div class="incident-grid" id="incident-grid"></div>
+  <div class="panel-intro"><div><div class="section-kicker">PHASE V · INCIDENT DOSSIERS</div><h3 class="serif">Incident archive</h3><p>Search and compare incidents covered by this archive, follow their participants and indexed places, and open the related lore entry. This is the archive's current coverage, not a claim to list every incident in the entire Touhou series.</p></div></div>
+  <div class="incident-summary-stats" aria-live="polite"><div><strong id="incident-total-count">15</strong><span>Indexed incidents</span></div><div><strong id="incident-visible-count">15</strong><span>Currently shown</span></div><div><strong id="incident-saved-count">0</strong><span>Saved for later</span></div></div>
+  <section class="incident-toolbar" aria-label="Filter the incident archive">
+   <label class="incident-search-field"><span>Search incidents</span><input type="search" id="incident-search" placeholder="Title, character, game, tag…" autocomplete="off" aria-label="Search incidents"></label>
+   <label class="incident-filter-field"><span>Year range</span><select id="incident-era-filter" aria-label="Filter incidents by year range"><option value="all">All years</option><option value="early">2002–2005</option><option value="middle">2006–2013</option><option value="recent">2014–2025</option></select></label>
+   <label class="incident-filter-field"><span>Sort</span><select id="incident-sort" aria-label="Sort incidents"><option value="oldest">Oldest first</option><option value="newest">Newest first</option><option value="title">Title A–Z</option></select></label>
+   <button type="button" class="incident-tool-button" id="incident-favorites-toggle" aria-pressed="false">☆ Saved only</button><button type="button" class="incident-tool-button" id="incident-reset">Reset</button>
+  </section>
+  <div class="incident-archive-count" id="incident-archive-count" role="status" aria-live="polite">15 of 15 incidents shown</div>
+  <div class="incident-archive-layout"><section class="incident-list-column" aria-label="Incident results"><div class="incident-grid" id="incident-grid"></div></section><aside class="incident-detail-panel" id="incident-detail" aria-live="polite" aria-label="Selected incident dossier"></aside></div>
  </section>
  <section class="tool-panel hidden" id="threads-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">Connections with canon labels</div><h3 class="serif">Follow the threads</h3><p>Direct plot links, recurring characters, and interpretive comparisons are kept distinct so that an interesting theory does not get mistaken for canon.</p></div></div>
@@ -1117,6 +1164,13 @@ let sortMode='path';
 let activeToolTab='characters';
 let activeLocation='hakurei';
 let activeNetworkFocus='character:Reimu Hakurei';
+const INCIDENT_FAVORITES_STORAGE_KEY='touhouArchiveIncidentFavoritesV1';
+let showIncidentFavoritesOnly=false;
+let activeIncidentTitle=INCIDENTS[0]?.title||'';
+function readIncidentFavorites(){try{const value=JSON.parse(localStorage.getItem(INCIDENT_FAVORITES_STORAGE_KEY)||'[]');return Array.isArray(value)?value.filter(title=>INCIDENTS.some(item=>item.title===title)):[];}catch(_){return [];}}
+let incidentFavorites=readIncidentFavorites();
+function writeIncidentFavorites(){try{localStorage.setItem(INCIDENT_FAVORITES_STORAGE_KEY,JSON.stringify(incidentFavorites));}catch(_){}}
+function toggleIncidentFavorite(title){if(!INCIDENTS.some(item=>item.title===title))return;const set=new Set(incidentFavorites);if(set.has(title))set.delete(title);else set.add(title);incidentFavorites=Array.from(set);writeIncidentFavorites();renderIncidents();}
 const MAP_FAVORITES_STORAGE_KEY='gensokyoArchiveMapFavoritesV1';
 function readMapFavorites(){
  try{
