@@ -967,7 +967,13 @@ def choose_distinct_image(context: str, relative_path: str, used_assets: set[str
     }
 
 
-def diversify_image_container(container: str, relative_path: str, used_assets: set[str]) -> str:
+def attribute_image_container(
+    container: str,
+    source_page: str,
+    credit: str,
+    alt_text: str,
+    replacement_url: str | None = None,
+) -> str:
     match = IMG_TAG_RE.search(container)
     if not match:
         return container
@@ -975,30 +981,23 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
     src_match = IMG_SRC_RE.search(tag)
     if not src_match:
         return container
-    original_url = src_match.group(2)
-    if not is_external_image(original_url) or is_character_reference(original_url):
-        return container
 
-    selected = choose_distinct_image(container, relative_path, used_assets, background=False)
-    url = selected["url"]
-    alt = selected["context_alt"].replace("&", "&amp;").replace('"', "&quot;")
-    credit = selected["credit"].replace("&", "&amp;").replace('"', "&quot;")
-    source_page = selected["source_page"].replace("&", "&amp;").replace('"', "&quot;")
-
-    tag = tag[:src_match.start(2)] + url + tag[src_match.end(2):]
+    if replacement_url:
+        tag = tag[:src_match.start(2)] + replacement_url + tag[src_match.end(2):]
+    alt = alt_text.replace("&", "&amp;").replace('"', "&quot;")
+    safe_credit = credit.replace("&", "&amp;").replace('"', "&quot;")
+    safe_source = source_page.replace("&", "&amp;").replace('"', "&quot;")
     tag = re.sub(r'\balt\s*=\s*(["\']).*?\1', f'alt="{alt}"', tag, count=1, flags=re.IGNORECASE | re.DOTALL)
-    tag = re.sub(r'\btitle\s*=\s*(["\']).*?\1', f'title="Image source: {credit}"', tag, count=1, flags=re.IGNORECASE | re.DOTALL)
+    tag = re.sub(r'\btitle\s*=\s*(["\']).*?\1', f'title="Image source: {safe_credit}"', tag, count=1, flags=re.IGNORECASE | re.DOTALL)
     if not re.search(r'\btitle\s*=', tag, flags=re.IGNORECASE):
-        tag = tag[:-1] + f' title="Image source: {credit}">'
+        tag = tag[:-1] + f' title="Image source: {safe_credit}">'
+    # Delete old Wiki-specific metadata and responsive source links so no stale
+    # attribution or blocked image variant can override the actual displayed asset.
     tag = re.sub(r'\sdata-wiki-file=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
-    # srcset could preserve the old external hotlink even after src was replaced.
     tag = re.sub(r'\s+srcset=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
     container = container[:match.start()] + tag + container[match.end():]
 
-    # Replace the whole figure caption, rather than leaving stale wording such as
-    # "official cover art" beside a different image. The link always matches the
-    # exact source that supplied this downloaded asset.
-    source_link = f'<a href="{source_page}" target="_blank" rel="noopener">{credit} ↗</a>'
+    source_link = f'<a href="{safe_source}" target="_blank" rel="noopener">{safe_credit} ↗</a>'
     if re.search(r'<figcaption\b', container, flags=re.IGNORECASE):
         container = re.sub(
             r'<figcaption\b[^>]*>[\s\S]*?</figcaption>',
@@ -1012,8 +1011,6 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
             return source_link
         container = SOURCE_ANCHOR_RE.sub(replace_source_anchor, container, count=1)
 
-    # Many of the old cards used a plain "Image: Touhou Wiki" label without a
-    # link. Replace it too so every non-character image is correctly credited.
     if re.search(r'<span\b[^>]*class=["\'][^"\']*\bsmall-source\b[^"\']*["\'][^>]*>', container, flags=re.IGNORECASE):
         container = re.sub(
             r'<span\b[^>]*class=["\'][^"\']*\bsmall-source\b[^"\']*["\'][^>]*>[\s\S]*?</span>',
@@ -1024,6 +1021,41 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
         )
     return container
 
+
+def diversify_image_container(container: str, relative_path: str, used_assets: set[str]) -> str:
+    match = IMG_TAG_RE.search(container)
+    if not match:
+        return container
+    tag = match.group(0)
+    src_match = IMG_SRC_RE.search(tag)
+    if not src_match:
+        return container
+    original_url = src_match.group(2)
+    if not is_external_image(original_url):
+        return container
+
+    # Character portraits may repeat by request, but their captions still need to
+    # name the source of the actual art rather than falsely saying "Touhou Wiki".
+    if is_character_reference(original_url):
+        name = wiki_filename(original_url)
+        metadata = IMAGE_ALIASES.get(name or "")
+        if metadata:
+            return attribute_image_container(
+                container,
+                str(metadata["source_page"]),
+                str(metadata["credit"]),
+                str(metadata["alt"]),
+            )
+        return container
+
+    selected = choose_distinct_image(container, relative_path, used_assets, background=False)
+    return attribute_image_container(
+        container,
+        str(selected["source_page"]),
+        str(selected["credit"]),
+        str(selected["alt"]),
+        replacement_url=str(selected["url"]),
+    )
 
 def diversify_page_images(relative_path: str, content: str, used_assets: set[str]) -> str:
     # Cards and hero figures get a source-specific credit link, alt text and image.
