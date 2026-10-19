@@ -108,16 +108,17 @@ IMAGE_ALIASES = {
         "alt": "Gameplay screenshot from Touhou 6: Embodiment of Scarlet Devil."
     },
     "Th10MoriyaShrineEntrance.jpg": {
-        "url": MOF_LB_GAMEPLAY, "source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith",
-        "alt": "Gameplay screenshot from Touhou 10: Mountain of Faith, used as game-specific setting imagery."
+        "url": MOF_BG, "source_page": MOF_PAGE, "credit": "Steam — Mountain of Faith",
+        "alt": "Official Mountain of Faith landscape artwork used as representative Gensokyo setting imagery."
     },
     "Th06stage2title.jpg": {
-        "url": EOSD_GAMESELECT, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
-        "alt": "Game-selection screen from Touhou 6: Embodiment of Scarlet Devil."
+        "url": EOSD_GAMEPLAY, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Gameplay screenshot from Touhou 6: Embodiment of Scarlet Devil, showing danmaku patterns rather than a title logo."
     },
     "Th06stage3title.jpg": {
-        "url": EOSD_BG_1, "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6 artwork",
-        "alt": "Community-contributed background artwork associated with Touhou 6: Embodiment of Scarlet Devil."
+        "url": "https://images.launchbox-app.com/1da13c92-9a5d-4bc7-8328-9432948f9e64.png",
+        "source_page": EOSD_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+        "alt": "Disc artwork associated with Touhou 6: Embodiment of Scarlet Devil, reserved for the music-and-themes collection."
     },
     "FS Tankebon1 cover.jpg": {
         "url": FORBIDDEN_SCROLLERY, "source_page": "https://yenpress.com/titles/9780316511971-forbidden-scrollery-vol-1",
@@ -913,46 +914,138 @@ def _context_game(context: str, relative_path: str) -> tuple[str, ...]:
 
 def _context_kind(context: str, is_css_background: bool = False) -> tuple[str, ...]:
     lower = html.unescape(re.sub(r"<[^>]+>", " ", context)).lower()
-    if is_css_background:
-        return ("background", "artwork", "screenshot", "cover", "disc", "logo")
-    if any(k in lower for k in ("print works", "book cover", "manga", "official book", "reference book", "perfect memento", "forbidden scrollery", "silent sinner", "bohemian archive", "symposium of post-mysticism")):
-        return ("cover", "artwork", "background", "screenshot", "disc", "logo")
-    if any(k in lower for k in ("gameplay", "danmaku", "spell card", "boss pattern", "stage", "projectile", "game interface")):
-        return ("screenshot", "background", "cover", "artwork", "disc", "logo")
-    if any(k in lower for k in ("location", "shrine", "forest", "lake", "mansion", "barrier", "gensokyo", "moon", "mountain", "setting")):
-        return ("background", "screenshot", "cover", "artwork", "disc", "logo")
-    if any(k in lower for k in ("cover", "title screen", "first touhou game", "re-release")):
-        return ("cover", "screenshot", "background", "artwork", "disc", "logo")
-    return ("background", "screenshot", "cover", "artwork", "disc", "logo")
 
+    # A CSS background should look like scenery, not a disc, logo, or book jacket.
+    if is_css_background:
+        return ("background", "artwork", "screenshot")
+
+    # Match section meaning before broad words such as "stage" or "cover".
+    if any(k in lower for k in (
+        "print works", "book cover", "manga", "official book", "reference book",
+        "perfect memento", "forbidden scrollery", "silent sinner",
+        "bohemian archive", "symposium of post-mysticism", "wild and horned hermit",
+        "lotus eater",
+    )):
+        return ("cover",)
+
+    if any(k in lower for k in (
+        "music & themes", "music and themes", "soundtrack", "original tracks",
+        "listening notes", "character theme", "stage theme", "track title",
+    )):
+        # Disc art belongs here if available; gameplay/scenery is a safe fallback.
+        return ("disc", "screenshot", "background", "artwork")
+
+    if any(k in lower for k in (
+        "spell cards", "spell-card", "spell card", "danmaku", "boss pattern",
+        "projectile", "bullet pattern", "game interface", "attack pattern",
+    )):
+        return ("screenshot", "background", "artwork")
+
+    if any(k in lower for k in (
+        "places of gensokyo", "location", "shrine", "forest", "lake", "mansion",
+        "barrier", "gensokyo", "moon", "mountain", "setting", "village",
+    )):
+        return ("background", "artwork", "screenshot")
+
+    if any(k in lower for k in (
+        "games & incidents", "game release", "release history", "title screen",
+        "first touhou game", "cover artwork", "game packaging",
+    )):
+        return ("cover", "screenshot", "background", "artwork")
+
+    # Never silently substitute a game logo or an unrelated physical disc.
+    return ("background", "screenshot", "cover", "artwork")
 
 def choose_distinct_image(context: str, relative_path: str, used_assets: set[str], background: bool = False) -> dict[str, str]:
     if not DIVERSE_IMAGE_CATALOG:
         raise RuntimeError("The diverse image catalogue is empty.")
+
+    clean_context = html.unescape(re.sub(r"<[^>]+>", " ", context)).lower()
     desired_games = _context_game(context, relative_path)
     desired_kinds = _context_kind(context, background)
+    basename = Path(relative_path).name.lower()
+
+    # Page routes are a second guard in case a card description is too short.
+    if "print-works" in basename:
+        desired_kinds = ("cover",)
+    elif "spell-cards" in basename:
+        desired_kinds = ("screenshot", "background", "artwork")
+    elif "locations" in basename:
+        desired_kinds = ("background", "artwork", "screenshot")
+    elif "music" in basename:
+        desired_kinds = ("disc", "screenshot", "background", "artwork")
+    elif "games" in basename:
+        desired_kinds = ("cover", "screenshot", "background", "artwork")
+
     preferred_headings = re.findall(r"<h[1-4][^>]*>(.*?)</h[1-4]>", context, flags=re.IGNORECASE | re.DOTALL)
     display_context = " — ".join(re.sub(r"<[^>]+>", "", html.unescape(x)).strip() for x in preferred_headings[:2])
     if not display_context:
         display_context = Path(relative_path).stem.replace("-", " ").title()
 
-    available = []
-    for candidate in DIVERSE_IMAGE_CATALOG:
-        identity = _image_identity(candidate["url"])
-        if identity in used_assets:
-            continue
-        available.append(candidate)
-    if not available:
-        raise RuntimeError("Not enough distinct image assets to avoid all non-character repeats.")
+    used_print_section = (
+        "print-works" in basename
+        or any(term in clean_context for term in (
+            "print works", "perfect memento", "forbidden scrollery", "silent sinner in blue",
+            "bohemian archive", "symposium of post-mysticism", "wild and horned hermit",
+            "lotus eater",
+        ))
+    )
+
+    available = [
+        candidate for candidate in DIVERSE_IMAGE_CATALOG
+        if _image_identity(candidate["url"]) not in used_assets
+    ]
+
+    # No game cover, logo, or disc is allowed to leak into a location/spell-card
+    # slot merely because the better matching pictures have already been used.
+    eligible = [candidate for candidate in available if candidate["kind"] in desired_kinds]
+    if used_print_section:
+        eligible = [
+            candidate for candidate in eligible
+            if candidate["game"] == "print" and candidate["kind"] == "cover"
+        ]
+
+    if not eligible:
+        section = "print-work covers" if used_print_section else ", ".join(desired_kinds)
+        raise RuntimeError(
+            f"No unused, section-appropriate image remains for {relative_path} ({display_context}); "
+            f"required media type: {section}. Add more researched matching assets instead of using an unrelated image."
+        )
+
+    topic_phrases = (
+        "perfect memento in strict sense", "perfect memento", "forbidden scrollery",
+        "silent sinner in blue", "symposium of post-mysticism", "bohemian archive in japanese red",
+        "bohemian archive", "wild and horned hermit", "lotus eater",
+        "highly responsive to prayers", "story of eastern wonderland",
+        "phantasmagoria of dim.dream", "lotus land story", "mystic square",
+        "embodiment of scarlet devil", "perfect cherry blossom", "imperishable night",
+        "phantasmagoria of flower view", "mountain of faith", "subterranean animism",
+        "undefined fantastic object", "ten desires", "double dealing character",
+        "legacy of lunatic kingdom", "hidden star in four seasons",
+        "wily beast and weakest creature", "unconnected marketeers",
+    )
 
     def score(candidate: dict[str, str]) -> tuple[int, int, int]:
-        game_score = (len(desired_games) - desired_games.index(candidate["game"])) * 100 if candidate["game"] in desired_games else 0
-        kind_score = (len(desired_kinds) - desired_kinds.index(candidate["kind"])) * 12 if candidate["kind"] in desired_kinds else 0
-        # Prefer real covers/screens/backgrounds over logos and disc scans if otherwise tied.
+        game_score = (
+            (len(desired_games) - desired_games.index(candidate["game"])) * 100
+            if candidate["game"] in desired_games else 0
+        )
+        kind_score = (
+            (len(desired_kinds) - desired_kinds.index(candidate["kind"])) * 12
+            if candidate["kind"] in desired_kinds else 0
+        )
+        candidate_text = " ".join(
+            str(candidate.get(key, "")) for key in ("title", "label", "credit", "alt", "game")
+        ).lower()
+        topic_score = max(
+            (1200 for phrase in topic_phrases
+             if phrase in clean_context and phrase in candidate_text),
+            default=0,
+        )
         quality_score = 3 if candidate["kind"] in ("cover", "screenshot", "background", "artwork") else 0
-        return (game_score, kind_score, quality_score)
+        return (topic_score + game_score, kind_score, quality_score)
 
-    chosen = max(available, key=score)
+    chosen = max(eligible, key=score)
     used_assets.add(_image_identity(chosen["url"]))
     source_page = chosen["source_page"]
     context_alt = chosen["alt"]
@@ -965,7 +1058,6 @@ def choose_distinct_image(context: str, relative_path: str, used_assets: set[str
         "context": display_context,
         "context_alt": context_alt,
     }
-
 
 def attribute_image_container(
     container: str,
@@ -1034,8 +1126,7 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
     if not is_external_image(original_url):
         return container
 
-    # Character portraits may repeat by request, but their captions still need to
-    # name the source of the actual art rather than falsely saying "Touhou Wiki".
+    # Character portraits may repeat by request and keep their character-specific source.
     if is_character_reference(original_url):
         name = wiki_filename(original_url)
         metadata = IMAGE_ALIASES.get(name or "")
@@ -1047,6 +1138,59 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
                 str(metadata["alt"]),
             )
         return container
+
+    clean_context = html.unescape(re.sub(r"<[^>]+>", " ", container)).lower()
+    is_print_context = (
+        "print-works" in Path(relative_path).name.lower()
+        or any(term in clean_context for term in (
+            "print works", "perfect memento", "forbidden scrollery", "silent sinner in blue",
+            "bohemian archive", "symposium of post-mysticism", "wild and horned hermit", "lotus eater",
+        ))
+    )
+    allowed_kinds = _context_kind(container)
+    if "print-works" in Path(relative_path).name.lower():
+        allowed_kinds = ("cover",)
+
+    catalog_by_identity = {_image_identity(item["url"]): item for item in DIVERSE_IMAGE_CATALOG}
+
+    def can_keep(candidate: dict[str, str] | None) -> bool:
+        if not candidate:
+            return False
+        if _image_identity(candidate["url"]) in used_assets:
+            return False
+        if candidate["kind"] not in allowed_kinds:
+            return False
+        if is_print_context and not (candidate["game"] == "print" and candidate["kind"] == "cover"):
+            return False
+        return True
+
+    # First honour a known Touhou Wiki filename's carefully reviewed replacement.
+    # The image is reserved globally, so the same non-character image cannot appear twice.
+    name = wiki_filename(original_url)
+    alias = IMAGE_ALIASES.get(name or "")
+    if alias:
+        preferred = catalog_by_identity.get(_image_identity(str(alias["url"])))
+        if can_keep(preferred):
+            used_assets.add(_image_identity(preferred["url"]))
+            return attribute_image_container(
+                container,
+                str(preferred["source_page"]),
+                str(preferred["credit"]),
+                str(preferred["alt"]),
+                replacement_url=str(preferred["url"]),
+            )
+
+    # Already-curated direct URLs (publisher covers, official art, researched gallery
+    # images) keep their intended role and source instead of being randomly remapped.
+    direct_candidate = catalog_by_identity.get(_image_identity(original_url))
+    if can_keep(direct_candidate):
+        used_assets.add(_image_identity(original_url))
+        return attribute_image_container(
+            container,
+            str(direct_candidate["source_page"]),
+            str(direct_candidate["credit"]),
+            str(direct_candidate["alt"]),
+        )
 
     selected = choose_distinct_image(container, relative_path, used_assets, background=False)
     return attribute_image_container(
