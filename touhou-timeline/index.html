@@ -403,7 +403,7 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
  </div>
  <div class="tool-tabs" role="tablist" aria-label="Archive explorer sections">
   <button type="button" role="tab" data-tool-tab="command" aria-selected="true" aria-controls="command-panel">✦ Investigation desk</button>
-  <button type="button" role="tab" data-tool-tab="characters" aria-selected="false aria-controls="characters-panel">♙ Character atlas</button>
+  <button type="button" role="tab" data-tool-tab="characters" aria-selected="false" aria-controls="characters-panel">♙ Character atlas</button>
   <button type="button" role="tab" data-tool-tab="network" aria-selected="false" aria-controls="network-panel">⌘ Relationship network</button>
   <button type="button" role="tab" data-tool-tab="map" aria-selected="false" aria-controls="map-panel">⌖ Gensokyo map</button>
   <button type="button" role="tab" data-tool-tab="incidents" aria-selected="false" aria-controls="incidents-panel">✧ Incident archive</button>
@@ -423,7 +423,7 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
    <div><strong id="command-stat-works">—</strong><span>Indexed works</span></div><div><strong id="command-stat-characters">—</strong><span>Characters</span></div><div><strong id="command-stat-places">—</strong><span>Locations</span></div><div><strong id="command-stat-incidents">—</strong><span>Incident dossiers</span></div>
   </div>
   <section class="command-search-panel" aria-label="Search the whole archive">
-   <label class="command-search-field"><span>Search across the archive</span><div class="command-search-input-wrap"><span aria-hidden="true">⌕</span><input type="search" id="command-search" placeholder="Try Reimu, the false moon, Youkai Mountain, a source…" autocomplete="off" aria-label="Search all Touhou archive content"><button type="button" id="command-search-clear" aria-label="Clear archive search">×</button></div></label>
+   <label class="command-search-field"><span>Search across the archive · press <kbd>/</kbd> to focus</span><div class="command-search-input-wrap"><span aria-hidden="true">⌕</span><input type="search" id="command-search" placeholder="Try Reimu, the false moon, Youkai Mountain, a source…" autocomplete="off" aria-label="Search all Touhou archive content"><button type="button" id="command-search-clear" aria-label="Clear archive search">×</button></div></label>
    <div class="command-filters">
     <label><span>Archive section</span><select id="command-category"><option value="all">Everything</option><option value="work">Works</option><option value="character">Characters</option><option value="location">Locations</option><option value="incident">Incidents</option><option value="thread">Lore threads</option><option value="source">Source references</option><option value="note">Research notes</option><option value="route">Reading routes</option></select></label>
     <label><span>Sort results</span><select id="command-sort"><option value="relevance">Best match / featured</option><option value="title">Title A–Z</option><option value="category">By archive section</option></select></label>
@@ -739,6 +739,8 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
 .route-delete-prompt{align-self:center;color:#fca5a5;font-size:8px;line-height:1.5}.route-delete-button.is-confirm{border-color:rgba(248,113,113,.55);background:rgba(248,113,113,.1);color:#fecaca}.route-delete-button.is-confirm:focus-visible{outline:2px solid #fca5a5;outline-offset:2px}
 
 /* Phase X · Grand Archive command desk and evidence casebook */
+.command-search-field>span{display:flex;align-items:center;gap:7px}.command-search-field kbd{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border:1px solid rgba(196,181,253,.2);border-radius:5px;color:#c4b5fd;background:rgba(196,181,253,.045);font:9px ui-monospace,monospace}.command-result-card.surprise-picked{border-color:rgba(240,198,164,.48);background:linear-gradient(135deg,rgba(240,198,164,.075),rgba(196,181,253,.025) 52%,rgba(255,255,255,.008));box-shadow:inset 0 0 0 1px rgba(240,198,164,.05)}.surprise-find-label{margin:-1px 0 10px;color:#f0c6a4;font:8px ui-monospace,monospace;letter-spacing:.13em}
+
 .command-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;overflow:hidden;border:1px solid rgba(196,181,253,.2);border-radius:18px;padding:clamp(18px,3vw,30px);background:radial-gradient(ellipse at 92% 8%,rgba(167,139,250,.14),transparent 38%),linear-gradient(125deg,rgba(196,181,253,.055),rgba(255,255,255,.008) 58%);margin-bottom:14px}
 .command-hero-copy{position:relative;z-index:1;max-width:780px;min-width:0}.command-hero-copy h3{font-size:clamp(24px,4vw,38px);line-height:1.12;margin:9px 0 12px;color:#f1edf8}.command-hero-copy p{max-width:760px;margin:0;color:#a19eaf;font-size:10px;line-height:1.95}
 .command-seal{flex:0 0 105px;width:105px;height:105px;border:1px solid rgba(196,181,253,.23);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#d6c8f4;background:radial-gradient(circle,rgba(196,181,253,.1),rgba(196,181,253,.01) 68%);box-shadow:0 0 0 7px rgba(196,181,253,.02),inset 0 0 24px rgba(196,181,253,.05)}
@@ -1978,6 +1980,7 @@ function initLoreRouteControls(){
 
 const CASEBOOK_STORAGE_KEY='gensokyoArchiveCasebookV1';
 const COMMAND_CATEGORY_LABELS={work:'Work',character:'Character',location:'Location',incident:'Incident',thread:'Lore thread',source:'Source reference',note:'Research note',route:'Reading route'};
+let commandSurpriseRefKey='';
 function caseId(){return 'case-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);}
 function cleanCasePin(item){
  if(!item||typeof item!=='object'||!String(item.refKey||'')||!String(item.title||''))return null;
@@ -2076,12 +2079,13 @@ function renderCommandCenter(){
   const score=item=>{const t=item.title.toLowerCase();return t===query?0:t.startsWith(query)?1:t.includes(query)?2:3;};
   return score(a)-score(b)||a.title.localeCompare(b.title);
  });
- $('command-results-title').textContent=query?'Search results':'A few doors to open';
- $('command-result-count').textContent=query?results.length+' matching records across the archive':results.length+' featured records · search for anything else';
+ const showingSurprise=!!commandSurpriseRefKey&&results.some(record=>record.refKey===commandSurpriseRefKey);
+ $('command-results-title').textContent=showingSurprise?'Your surprise discovery':query?'Search results':'A few doors to open';
+ $('command-result-count').textContent=showingSurprise?'A random find from the archive · open it or pin it':query?results.length+' matching records across the archive':results.length+' featured records · search for anything else';
  $('command-results').innerHTML=results.length?results.slice(0,80).map(record=>{
   const pinned=caseHasPin(record.refKey),tags=record.tags.slice(0,4).map(tag=>'<span>'+esc(tag)+'</span>').join('');
   const sourceLink=record.url?'<a class="command-external-link" href="'+esc(record.url)+'" target="_blank" rel="noopener noreferrer">Open source ↗</a>':'';
-  return '<article class="command-result-card"><div class="command-result-top"><span class="command-type-pill type-'+esc(record.category)+'">'+esc(record.typeLabel)+'</span><span class="command-result-linked">'+esc((record.linkedEntries||[]).length?record.linkedEntries.length+' linked work'+(record.linkedEntries.length===1?'':'s'):'Archive index')+'</span></div><h5>'+esc(record.title)+'</h5>'+(record.subtitle?'<div class="command-result-subtitle">'+esc(record.subtitle)+'</div>':'')+'<p>'+esc(record.summary||'Open this index record to explore related information.')+'</p>'+(tags?'<div class="command-result-tags">'+tags+'</div>':'')+'<div class="command-result-actions"><button type="button" data-command-open="'+esc(record.refKey)+'" class="command-open-button">Open ↗</button><button type="button" data-command-pin="'+esc(record.refKey)+'" class="command-pin-button" aria-pressed="'+String(pinned)+'">'+(pinned?'✓ Pinned to case':'＋ Pin to case')+'</button>'+sourceLink+'</div></article>';
+  return '<article class="command-result-card'+(record.refKey===commandSurpriseRefKey?' surprise-picked':'')+'">'+(record.refKey===commandSurpriseRefKey?'<div class="surprise-find-label">✧ RANDOM DISCOVERY</div>':'')+'<div class="command-result-top"><span class="command-type-pill type-'+esc(record.category)+'">'+esc(record.typeLabel)+'</span><span class="command-result-linked">'+esc((record.linkedEntries||[]).length?record.linkedEntries.length+' linked work'+(record.linkedEntries.length===1?'':'s'):'Archive index')+'</span></div><h5>'+esc(record.title)+'</h5>'+(record.subtitle?'<div class="command-result-subtitle">'+esc(record.subtitle)+'</div>':'')+'<p>'+esc(record.summary||'Open this index record to explore related information.')+'</p>'+(tags?'<div class="command-result-tags">'+tags+'</div>':'')+'<div class="command-result-actions"><button type="button" data-command-open="'+esc(record.refKey)+'" class="command-open-button">Open ↗</button><button type="button" data-command-pin="'+esc(record.refKey)+'" class="command-pin-button" aria-pressed="'+String(pinned)+'">'+(pinned?'✓ Pinned to case':'＋ Pin to case')+'</button>'+sourceLink+'</div></article>';
  }).join(''):'<div class="command-no-results"><span>⌕</span><h5>No matching records</h5><p>Try a character, work code, incident title, location, theme, or a word from a source description. Use “Everything” to widen the search.</p></div>';
 }
 function openArchiveCommandRecord(record){
@@ -2132,15 +2136,21 @@ function importCasebookData(data){
  else setCasebookStatus('No valid case files found. Each case needs a title; pinned records can be imported with the case.');
 }
 function initCommandCenterControls(){
- $('command-search').addEventListener('input',renderCommandCenter);
+ $('command-search').addEventListener('input',()=>{commandSurpriseRefKey='';renderCommandCenter();});
  $('command-category').addEventListener('change',renderCommandCenter);
  $('command-sort').addEventListener('change',renderCommandCenter);
- $('command-search-clear').addEventListener('click',()=>{$('command-search').value='';$('command-category').value='all';renderCommandCenter();$('command-search').focus();});
+ $('command-search-clear').addEventListener('click',()=>{commandSurpriseRefKey='';$('command-search').value='';$('command-category').value='all';renderCommandCenter();$('command-search').focus();});
  $('command-surprise').addEventListener('click',()=>{
   const candidates=buildArchiveCommandRecords().filter(record=>['work','character','location','incident','thread'].includes(record.category));
   if(!candidates.length)return;
   const record=candidates[Math.floor(Math.random()*candidates.length)];
-  openArchiveCommandRecord(record);setCasebookStatus('Surprise discovery: '+record.title+'. Pin it from search results to keep it in your casebook.');
+  commandSurpriseRefKey=record.refKey;
+  $('command-search').value=record.title;
+  $('command-category').value=record.category;
+  $('command-sort').value='relevance';
+  renderCommandCenter();
+  $('command-results').scrollIntoView({behavior:'smooth',block:'start'});
+  setCasebookStatus('Surprise discovery: '+record.title+'. Open it or pin it to your casebook.');
  });
  $('casebook-case-select').addEventListener('change',event=>{casebookState.activeId=event.target.value;saveCasebook();renderCasebookUI(true);setCasebookStatus('Opened “'+(activeCase()?.title||'case')+'”.');});
  $('casebook-new').addEventListener('click',()=>{
