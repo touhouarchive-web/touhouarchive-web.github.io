@@ -197,6 +197,40 @@
  .map-related-place small{color:#868392;font-size:8px;line-height:1.55}
  .map-related-note{margin:8px 0 0;color:#656574;font-size:8px;line-height:1.7}
  .map-favorite-count{color:#e8d79b}
+ /* Phase IV relationship explorer */
+ .network-search-panel{margin:16px 0 18px;padding:15px;border:1px solid rgba(196,181,253,.13);border-radius:14px;background:rgba(196,181,253,.025)}
+ .network-search-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(175px,.4fr);gap:10px}
+ .network-search-field,.network-kind-field{display:grid;gap:6px;min-width:0;color:#90909c;font-size:9px}
+ .network-search-field input,.network-kind-field select{width:100%;min-width:0;min-height:43px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:#111214;color:#e6e4ee;padding:10px 11px;font:inherit;font-size:11px}
+ .network-search-count{margin:12px 0 8px;color:#777783;font:9px/1.7 ui-monospace,monospace}
+ .network-search-results{display:flex;flex-wrap:wrap;gap:7px}
+ .network-search-hit{display:flex;align-items:center;gap:7px;min-height:38px;max-width:100%;border:1px solid rgba(196,181,253,.14);border-radius:9px;background:rgba(196,181,253,.03);color:#ddd8ed;padding:8px 10px;font-size:9px;text-align:left;cursor:pointer}
+ .network-search-hit:hover,.network-search-hit[aria-pressed=true]{border-color:rgba(196,181,253,.5);background:rgba(196,181,253,.09)}
+ .network-search-hit small{color:#82808e;font-size:8px}
+ .network-kind-dot,.network-key{display:inline-block;flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#b6a1e8}
+ .network-kind-dot.location,.network-key.location{background:#72b59b}.network-kind-dot.incident,.network-key.incident{background:#d2a164}.network-kind-dot.story,.network-key.story{background:#83a8c4}
+ .network-workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.72fr);gap:12px;align-items:start}
+ .network-graph-panel,.network-focus-detail{min-width:0;border:1px solid rgba(255,255,255,.075);border-radius:14px;background:rgba(255,255,255,.012);padding:13px}
+ .network-graph-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:7px}
+ .network-graph-heading h4,.network-neighbors-heading h4{margin:6px 0 0;font:500 20px/1.2 Georgia,serif;color:#f0edf7}
+ .network-graph-hint{color:#757583;font-size:8px;text-align:right}.relationship-graph{display:block;width:100%;height:auto;min-height:230px;overflow:visible;touch-action:manipulation}
+ .network-edge{stroke:rgba(170,158,205,.31);stroke-width:1.35;vector-effect:non-scaling-stroke}.network-edge.secondary{stroke:rgba(170,158,205,.16);stroke-dasharray:4 5}
+ .network-node{cursor:pointer;outline:none}.network-node .network-node-shape{stroke:rgba(236,231,255,.35);stroke-width:1.4;vector-effect:non-scaling-stroke}
+ .network-node--character .network-node-shape{fill:#342b4e}.network-node--location .network-node-shape{fill:#1f3c35}.network-node--incident .network-node-shape{fill:#4c3925}.network-node--story .network-node-shape{fill:#253b4a}
+ .network-node.is-center .network-node-shape{stroke:#eee8ff;stroke-width:2.8;filter:drop-shadow(0 0 7px rgba(196,181,253,.22))}
+ .network-node:hover .network-node-shape,.network-node:focus .network-node-shape{stroke:#fff;stroke-width:2.7}
+ .network-node text{fill:#f1edf9;text-anchor:middle;font:600 10px system-ui,sans-serif;pointer-events:none}.network-node.is-center text{font-size:11px;font-weight:750}.network-node .network-node-subtitle{fill:#b8b1c9;font-size:8px;font-weight:500}
+ .network-legend{display:flex;flex-wrap:wrap;gap:12px;margin:6px 2px 0;color:#8a8996;font-size:8px}.network-legend span{display:inline-flex;align-items:center;gap:5px}.network-key{width:7px;height:7px;flex-basis:7px}
+ .network-method-note,.network-focus-note{margin:11px 0 0;color:#747381;font-size:9px;line-height:1.75}
+ .network-focus-detail .network-focus-kicker{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#a49abf;font-weight:800}.network-focus-detail h4{margin:8px 0 6px;color:#f2eff8;font:500 22px/1.2 Georgia,serif;overflow-wrap:anywhere}
+ .network-focus-detail .network-focus-subtitle{color:#9b95ad;font-size:9px;line-height:1.65}.network-focus-detail .network-focus-description{margin:12px 0 0;color:#a0a0ac;font-size:10px;line-height:1.85}
+ .network-neighbors-section{margin-top:21px}.network-neighbors-heading{margin-bottom:12px}.network-neighbors-heading p{margin:7px 0 0;color:#858592;font-size:10px;line-height:1.75}
+ .network-neighbor-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.network-neighbor-card{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;min-height:96px;border:1px solid rgba(255,255,255,.075);border-radius:11px;background:rgba(255,255,255,.012);color:#dedbe6;padding:11px;text-align:left;cursor:pointer}
+ .network-neighbor-card:hover{border-color:rgba(196,181,253,.32);background:rgba(196,181,253,.04)}.network-neighbor-type{display:flex;align-items:center;gap:6px;color:#9993ab;font-size:8px}.network-neighbor-card strong{font:500 14px/1.3 Georgia,serif;overflow-wrap:anywhere}.network-neighbor-card small{color:#858391;font-size:8px;line-height:1.6}
+ .network-neighbor-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.1);border-radius:11px;padding:16px;color:#858391;font-size:10px;line-height:1.8}
+ @media(max-width:900px){.network-workspace{grid-template-columns:1fr}.network-neighbor-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:650px){.network-search-toolbar{grid-template-columns:1fr}.network-search-field input,.network-kind-field select{font-size:16px}.network-neighbor-list{grid-template-columns:1fr}.network-search-panel,.network-graph-panel,.network-focus-detail{padding:10px}.relationship-graph{min-height:210px}}
+ @media(max-width:390px){.relationship-graph{min-height:190px}.network-search-results{display:grid;grid-template-columns:1fr}.network-search-hit{width:100%}}
  @media(max-width:900px){.community-map-explorer-layout{grid-template-columns:1fr}.community-map-explorer-layout>.map-detail{position:static}.map-index-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
  @media(max-width:650px){.map-index-phase{padding:13px}.map-index-phase-heading{align-items:stretch;flex-direction:column}.map-phase-badge{align-self:flex-start}.map-location-toolbar{grid-template-columns:1fr}.map-location-search input,.map-region-select select{font-size:16px}.map-reset-button{width:100%}.image-map-marker{width:32px;height:32px;font-size:9px}.map-index-list{grid-template-columns:repeat(2,minmax(0,1fr))}.community-map-explorer-layout{padding:0 7px 10px}}
  @media(max-width:390px){.map-index-list{grid-template-columns:1fr}.image-map-marker{width:30px;height:30px}.map-index-phase{padding:11px}}
@@ -240,6 +274,7 @@
  </div>
  <div class="tool-tabs" role="tablist" aria-label="Archive explorer sections">
   <button type="button" role="tab" data-tool-tab="characters" aria-selected="true" aria-controls="characters-panel">♙ Character atlas</button>
+  <button type="button" role="tab" data-tool-tab="network" aria-selected="false" aria-controls="network-panel">⌘ Relationship network</button>
   <button type="button" role="tab" data-tool-tab="map" aria-selected="false" aria-controls="map-panel">⌖ Gensokyo map</button>
   <button type="button" role="tab" data-tool-tab="incidents" aria-selected="false" aria-controls="incidents-panel">✧ Incident archive</button>
   <button type="button" role="tab" data-tool-tab="threads" aria-selected="false" aria-controls="threads-panel">⌘ Lore threads</button>
@@ -248,6 +283,30 @@
  <section class="tool-panel" id="characters-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">People, spirits, gods, and youkai</div><h3 class="serif">Character atlas</h3><p>Index entries are limited to characters attached to the stories currently in this archive, not the entire Touhou cast.</p></div><label class="atlas-search">⌕ <input type="search" id="character-search" placeholder="Find a character…" aria-label="Search the character atlas"></label></div>
   <div id="character-count" class="panel-count"></div><div class="character-grid" id="character-grid"></div>
+ </section>
+ <section class="tool-panel hidden" id="network-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">PHASE IV · CHARACTER &amp; STORY CONNECTIONS</div><h3 class="serif">Relationship network</h3><p>Choose a character, place, incident, or game to centre the network. Links are calculated from shared entries, named characters, and matching tags in this archive.</p></div></div>
+  <section class="network-search-panel" aria-label="Find a network starting point">
+   <div class="network-search-toolbar">
+    <label class="network-search-field"><span>Find an entity</span><input type="search" id="network-search" placeholder="Try Reimu, Human Village, TH06…" autocomplete="off" aria-label="Search characters, places, incidents and games"></label>
+    <label class="network-kind-field"><span>Type</span><select id="network-kind-filter" aria-label="Filter network entities by type"><option value="all">All entity types</option><option value="character">Characters</option><option value="location">Locations</option><option value="incident">Incidents</option><option value="story">Games &amp; print works</option></select></label>
+   </div>
+   <div class="network-search-count" id="network-search-count" role="status" aria-live="polite">Choose a starting point to explore its connections.</div>
+   <div class="network-search-results" id="network-search-results"></div>
+  </section>
+  <div class="network-workspace">
+   <section class="network-graph-panel" aria-labelledby="network-graph-heading">
+    <div class="network-graph-heading"><div><div class="section-kicker">CONNECTED VIEW</div><h4 id="network-graph-heading">Explore the web</h4></div><span class="network-graph-hint">Tap any node to refocus</span></div>
+    <svg id="relationship-graph" class="relationship-graph" viewBox="0 0 840 540" role="group" aria-label="Interactive relationship graph"><title>Relationship network centred on Reimu Hakurei</title><desc>Select a node to make it the new centre.</desc></svg>
+    <div class="network-legend" aria-label="Node types"><span><i class="network-key character"></i>Character</span><span><i class="network-key location"></i>Location</span><span><i class="network-key incident"></i>Incident</span><span><i class="network-key story"></i>Game / story</span></div>
+    <p class="network-method-note">Connection strength is a reading aid, not an official relationship ranking. Shared themes are weaker links than shared games or named characters. The graph shows the selected entity's nearby connections, not every connection in the series at once.</p>
+   </section>
+   <aside class="network-focus-detail" id="network-focus-detail" aria-live="polite" aria-label="Selected network entity details"></aside>
+  </div>
+  <section class="network-neighbors-section" aria-labelledby="network-neighbors-heading">
+   <div class="network-neighbors-heading"><div class="section-kicker">LINKED ENTITIES</div><h4 id="network-neighbors-heading">Connected entities</h4><p>Select a card to move through the network without needing to tap a small graph node.</p></div>
+   <div class="network-neighbor-list" id="network-neighbor-list"></div>
+  </section>
  </section>
  <section class="tool-panel hidden" id="map-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">Places and story geography</div><h3 class="serif">Gensokyo map room</h3><p>The detailed community map you shared is now here. Below it, explore a separate interactive index of locations and the stories connected to them.</p></div><span class="map-legend"><i></i> Select a location below</span></div>
@@ -1057,6 +1116,7 @@ function openDrawer(id,trigger){
 let sortMode='path';
 let activeToolTab='characters';
 let activeLocation='hakurei';
+let activeNetworkFocus='character:Reimu Hakurei';
 const MAP_FAVORITES_STORAGE_KEY='gensokyoArchiveMapFavoritesV1';
 function readMapFavorites(){
  try{
@@ -1196,6 +1256,76 @@ function renderMapDetail(){
  document.querySelectorAll('[data-location]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.location===l.id)));
  $('map-detail').innerHTML='<div class="map-detail-top"><div class="place-group">'+esc(MAP_REGION_LABELS[pos.region]||l.group)+' · '+esc(l.group)+'</div><button type="button" class="map-favorite-action" data-toggle-place-favorite="'+esc(l.id)+'" aria-pressed="'+String(isFavorite)+'">'+(isFavorite?'★ Saved place':'☆ Save place')+'</button></div><h4>'+esc(l.name)+'</h4><p>'+esc(l.description)+'</p><div class="canon-badge">'+esc(l.status)+'</div><div class="detail-subhead">Characters in this archive</div><div class="character-links">'+(l.characters.length?l.characters.map(name=>'<span class="entry-chip">'+esc(name)+'</span>').join(''):'<span class="shelf-empty">No character profile attached yet.</span>')+'</div><div class="detail-subhead">Related reading</div><div class="character-links">'+(l.entries.length?l.entries.map(entryChip).join(''):'<span class="shelf-empty">No full lore entry is connected to this location yet.</span>')+'</div><div class="detail-subhead">Lore-connected places</div><div class="map-related-place-list">'+(related.length?related.map(item=>'<button type="button" class="map-related-place" data-location="'+esc(item.location.id)+'"><strong>'+esc(item.location.name)+'</strong><small>'+esc(item.reasons.join(' · '))+'</small></button>').join(''):'<div class="shelf-empty">No strong shared-story or shared-tag connections are indexed yet.</div>')+'</div><p class="map-related-note">Connections come from shared stories, characters, or tags. They are reading suggestions, not claims about physical distance or travel routes.</p>';
 }
+function buildNetworkNodes(){
+ const nodes=[];
+ TIMELINE.forEach(e=>nodes.push({id:'story:'+e.id,kind:'story',kindLabel:MEDIA[e.type]?.label||'Game / story',name:e.title,subtitle:e.code+' · '+e.releaseDate,description:e.summary,entryIds:[e.id],characterNames:e.characters||[],tags:e.tags||[],openEntryIds:[e.id]}));
+ CHARACTERS.forEach(e=>nodes.push({id:'character:'+e.name,kind:'character',kindLabel:'Character',name:e.name,subtitle:e.role,description:e.description,entryIds:e.entries||[],characterNames:[e.name],tags:e.tags||[],openEntryIds:e.entries||[]}));
+ LOCATIONS.forEach(e=>nodes.push({id:'location:'+e.id,kind:'location',kindLabel:'Location',name:e.name,subtitle:e.group,description:e.description,entryIds:e.entries||[],characterNames:e.characters||[],tags:e.tags||[],openEntryIds:e.entries||[]}));
+ INCIDENTS.forEach(e=>nodes.push({id:'incident:'+e.title,kind:'incident',kindLabel:'Incident',name:e.title,subtitle:'Incident · '+e.year+' · '+e.status,description:e.summary,entryIds:[e.entry],characterNames:e.characters||[],tags:e.tags||[],openEntryIds:[e.entry]}));
+ return nodes;
+}
+function getNetworkConnection(a,b){
+ const entries=(a.entryIds||[]).filter(id=>(b.entryIds||[]).includes(id));
+ const characters=(a.characterNames||[]).filter(name=>(b.characterNames||[]).includes(name));
+ const tagSet=new Set((b.tags||[]).map(tag=>String(tag).toLowerCase()));
+ const tags=(a.tags||[]).filter(tag=>tagSet.has(String(tag).toLowerCase()));
+ const score=entries.length*5+characters.length*4+tags.length;
+ const reasons=[];
+ if(entries.length)reasons.push('Shared entries: '+entries.map(id=>TIMELINE.find(e=>e.id===id)?.code||id.toUpperCase()).join(', '));
+ if(characters.length)reasons.push('Shared characters: '+characters.slice(0,3).join(', '));
+ if(tags.length)reasons.push('Shared tags: '+tags.slice(0,3).join(', '));
+ return {score,reasons};
+}
+function findNetworkNode(id,nodes=buildNetworkNodes()){return nodes.find(n=>n.id===id)||nodes.find(n=>n.id==='character:Reimu Hakurei')||nodes[0];}
+function getNetworkNeighbors(center,nodes=buildNetworkNodes()){
+ const all=nodes.filter(n=>n.id!==center.id).map(node=>({node,...getNetworkConnection(center,node)})).filter(v=>v.score>0).sort((a,b)=>b.score-a.score||a.node.name.localeCompare(b.node.name));
+ const chosen=[],used=new Set();
+ ['story','location','incident','character'].forEach(kind=>{const v=all.find(x=>x.node.kind===kind&&!used.has(x.node.id));if(v&&chosen.length<10){chosen.push(v);used.add(v.node.id);}});
+ all.forEach(v=>{if(chosen.length<10&&!used.has(v.node.id)){chosen.push(v);used.add(v.node.id);}});
+ return chosen;
+}
+function networkWrapLabel(label,max=16,limit=2){
+ const words=String(label||'').split(/\s+/),lines=[];let current='';
+ words.forEach(word=>{if(!current)current=word;else if((current+' '+word).length<=max)current+=' '+word;else{lines.push(current);current=word;}});
+ if(current)lines.push(current);
+ if(lines.length>limit){lines.length=limit;const last=lines[limit-1];lines[limit-1]=last.length>=max?last.slice(0,max-1)+'…':last+' …';}
+ return lines;
+}
+function renderNetworkSearchResults(){
+ const nodes=buildNetworkNodes(),q=($('network-search').value||'').trim().toLowerCase(),kind=$('network-kind-filter').value||'all';
+ const matches=nodes.filter(n=>(kind==='all'||n.kind===kind)&&q&&[n.name,n.subtitle,n.description,n.kindLabel,...n.tags,...n.characterNames,...n.entryIds].join(' ').toLowerCase().includes(q)).sort((a,b)=>(a.name.toLowerCase()===q?0:1)-(b.name.toLowerCase()===q?0:1)||a.name.localeCompare(b.name));
+ const results=$('network-search-results'),count=$('network-search-count');
+ if(!q){
+  const quick=['character:Reimu Hakurei','character:Marisa Kirisame','location:hakurei','story:th06'].map(id=>findNetworkNode(id,nodes)).filter(Boolean);
+  count.textContent='Quick starts · search '+nodes.length+' indexed entities.';
+  results.innerHTML=quick.map(n=>'<button type="button" class="network-search-hit" data-network-focus="'+esc(n.id)+'" aria-pressed="'+String(n.id===activeNetworkFocus)+'"><i class="network-kind-dot '+n.kind+'"></i><strong>'+esc(n.name)+'</strong><small>'+esc(n.kindLabel)+'</small></button>').join('');
+  return;
+ }
+ count.textContent=matches.length+' matching '+(matches.length===1?'entity':'entities')+' · '+nodes.length+' indexed entities';
+ results.innerHTML=matches.length?matches.slice(0,12).map(n=>'<button type="button" class="network-search-hit" data-network-focus="'+esc(n.id)+'" aria-pressed="'+String(n.id===activeNetworkFocus)+'"><i class="network-kind-dot '+n.kind+'"></i><strong>'+esc(n.name)+'</strong><small>'+esc(n.kindLabel)+(n.subtitle?' · '+esc(n.subtitle):'')+'</small></button>').join(''):'<div class="network-neighbor-empty">No matches. Try another name, game code, character, or theme.</div>';
+}
+function renderRelationshipNetwork(){
+ const nodes=buildNetworkNodes(),center=findNetworkNode(activeNetworkFocus,nodes);activeNetworkFocus=center.id;
+ const linked=getNetworkNeighbors(center,nodes),svg=$('relationship-graph'),cx=420,cy=265,rx=300,ry=184,points=new Map([[center.id,{x:cx,y:cy}]]);
+ linked.forEach((link,i)=>{const angle=-Math.PI/2+Math.PI*2*i/Math.max(1,linked.length);points.set(link.node.id,{x:cx+rx*Math.cos(angle),y:cy+ry*Math.sin(angle)});});
+ let html='<title>Relationship network centred on '+esc(center.name)+'</title><desc>Centre entity and '+linked.length+' connected entities. Activate any node to refocus.</desc>';
+ linked.forEach(v=>{const p=points.get(v.node.id);html+='<line class="network-edge" x1="'+cx+'" y1="'+cy+'" x2="'+p.x.toFixed(1)+'" y2="'+p.y.toFixed(1)+'" />';});
+ for(let i=0;i<linked.length;i++)for(let j=i+1;j<linked.length;j++){if(getNetworkConnection(linked[i].node,linked[j].node).score>=5){const a=points.get(linked[i].node.id),b=points.get(linked[j].node.id);html+='<line class="network-edge secondary" x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+b.x.toFixed(1)+'" y2="'+b.y.toFixed(1)+'" />';}}
+ [{node:center,point:points.get(center.id),isCenter:true},...linked.map(v=>({node:v.node,point:points.get(v.node.id),isCenter:false}))].forEach(item=>{
+  const n=item.node,p=item.point,mid=item.isCenter,r=mid?65:(n.kind==='story'?42:37),lines=networkWrapLabel(n.name,mid?17:15,2),start=-((lines.length-1)*7.2);
+  html+='<g class="network-node network-node--'+n.kind+(mid?' is-center':'')+'" data-network-focus="'+esc(n.id)+'" role="button" tabindex="0" aria-label="Focus '+esc(n.kindLabel+': '+n.name)+'" aria-pressed="'+String(mid)+'" transform="translate('+p.x.toFixed(1)+' '+p.y.toFixed(1)+')"><circle class="network-node-shape" r="'+r+'"></circle><text y="'+start.toFixed(1)+'">';
+  lines.forEach((line,i)=>{html+='<tspan x="0" dy="'+(i?'14.4':'0')+'">'+esc(line)+'</tspan>';});
+  if(mid)html+='<tspan class="network-node-subtitle" x="0" dy="15">'+esc(n.kindLabel.toUpperCase())+'</tspan>';
+  html+='</text></g>';
+ });
+ if(!linked.length)html+='<text x="420" y="370" text-anchor="middle" fill="#858391" font-size="12">No indexed links for this entity yet.</text>';
+ svg.innerHTML=html;
+ const entries=(center.openEntryIds||[]).filter(id=>TIMELINE.some(e=>e.id===id)).map(entryChip).join('');
+ const top=linked.slice(0,5).map(v=>'<button type="button" class="map-related-place" data-network-focus="'+esc(v.node.id)+'"><strong>'+esc(v.node.name)+'</strong><small>'+esc(v.reasons.join(' · '))+'</small></button>').join('');
+ $('network-focus-detail').innerHTML='<div class="network-focus-kicker">'+esc(center.kindLabel)+' · Selected node</div><h4>'+esc(center.name)+'</h4><div class="network-focus-subtitle">'+esc(center.subtitle||'Indexed Touhou entity')+'</div><p class="network-focus-description">'+esc(center.description||'This entity is indexed in the archive.')+'</p><div class="detail-subhead">Connected lore entries</div><div class="character-links">'+(entries||'<span class="shelf-empty">No linked full entry in this archive subset.</span>')+'</div><div class="detail-subhead">Top connections</div><div class="map-related-place-list">'+(top||'<span class="shelf-empty">No connection is indexed yet.</span>')+'</div><p class="network-focus-note">Calculated from shared story IDs, named characters, and matching tags.</p>';
+ $('network-neighbor-list').innerHTML=linked.length?linked.map(v=>'<button type="button" class="network-neighbor-card" data-network-focus="'+esc(v.node.id)+'"><span class="network-neighbor-type"><i class="network-kind-dot '+v.node.kind+'"></i>'+esc(v.node.kindLabel)+' · '+v.score+' link points</span><strong>'+esc(v.node.name)+'</strong><small>'+esc(v.reasons.join(' · '))+'</small></button>').join(''):'<div class="network-neighbor-empty">No linked entities are indexed for this selection.</div>';
+ renderNetworkSearchResults();
+}
 function renderIncidents(){
  $('incident-grid').innerHTML=INCIDENTS.map(i=>{
   return '<article class="incident-card"><div class="incident-top"><span class="incident-year">'+esc(i.year)+'</span><span class="incident-status">'+esc(i.status)+'</span></div><h4>'+esc(i.title)+'</h4><p>'+esc(i.summary)+'</p><div class="incident-tags">'+i.tags.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-links">'+i.characters.map(n=>'<span class="entry-chip">'+esc(n)+'</span>').join('')+'</div><button type="button" class="open-entry-link" data-open-entry="'+esc(i.entry)+'">Open full lore entry ↗</button></article>';
@@ -1221,11 +1351,11 @@ function renderShelfPanel(){
 }
 function updateToolTabs(){
  document.querySelectorAll('[data-tool-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.toolTab===activeToolTab)));
- const panels={characters:'characters-panel',map:'map-panel',incidents:'incidents-panel',threads:'threads-panel',shelf:'shelf-panel'};
+ const panels={characters:'characters-panel',network:'network-panel',map:'map-panel',incidents:'incidents-panel',threads:'threads-panel',shelf:'shelf-panel'};
  Object.keys(panels).forEach(k=>$(panels[k]).classList.toggle('hidden',k!==activeToolTab));
 }
 function renderArchiveTools(){
- renderCharacterAtlas();renderMap();renderIncidents();renderThreads();renderShelfPanel();updateToolTabs();
+ renderCharacterAtlas();renderMap();renderIncidents();renderThreads();renderShelfPanel();renderRelationshipNetwork();updateToolTabs();
 }
 
 $('filters').addEventListener('click',event=>{const button=event.target.closest('[data-filter]');if(!button)return;const type=button.dataset.filter;filters[type]=!filters[type];renderAll();});
@@ -1233,6 +1363,9 @@ $('clear-filters').addEventListener('click',()=>{filters.game=filters.print=filt
 $('search').addEventListener('input',event=>{searchText=event.target.value;renderTimeline();});
 $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value;renderTimeline();});
 $('character-search').addEventListener('input',renderCharacterAtlas);
+$('network-search').addEventListener('input',renderNetworkSearchResults);
+$('network-kind-filter').addEventListener('change',renderNetworkSearchResults);
+$('relationship-graph').addEventListener('keydown',event=>{const node=event.target.closest('[data-network-focus]');if(node&&(event.key==='Enter'||event.key===' ')){event.preventDefault();activeNetworkFocus=node.dataset.networkFocus;renderRelationshipNetwork();}});
 $('map-location-search').addEventListener('input',renderMapIndex);
 $('map-region-filter').addEventListener('change',renderMapIndex);
 $('map-favorites-toggle').addEventListener('click',()=>{showMapFavoritesOnly=!showMapFavoritesOnly;renderMapIndex();});
@@ -1247,6 +1380,8 @@ document.addEventListener('keydown',event=>{if(!selectedId)return;if(event.key==
 $('archive-tools').addEventListener('click',event=>{
  const tab=event.target.closest('[data-tool-tab]');
  if(tab){activeToolTab=tab.dataset.toolTab;updateToolTabs();return;}
+ const networkFocus=event.target.closest('[data-network-focus]');
+ if(networkFocus){activeNetworkFocus=networkFocus.dataset.networkFocus;renderRelationshipNetwork();return;}
  const favorite=event.target.closest('[data-toggle-place-favorite]');
  if(favorite){toggleMapFavorite(favorite.dataset.togglePlaceFavorite);return;}
  const pin=event.target.closest('[data-location]');
