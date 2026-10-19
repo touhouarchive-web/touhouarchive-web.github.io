@@ -80,6 +80,9 @@ FORBIDDEN_SCROLLERY_VOL3 = "https://images.yenpress.com/imgs/9780316512015.jpg?w
 FORBIDDEN_SCROLLERY_VOL4 = "https://images.yenpress.com/imgs/9780316512039.jpg?w=285&h=422&type=books&s=8d2060290f2b4eb5e1df7d79d2f70c1c"
 SYMPOSIUM_COVER = "https://shop.akbh.jp/cdn/shop/products/9784758012317.jpg?v=1722506606&width=800"
 WILD_HERMIT_VOL1 = "https://shop.akbh.jp/cdn/shop/products/9784758012225.jpg?v=1722506116&width=800"
+ARMIXI_GENSOKYO_MAP_V20 = "https://i.redd.it/t118a4520yna1.jpg"
+ARMIXI_GENSOKYO_MAP_PAGE = "https://www.artstation.com/artwork/JvEdrA?album_id=8788868"
+ARMIXI_GENSOKYO_MAP_DISCUSSION = "https://www.reddit.com/r/touhou/comments/11s447e/gensokyos_map_v20_by_armixi/"
 
 # Each source is a subject-matched replacement for a blocked Touhou Wiki media file.
 # Official game/publisher images are preferred; community images are explicitly credited.
@@ -277,6 +280,14 @@ for url in [MOF_LB_COVER, MOF_LB_GAMEPLAY, MOF_LB_BG]:
     URL_CREDIT.setdefault(url, {"source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith", "alt": "Touhou 10 game artwork."})
 
 
+
+# The user-referenced Armixi v2.0 map is pinned so the gallery diversifier cannot
+# substitute unrelated artwork. Credit points to the artist's original ArtStation page.
+URL_CREDIT[ARMIXI_GENSOKYO_MAP_V20] = {
+    "source_page": ARMIXI_GENSOKYO_MAP_PAGE,
+    "credit": "Armixi — Gensokyo's Map v2.0 (original ArtStation artwork)",
+    "alt": "Fan-made high-resolution map of Gensokyo by Armixi, version 2.0, showing regions and landmarks from Touhou Project.",
+}
 
 # A researched pool of distinct, subject-matched images gathered from each game's
 # LaunchBox media gallery, official Steam store pages, official Touhou promotional
