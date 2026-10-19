@@ -198,6 +198,39 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
 .chronology-incident-card strong{display:block;margin-top:5px;color:#e6d9c9;font:500 13px/1.35 Georgia,serif}
 .chronology-incident-card p{margin:5px 0 0;color:#9c9285;font-size:8px;line-height:1.7}
 .chronology-empty{border:1px dashed rgba(255,255,255,.11);border-radius:12px;padding:18px;color:#8b8997;font-size:10px;line-height:1.8}
+/* Phase VII · evidence-labelled lore research desk */
+.source-library-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:16px 0}
+.source-library-stats>div{display:grid;gap:5px;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px;background:rgba(255,255,255,.012)}
+.source-library-stats strong{font:500 22px/1 Georgia,serif;color:#e1d5fb}.source-library-stats span{font-size:8px;letter-spacing:.04em;color:#888795}
+.source-library-method{display:flex;gap:11px;align-items:flex-start;margin:0 0 15px;padding:12px 13px;border:1px solid rgba(196,181,253,.13);border-radius:11px;background:rgba(196,181,253,.025)}
+.source-method-mark{display:grid;place-items:center;flex:0 0 21px;width:21px;height:21px;border:1px solid rgba(196,181,253,.28);border-radius:50%;font:600 11px Georgia,serif;color:#d1c4ef}
+.source-library-method p{margin:0;color:#8e8c9b;font-size:9px;line-height:1.8}.source-library-method strong{color:#e0d8ef;font-weight:650}.source-library-method b{color:#c9bce7;font-weight:650}
+.source-library-toolbar{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(170px,.7fr) minmax(170px,.8fr) auto;gap:9px;align-items:end;border:1px solid rgba(196,181,253,.12);border-radius:13px;padding:12px;background:rgba(196,181,253,.025)}
+.source-library-search,.source-library-filter{display:grid;gap:6px;min-width:0;color:#92909e;font-size:9px}
+.source-library-search input,.source-library-filter select{width:100%;min-width:0;min-height:40px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#111214;color:#e6e4ee;padding:9px 10px;font:inherit;font-size:10px}
+.source-library-search input::placeholder{color:#696875}
+.source-library-button{min-height:40px;border:1px solid rgba(196,181,253,.17);border-radius:8px;background:rgba(196,181,253,.035);color:#cfc4f0;padding:9px 12px;font-size:9px;white-space:nowrap;cursor:pointer}
+.source-library-count{margin:12px 0;color:#777783;font:9px/1.6 ui-monospace,monospace}
+.source-library-intro{margin:21px 0 12px}.source-library-intro h4{margin:5px 0;color:#eeeaf6;font:500 23px/1.2 Georgia,serif}.source-library-intro p{margin:7px 0 0;color:#858391;font-size:9px;line-height:1.8}
+.source-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
+.source-library-card{display:flex;flex-direction:column;min-width:0;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:linear-gradient(145deg,rgba(255,255,255,.018),rgba(255,255,255,.006));padding:14px}
+.source-library-card.note-card{border-color:rgba(196,181,253,.16)}.source-library-card.source-card{border-color:rgba(125,211,252,.12)}
+.source-library-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.source-library-label{font:800 8px/1.5 ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:#bba9e7}
+.source-evidence-badge{display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:5px 7px;color:#aaa7b8;font-size:7px;line-height:1.3}
+.source-evidence-badge.official{border-color:rgba(110,231,183,.18);color:#91d9b8}.source-evidence-badge.reference{border-color:rgba(125,211,252,.18);color:#8fcde6}.source-evidence-badge.interpretation{border-color:rgba(196,181,253,.23);color:#c9b4f0}.source-evidence-badge.community{border-color:rgba(251,191,36,.2);color:#e3c17b}
+.source-library-card h5{margin:10px 0 7px;color:#ece8f4;font:500 19px/1.27 Georgia,serif;overflow-wrap:anywhere}
+.source-library-card .source-card-description{margin:0;color:#9997a5;font-size:9px;line-height:1.85;overflow-wrap:anywhere}
+.source-library-card .source-card-context{margin-top:8px;color:#777583;font-size:8px;line-height:1.7}
+.source-card-links{display:grid;gap:7px;margin-top:13px}
+.source-card-link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 9px;border:1px solid rgba(255,255,255,.07);border-radius:8px;background:rgba(255,255,255,.012);color:#cfc7e1;text-decoration:none;font-size:9px;line-height:1.5}
+.source-card-link span{color:#858391;font-size:8px;text-align:right;overflow-wrap:anywhere}.source-card-link:hover{border-color:rgba(196,181,253,.32);color:#f1eafa}
+.source-card-worklinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:12px}
+.source-card-worklinks .chronology-chip{font-size:8px}
+.source-library-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.11);border-radius:12px;padding:20px;color:#8b8997;font-size:10px;line-height:1.8}
+@media(max-width:950px){.source-library-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.source-library-search{grid-column:1/-1}}
+@media(max-width:650px){.source-library-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.source-library-stats>div{padding:9px}.source-library-stats strong{font-size:19px}.source-library-stats span{font-size:7px}.source-library-toolbar{grid-template-columns:1fr 1fr;padding:10px}.source-library-search{grid-column:1/-1}.source-library-search input,.source-library-filter select{font-size:16px}.source-library-grid{grid-template-columns:1fr}.source-library-card{padding:12px}}
+
 @media(max-width:1100px){.chronology-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.chronology-search-field{grid-column:1/-1}.chronology-layout{grid-template-columns:1fr}.chronology-detail{position:static}}
 @media(max-width:650px){.chronology-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.chronology-stats>div{padding:9px}.chronology-stats strong{font-size:19px}.chronology-stats span{font-size:7px}.chronology-toolbar{grid-template-columns:1fr 1fr;padding:10px}.chronology-search-field{grid-column:1/-1}.chronology-search-field input,.chronology-control-field select{font-size:16px}.chronology-layout{grid-template-columns:1fr}.chronology-rail{padding-left:19px}.chronology-detail{padding:13px}.chronology-detail h4{font-size:22px}}
 
@@ -374,6 +407,7 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
   <button type="button" role="tab" data-tool-tab="map" aria-selected="false" aria-controls="map-panel">⌖ Gensokyo map</button>
   <button type="button" role="tab" data-tool-tab="incidents" aria-selected="false" aria-controls="incidents-panel">✧ Incident archive</button>
   <button type="button" role="tab" data-tool-tab="chronology" aria-selected="false" aria-controls="chronology-panel">◷ Chronology</button>
+  <button type="button" role="tab" data-tool-tab="sources" aria-selected="false" aria-controls="sources-panel">ⓘ Deep Lore &amp; Sources</button>
   <button type="button" role="tab" data-tool-tab="threads" aria-selected="false" aria-controls="threads-panel">⌘ Lore threads</button>
   <button type="button" role="tab" data-tool-tab="shelf" aria-selected="false" aria-controls="shelf-panel">♡ Reading shelf</button>
  </div>
@@ -508,6 +542,28 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
    <section class="chronology-rail-column" aria-label="Chronological milestone list"><div id="chronology-rail" class="chronology-rail"></div></section>
    <aside id="chronology-detail" class="chronology-detail" aria-live="polite" aria-label="Selected chronology milestone"></aside>
   </div>
+ </section>
+ <section class="tool-panel hidden" id="sources-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">PHASE VII · DEEP LORE &amp; SOURCE LIBRARY</div><h3 class="serif">Research desk</h3><p>Explore carefully labelled lore notes alongside the references already attached to the archive's works. Each note distinguishes a source-backed summary from this archive's interpretation; when possible, start with the original work or an official announcement.</p></div></div>
+  <div class="source-library-stats" aria-live="polite">
+   <div><strong id="source-library-total">0</strong><span>Indexed references</span></div>
+   <div><strong id="source-library-notes">0</strong><span>Research notes</span></div>
+   <div><strong id="source-library-works">17</strong><span>Works linked</span></div>
+   <div><strong id="source-library-visible">0</strong><span>Results shown</span></div>
+  </div>
+  <div class="source-library-method">
+   <div class="source-method-mark">i</div>
+   <p><strong>Reading evidence labels</strong><br><span><b>Official / publisher</b> means an official news post or a distribution listing. <b>Reference wiki</b> means a useful community-maintained secondary source, not an official statement. <b>Archive interpretation</b> is an editorial reading of linked works. Community artwork is identified as fan-made.</span></p>
+  </div>
+  <section class="source-library-toolbar" aria-label="Search and filter sources">
+   <label class="source-library-search"><span>Search notes and references</span><input id="source-library-search" type="search" placeholder="Try canon, Higan, spell cards, TH20…" autocomplete="off" aria-label="Search lore notes and source references"></label>
+   <label class="source-library-filter"><span>Evidence type</span><select id="source-library-kind"><option value="all">All evidence types</option><option value="official">Official / publisher</option><option value="reference">Reference wiki</option><option value="interpretation">Archive interpretation</option><option value="community">Community artwork / discussion</option><option value="other">Other references</option></select></label>
+   <label class="source-library-filter"><span>Research topic</span><select id="source-library-topic"><option value="all">All topics</option></select></label>
+   <button type="button" class="source-library-button" id="source-library-reset">Reset</button>
+  </section>
+  <div class="source-library-count" id="source-library-count" role="status" aria-live="polite">Loading indexed references…</div>
+  <div class="source-library-intro"><div><div class="section-kicker">EDITORIAL NOTES &amp; CITED REFERENCES</div><h4>Deep lore notebook</h4><p>Search a concept or source, then use each card's links to open its reference or revisit a related archive entry.</p></div></div>
+  <div class="source-library-grid" id="source-library-grid"></div>
  </section>
  <section class="tool-panel hidden" id="threads-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">Connections with canon labels</div><h3 class="serif">Follow the threads</h3><p>Direct plot links, recurring characters, and interpretive comparisons are kept distinct so that an interesting theory does not get mistaken for canon.</p></div></div>
@@ -1291,6 +1347,18 @@ let activeIncidentTitle=INCIDENTS[0]?.title||'';
 let activeChronologyId='th06';
 let showChronologyOrder='release';
 let activeChronologyThread='all';
+let activeSourceTopic='all';
+const LORE_RESEARCH_NOTES = [
+ {id:'evidence-ladder',title:'How to judge a lore claim',topic:'Source method',evidence:'interpretation',label:'Archive research method',summary:'Keep the original work, an official announcement, a secondary reference page, and an editorial inference separate. A community wiki can be useful for locating a scene or explanation, but it is not itself an official statement from Team Shanghai Alice.',details:'For close reading, check the game, printed work, or music-CD story first when available. Use reference pages to navigate and compare material. Label route-dependent endings and the archive’s interpretive links rather than presenting them as a single unqualified canon sequence.',entries:[],characters:[],tags:['evidence','canon','method'],sources:[{label:'Touhou Wiki — canon overview',url:'https://en.touhouwiki.net/wiki/Canon',kind:'reference'},{label:'Official Touhou Project news',url:'https://touhou-project.news/official/',kind:'official'}]},
+ {id:'release-vs-story-time',title:'Release chronology is not an in-universe calendar',topic:'Chronology',evidence:'interpretation',label:'Archive interpretation',summary:'The chronology follows release dates and the archive’s recommended reading path. It should not be read as a complete calendar of dates on which every incident happened inside Gensokyo.',details:'Touhou’s stories often refer to recurring characters and earlier events, but the release order alone does not settle every narrative sequence. Follow an entry’s cited sources and the route-specific article instead of inferring an exact fictional date from a game’s publication year.',entries:['th06','th07','th08','th09','th19','th20'],characters:[],tags:['release dates','reading order','route structure'],sources:[{label:'Touhou Wiki — Touhou Project overview',url:'https://en.touhouwiki.net/wiki/Touhou_Project',kind:'reference'}]},
+ {id:'official-vs-reference',title:'Official works and secondary reference pages',topic:'Canon & provenance',evidence:'reference',label:'Reference summary',summary:'The reference wiki describes official games, print works, and music as distinct kinds of Touhou material and explains that wiki summaries are not a substitute for the original works.',details:'Use this distinction to inspect evidence, not as a shortcut that makes every sentence on a wiki official. This archive links to secondary references for orientation, while its entry pages are paraphrases and interpretations created for readers.',entries:['th06','ghostly-field-club','silent-sinner','th20'],characters:[],tags:['canon','provenance','official works'],sources:[{label:'Touhou Wiki — canon overview',url:'https://en.touhouwiki.net/wiki/Canon',kind:'reference'},{label:'Official Touhou Project announcements',url:'https://touhou-project.news/official/',kind:'official'}]},
+ {id:'gensokyo-and-geography',title:'Gensokyo geography: map, setting, and limits',topic:'Setting & geography',evidence:'reference',label:'Reference summary + map provenance',summary:'Use the in-game and published setting material as the basis for lore claims about Gensokyo. The interactive map in this archive is a reading aid, and the large illustrated map is community-created fan art—not an official Team Shanghai Alice map.',details:'Some locations are separated, hidden, underground, or on the Moon, so a two-dimensional fan map should not be treated as an exact, to-scale canonical atlas. The pins in this archive are approximate anchors for exploring related stories.',entries:['th06','th07','th11','th16','th20'],characters:[],tags:['Gensokyo','map','geography','fan art'],sources:[{label:'Touhou Wiki — Gensokyo Geography',url:'https://en.touhouwiki.net/wiki/Strange_Creators_of_Outer_World/Gensokyo_Geography',kind:'reference'},{label:'Armixi — Gensokyo’s Map v2.0 (original artwork)',url:'https://www.artstation.com/artwork/JvEdrA?album_id=8788868',kind:'community'},{label:'Map discussion and context',url:'https://www.reddit.com/r/touhou/comments/11s447e/gensokyos-map-v20-by-armixi/',kind:'community'}]},
+ {id:'spell-card-system',title:'Spell Cards: setting rule and gameplay language',topic:'Spell Card rules',evidence:'reference',label:'Reference summary',summary:'Spell Cards function as a named, patterned way characters settle confrontations in much of the Windows-era setting, while each game implements its combat systems in its own way.',details:'Read the relevant game’s scenes and rule explanations before assuming every encounter follows one identical procedure. This note is a starting point for research, not a full replacement for the source material.',entries:['th06','th09','th14','th19'],characters:['Reimu Hakurei','Marisa Kirisame'],tags:['Spell Cards','danmaku','duels'],sources:[{label:'Touhou Wiki — Spell card',url:'https://en.touhouwiki.net/wiki/Spell_card',kind:'reference'}]},
+ {id:'parallel-routes',title:'Parallel routes: preserve each character’s perspective',topic:'Narrative structure',evidence:'interpretation',label:'Archive interpretation',summary:'TH09 and TH19 use versus-shooter structures with many character perspectives. Their routes can reveal different pieces of the incident, so a summary should not flatten every ending and dialogue scene into one purportedly identical route.',details:'Use the individual game’s story, endings, and cited reference pages to compare what is shared and what varies. This is especially important when describing motivations, outcomes, and post-incident status.',entries:['th09','th19'],characters:['Reimu Hakurei','Marisa Kirisame','Komachi Onozuka','Eiki Shiki','Yachie Kicchou','Zanmu Nippaku'],tags:['multiple routes','endings','perspectives'],sources:[{label:'Touhou Wiki — Phantasmagoria of Flower View / Story',url:'https://en.touhouwiki.net/wiki/Phantasmagoria_of_Flower_View/Story',kind:'reference'},{label:'Touhou Wiki — Unfinished Dream of All Living Ghost',url:'https://en.touhouwiki.net/wiki/Unfinished_Dream_of_All_Living_Ghost',kind:'reference'}]},
+ {id:'moon-story-threads',title:'Moon lore: recurring characters do not automatically mean a direct sequel',topic:'Moon & continuity',evidence:'interpretation',label:'Archive interpretation',summary:'The archive links TH08, Silent Sinner in Blue, TH15, and TH20 through lunar settings or recurring characters. Those connections help with context, but do not mean the incidents form one uninterrupted, chapter-by-chapter plot.',details:'Compare the specific appearances and stated motives in each work. The Lunar Capital is a recurring setting; the False Moon incident, the invasion in Legacy of Lunatic Kingdom, and the sanctuary crisis in Fossilized Wonders are distinct story events.',entries:['th08','silent-sinner','th15','th20'],characters:['Eirin Yagokoro','Kaguya Houraisan','Watatsuki no Toyohime','Junko','Hecatia Lapislazuli'],tags:['Moon','Lunar Capital','continuity'],sources:[{label:'Touhou Wiki — Imperishable Night',url:'https://en.touhouwiki.net/wiki/Imperishable_Night',kind:'reference'},{label:'Touhou Wiki — Legacy of Lunatic Kingdom',url:'https://en.touhouwiki.net/wiki/Legacy_of_Lunatic_Kingdom',kind:'reference'},{label:'Touhou Wiki — Fossilized Wonders',url:'https://en.touhouwiki.net/wiki/Fossilized_Wonders',kind:'reference'}]},
+ {id:'th20-primary',title:'TH20 release information: begin with official announcements',topic:'TH20 & Lunar context',evidence:'official',label:'Primary-source check',summary:'The official Touhou Project news outlet posted the TH20 announcement for Fossilized Wonders. Use the original announcement to confirm release-related facts, then compare reference pages for summaries and character details.',details:'This source card is a direct path to the official announcement. The archive’s lore explanation remains a paraphrase; the linked official post and original game are the primary places to verify what they state.',entries:['th20'],characters:['Watatsuki no Toyohime','Iwanaga Ariya','Yuiman Asama'],tags:['TH20','Fossilized Wonders','official announcement'],sources:[{label:'Official TH20 announcement — Touhou Project news',url:'https://touhou-project.news/news/13976/',kind:'official'},{label:'Steam — Fossilized Wonders listing',url:'https://store.steampowered.com/app/3671710/',kind:'official'}]},
+ {id:'faith-to-fusion',title:'From mountain faith to underground fusion',topic:'Incident continuity',evidence:'interpretation',label:'Cross-entry interpretation',summary:'The archive links TH10’s Moriya Shrine plot to TH11’s underground nuclear-fusion incident because the works share characters and a project context. The entries should still be read as separate incidents with their own outcomes.',details:'Use the full TH10 and TH11 story entries, then compare the character statements and the official/reference material cited for each work. Shared context is stronger than a surface-level thematic resemblance, but it does not erase their separate plots.',entries:['th10','th11'],characters:['Kanako Yasaka','Suwako Moriya','Utsuho Reiuji','Satori Komeiji'],tags:['Moriya Shrine','Former Hell','nuclear fusion'],sources:[{label:'Touhou Wiki — Mountain of Faith',url:'https://en.touhouwiki.net/wiki/Mountain_of_Faith',kind:'reference'},{label:'Touhou Wiki — Subterranean Animism',url:'https://en.touhouwiki.net/wiki/Subterranean_Animism',kind:'reference'}]}
+];
 function readIncidentFavorites(){try{const value=JSON.parse(localStorage.getItem(INCIDENT_FAVORITES_STORAGE_KEY)||'[]');return Array.isArray(value)?value.filter(title=>INCIDENTS.some(item=>item.title===title)):[];}catch(_){return [];}}
 let incidentFavorites=readIncidentFavorites();
 function writeIncidentFavorites(){try{localStorage.setItem(INCIDENT_FAVORITES_STORAGE_KEY,JSON.stringify(incidentFavorites));}catch(_){}}
@@ -1645,6 +1713,75 @@ function initChronologyControls(){
   $('chronology-search').value='';$('chronology-order').value='release';$('chronology-media').value='all';$('chronology-thread').value='all';activeChronologyThread='all';activeChronologyId='th06';renderChronology();
  });
 }
+function sourceEvidenceClass(source){
+ const url=String(source?.url||'').toLowerCase();
+ if(source?.kind==='official'||url.includes('touhou-project.news')||url.includes('store.steampowered.com'))return 'official';
+ if(source?.kind==='community'||url.includes('artstation.com')||url.includes('reddit.com'))return 'community';
+ if(source?.kind==='reference'||url.includes('touhouwiki.net'))return 'reference';
+ return 'other';
+}
+function sourceEvidenceLabel(kind){
+ return ({official:'Official / publisher',reference:'Reference wiki',interpretation:'Archive interpretation',community:'Community artwork / discussion',other:'Other reference'})[kind]||'Other reference';
+}
+function buildSourceLibraryRecords(){
+ const records=[];
+ LORE_RESEARCH_NOTES.forEach(note=>{
+  records.push({id:'note:'+note.id,recordType:'note',title:note.title,topic:note.topic,evidence:note.evidence,label:note.label,summary:note.summary,details:note.details,entries:note.entries||[],characters:note.characters||[],tags:note.tags||[],sources:(note.sources||[]).map(source=>({...source,kind:sourceEvidenceClass(source)}))});
+ });
+ TIMELINE.forEach(entry=>{
+  (Array.isArray(entry.sources)?entry.sources:[]).forEach((source,index)=>{
+   if(!source||!source.url||!source.label)return;
+   const kind=sourceEvidenceClass(source);
+   records.push({id:'source:'+entry.id+':'+index,recordType:'source',title:source.label,topic:entry.type==='game'?'Mainline games':entry.type==='print'?'Print works':'Music CDs & story notes',evidence:kind,label:sourceEvidenceLabel(kind),summary:'Reference linked from this archive entry. Use it to check the title, story summary, names, and details against the linked work or reference itself.',details:'This link is attached to '+entry.code+' · '+entry.title+'. Its presence in the archive does not make a secondary reference an official source.',entries:[entry.id],characters:Array.isArray(entry.characters)?entry.characters:[],tags:entry.tags||[],sources:[{label:source.label,url:source.url,kind}]});
+  });
+ });
+ return records;
+}
+function renderSourceLibrary(){
+ const records=buildSourceLibraryRecords();
+ const query=($('source-library-search').value||'').trim().toLowerCase();
+ const kind=$('source-library-kind').value||'all';
+ const topic=$('source-library-topic').value||'all';
+ const visible=records.filter(record=>{
+  if(kind!=='all'&&record.evidence!==kind)return false;
+  if(topic!=='all'&&record.topic!==topic)return false;
+  const entries=record.entries.map(id=>{const entry=TIMELINE.find(item=>item.id===id);return entry?[entry.code,entry.title,entry.originalTitle,entry.year].join(' '):id;}).join(' ');
+  const haystack=[record.title,record.topic,record.label,record.summary,record.details,entries,record.characters.join(' '),record.tags.join(' '),...record.sources.map(source=>source.label+' '+source.url)].join(' ').toLowerCase();
+  return haystack.includes(query);
+ }).sort((a,b)=>(a.recordType==='note'?0:1)-(b.recordType==='note'?0:1)||a.title.localeCompare(b.title));
+ const notes=records.filter(record=>record.recordType==='note').length;
+ $('source-library-total').textContent=String(records.length);
+ $('source-library-notes').textContent=String(notes);
+ $('source-library-works').textContent=String(TIMELINE.length);
+ $('source-library-visible').textContent=String(visible.length);
+ $('source-library-count').textContent=visible.length+' of '+records.length+' research notes and source references shown';
+ const topicSelect=$('source-library-topic');
+ const currentTopic=topicSelect.value||'all';
+ const topicOptions=[...new Set(records.map(record=>record.topic))].sort((a,b)=>a.localeCompare(b));
+ const topicHtml='<option value="all">All topics</option>'+topicOptions.map(name=>'<option value="'+esc(name)+'">'+esc(name)+'</option>').join('');
+ if(topicSelect.dataset.optionsKey!==topicOptions.join('|')){
+  topicSelect.innerHTML=topicHtml;
+  topicSelect.dataset.optionsKey=topicOptions.join('|');
+  topicSelect.value=topicOptions.includes(currentTopic)?currentTopic:'all';
+ }
+ $('source-library-grid').innerHTML=visible.length?visible.map(record=>{
+  const note=record.recordType==='note';
+  const entryButtons=record.entries.map(id=>TIMELINE.find(entry=>entry.id===id)).filter(Boolean).map(entry=>'<button type="button" class="chronology-chip" data-open-entry="'+esc(entry.id)+'">'+esc(entry.code)+' · '+esc(entry.title)+'</button>').join('');
+  const refLinks=record.sources.map(source=>'<a class="source-card-link" href="'+esc(source.url)+'" target="_blank" rel="noopener noreferrer">'+esc(source.label)+'<span>'+esc(sourceEvidenceLabel(sourceEvidenceClass(source)))+' ↗</span></a>').join('');
+  const characterTags=record.characters.length?'<div class="source-library-card-context">Characters indexed: '+esc(record.characters.slice(0,5).join(', '))+(record.characters.length>5?' and '+(record.characters.length-5)+' more':'')+'</div>':'';
+  const tagMarkup=record.tags.length?'<div class="chronology-tag-list">'+record.tags.slice(0,6).map(tag=>'<span>'+esc(tag)+'</span>').join('')+'</div>':'';
+  return '<article class="source-library-card '+(note?'note-card':'source-card')+'"><div class="source-library-card-top"><span class="source-library-label">'+(note?'RESEARCH NOTE':'WORK REFERENCE')+' · '+esc(record.topic)+'</span><span class="source-evidence-badge '+esc(record.evidence)+'">'+esc(sourceEvidenceLabel(record.evidence))+'</span></div><h5>'+esc(record.title)+'</h5><p class="source-card-description">'+esc(record.summary)+'</p>'+(note?'<p class="source-card-context">'+esc(record.details)+'</p>':characterTags)+'<div class="source-card-links">'+refLinks+'</div><div class="source-card-worklinks">'+entryButtons+'</div>'+tagMarkup+'</article>';
+ }).join(''):'<div class="source-library-empty">No references match those filters. Try a broader search, another evidence type, or reset the library.</div>';
+}
+function initSourceLibraryControls(){
+ const topic=$('source-library-topic');
+ topic.innerHTML='<option value="all">All topics</option>'+[...new Set(buildSourceLibraryRecords().map(record=>record.topic))].sort((a,b)=>a.localeCompare(b)).map(name=>'<option value="'+esc(name)+'">'+esc(name)+'</option>').join('');
+ topic.dataset.optionsKey=[...new Set(buildSourceLibraryRecords().map(record=>record.topic))].sort((a,b)=>a.localeCompare(b)).join('|');
+ $('source-library-search').addEventListener('input',renderSourceLibrary);
+ $('source-library-kind').addEventListener('change',renderSourceLibrary);
+ $('source-library-topic').addEventListener('change',renderSourceLibrary);
+ $('source-library-reset').addEventListener('click',()=>{$('source-library-search').value='';$('source-library-kind').value='all';$('source-library-topic').value='all';renderSourceLibrary();});
+}
 function renderThreads(){
  $('thread-list').innerHTML=LORE_THREADS.map(t=>{
   return '<article class="thread-card"><span class="thread-label">'+esc(t.label)+'</span><h4>'+esc(t.title)+'</h4><p>'+esc(t.text)+'</p><div class="thread-entry-links">'+t.entries.map(entryChip).join('')+'</div></article>';
@@ -1665,11 +1802,11 @@ function renderShelfPanel(){
 }
 function updateToolTabs(){
  document.querySelectorAll('[data-tool-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.toolTab===activeToolTab)));
- const panels={characters:'characters-panel',network:'network-panel',map:'map-panel',incidents:'incidents-panel',chronology:'chronology-panel',threads:'threads-panel',shelf:'shelf-panel'};
+ const panels={characters:'characters-panel',network:'network-panel',map:'map-panel',incidents:'incidents-panel',chronology:'chronology-panel',sources:'sources-panel',threads:'threads-panel',shelf:'shelf-panel'};
  Object.keys(panels).forEach(k=>$(panels[k]).classList.toggle('hidden',k!==activeToolTab));
 }
 function renderArchiveTools(){
- renderCharacterAtlas();renderMap();renderIncidents();renderChronology();renderThreads();renderShelfPanel();renderRelationshipNetwork();updateToolTabs();
+ renderCharacterAtlas();renderMap();renderIncidents();renderChronology();renderSourceLibrary();renderThreads();renderShelfPanel();renderRelationshipNetwork();updateToolTabs();
 }
 
 $('filters').addEventListener('click',event=>{const button=event.target.closest('[data-filter]');if(!button)return;const type=button.dataset.filter;filters[type]=!filters[type];renderAll();});
@@ -1678,6 +1815,7 @@ $('search').addEventListener('input',event=>{searchText=event.target.value;rende
 $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value;renderTimeline();});
 $('character-search').addEventListener('input',renderCharacterAtlas);
 initChronologyControls();
+initSourceLibraryControls();
 $('incident-search').addEventListener('input',renderIncidents);
 $('incident-era-filter').addEventListener('change',renderIncidents);
 $('incident-sort').addEventListener('change',renderIncidents);
