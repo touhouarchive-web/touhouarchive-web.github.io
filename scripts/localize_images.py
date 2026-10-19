@@ -857,7 +857,7 @@ CHARACTER_FILES = {
     "Th06Remilia.png", "Th105Aya.png", "Th10KanakoYasaka.png",
 }
 CARD_OR_FIGURE_RE = re.compile(
-    r'<article\b[^>]*class=["\'][^"\']*\barchive-card\b[^"\']*["\'][^>]*>[\s\S]*?</article>|<figure\b[\s\S]*?</figure>',
+    r'<article\b[^>]*class=["\'][^"\']*\barchive-card\b[^"\']*["\'][^>]*>[\s\S]*?</article>|<a\b[^>]*class=["\'][^"\']*\barchive-card\b[^"\']*["\'][^>]*>[\s\S]*?</a>|<figure\b[\s\S]*?</figure>',
     re.IGNORECASE,
 )
 SOURCE_ANCHOR_RE = re.compile(
@@ -1203,10 +1203,57 @@ def main() -> None:
         quote_char = match.group("quote")
         return "url(" + quote_char + str(meta["asset_path"]) + quote_char + ")"
 
+    # Repair all card/figure credits from the final localized asset metadata, AFTER
+    # src has been rewritten. This keeps source links and captions accurate.
+    local_credit_map: dict[str, dict[str, str]] = {}
+    for source_meta in references.values():
+        asset_path = source_meta.get("asset_path")
+        if not asset_path:
+            continue
+        local_credit_map[str(asset_path)] = {
+            "source_page": str(source_meta.get("actual_source_page", source_meta.get("source_page", ""))),
+            "credit": str(source_meta.get("actual_credit", source_meta.get("credit", "Image source"))),
+            "alt": str(source_meta.get("actual_alt", source_meta.get("alt", "Touhou image"))),
+        }
+
+    def repair_final_image_credit(match: re.Match[str]) -> str:
+        container = match.group(0)
+        img = IMG_TAG_RE.search(container)
+        if not img:
+            return container
+        src_match = IMG_SRC_RE.search(img.group(0))
+        if not src_match:
+            return container
+        metadata = local_credit_map.get(src_match.group(2))
+        if not metadata:
+            return container
+        source_page = metadata["source_page"].replace("&", "&amp;").replace('"', "&quot;")
+        credit = metadata["credit"].replace("&", "&amp;").replace('"', "&quot;")
+        source_link = f'<a href="{source_page}" target="_blank" rel="noopener">{credit} ↗</a>'
+
+        if re.search(r'<figcaption\b', container, flags=re.IGNORECASE):
+            container = re.sub(
+                r'<figcaption\b[^>]*>[\s\S]*?</figcaption>',
+                '<figcaption class="caption">Image source · ' + source_link + '</figcaption>',
+                container,
+                count=1,
+                flags=re.IGNORECASE,
+            )
+        if re.search(r'<span\b[^>]*class=["\'][^"\']*\bsmall-source\b[^"\']*["\'][^>]*>', container, flags=re.IGNORECASE):
+            container = re.sub(
+                r'<span\b[^>]*class=["\'][^"\']*\bsmall-source\b[^"\']*["\'][^>]*>[\s\S]*?</span>',
+                '<span class="small-source">Image source: ' + source_link + '</span>',
+                container,
+                count=1,
+                flags=re.IGNORECASE,
+            )
+        return container
+
     for path in html_css_files:
         content = path.read_text(encoding="utf-8")
         if path.suffix.lower() == ".html":
             content = IMG_TAG_RE.sub(replace_image_tag, content)
+            content = CARD_OR_FIGURE_RE.sub(repair_final_image_credit, content)
             def replace_file_link(match: re.Match[str]) -> str:
                 name = unquote(match.group(1)).replace("_", " ")
                 meta = IMAGE_ALIASES.get(name)
