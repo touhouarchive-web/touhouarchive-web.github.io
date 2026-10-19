@@ -956,8 +956,6 @@ def choose_distinct_image(context: str, relative_path: str, used_assets: set[str
     used_assets.add(_image_identity(chosen["url"]))
     source_page = chosen["source_page"]
     context_alt = chosen["alt"]
-    if display_context:
-        context_alt += f" Used as an illustrative reference alongside {display_context}."
     credit = chosen["credit"]
     URL_CREDIT[chosen["url"]] = {
         "source_page": source_page, "credit": credit, "alt": context_alt
@@ -997,10 +995,33 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
     tag = re.sub(r'\s+srcset=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
     container = container[:match.start()] + tag + container[match.end():]
 
-    # Redirect the card/figure's attribution link to the true source of its new image.
-    def replace_source_anchor(_match: re.Match[str]) -> str:
-        return f'<a href="{source_page}" target="_blank" rel="noopener">Image source: {credit} ↗</a>'
-    container = SOURCE_ANCHOR_RE.sub(replace_source_anchor, container, count=1)
+    # Replace the whole figure caption, rather than leaving stale wording such as
+    # "official cover art" beside a different image. The link always matches the
+    # exact source that supplied this downloaded asset.
+    source_link = f'<a href="{source_page}" target="_blank" rel="noopener">{credit} ↗</a>'
+    if re.search(r'<figcaption\b', container, flags=re.IGNORECASE):
+        container = re.sub(
+            r'<figcaption\b[^>]*>[\s\S]*?</figcaption>',
+            '<figcaption class="caption">Image source · ' + source_link + '</figcaption>',
+            container,
+            count=1,
+            flags=re.IGNORECASE,
+        )
+    else:
+        def replace_source_anchor(_match: re.Match[str]) -> str:
+            return source_link
+        container = SOURCE_ANCHOR_RE.sub(replace_source_anchor, container, count=1)
+
+    # Many of the old cards used a plain "Image: Touhou Wiki" label without a
+    # link. Replace it too so every non-character image is correctly credited.
+    if re.search(r'<span\b[^>]*class=["\'][^"\']*\bsmall-source\b[^"\']*["\'][^>]*>', container, flags=re.IGNORECASE):
+        container = re.sub(
+            r'<span\b[^>]*class=["\'][^"\']*\bsmall-source\b[^"\']*["\'][^>]*>[\s\S]*?</span>',
+            '<span class="small-source">Image source: ' + source_link + '</span>',
+            container,
+            count=1,
+            flags=re.IGNORECASE,
+        )
     return container
 
 
