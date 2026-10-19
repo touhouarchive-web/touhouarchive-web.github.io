@@ -567,6 +567,19 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
  </section>
  <section class="tool-panel hidden" id="threads-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">Connections with canon labels</div><h3 class="serif">Follow the threads</h3><p>Direct plot links, recurring characters, and interpretive comparisons are kept distinct so that an interesting theory does not get mistaken for canon.</p></div></div>
+  <div class="thread-summary-stats" aria-label="Lore thread summary">
+   <div><strong id="thread-stat-count">—</strong><span>Indexed threads</span></div>
+   <div><strong id="thread-stat-works">—</strong><span>Connected works</span></div>
+   <div><strong id="thread-stat-direct">—</strong><span>Direct plot / continuity</span></div>
+   <div><strong id="thread-stat-incidents">—</strong><span>Linked incident dossiers</span></div>
+  </div>
+  <section class="thread-toolbar" aria-label="Search and filter lore threads">
+   <label class="thread-search-field"><span>Search connections</span><input type="search" id="thread-search" placeholder="Try Moon lore, TH20, Mallet…" autocomplete="off" aria-label="Search lore threads"></label>
+   <label class="thread-filter-field"><span>Connection type</span><select id="thread-kind-filter" aria-label="Filter by lore connection type"><option value="all">All connection types</option><option value="direct">Direct plot / continuity</option><option value="character">Recurring characters / factions</option><option value="theme">Theme / interpretation</option><option value="context">Context / reading guidance</option></select></label>
+   <label class="thread-filter-field"><span>Sort by</span><select id="thread-sort"><option value="curated">Curated order</option><option value="connected">Most linked works</option><option value="title">Title A–Z</option></select></label>
+   <button type="button" class="thread-tool-button" id="thread-reset">Reset</button>
+  </section>
+  <div class="thread-results-count" id="thread-results-count" role="status" aria-live="polite">Loading lore threads…</div>
   <div class="thread-list" id="thread-list"></div>
  </section>
  <section class="tool-panel hidden" id="shelf-panel" role="tabpanel">
@@ -620,6 +633,37 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
 .gallery-image-link{background:radial-gradient(ellipse at 30% 20%,var(--entry-glow),transparent 65%),#121217}
 .image-fallback span{color:var(--entry-accent)}
 @media(max-width:520px){.palette-label{font-size:8.5px}.palette-swatch{width:11px;height:11px;flex-basis:11px}}
+
+/* Phase VIII · searchable lore-thread explorer */
+.thread-summary-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:16px 0}
+.thread-summary-stats>div{display:grid;gap:5px;min-width:0;border:1px solid rgba(196,181,253,.13);border-radius:11px;padding:12px;background:linear-gradient(145deg,rgba(196,181,253,.035),rgba(255,255,255,.008))}
+.thread-summary-stats strong{font:500 22px/1 Georgia,serif;color:#e4d9fb}
+.thread-summary-stats span{font-size:8px;line-height:1.5;letter-spacing:.035em;color:#898795}
+.thread-toolbar{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(150px,.9fr) minmax(120px,.7fr) auto;gap:9px;align-items:end;border:1px solid rgba(196,181,253,.12);border-radius:13px;padding:12px;background:rgba(196,181,253,.025)}
+.thread-search-field,.thread-filter-field{display:grid;gap:6px;min-width:0;color:#92909e;font-size:9px}
+.thread-search-field input,.thread-filter-field select{width:100%;min-width:0;min-height:40px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#111214;color:#e6e4ee;padding:9px 10px;font:inherit;font-size:10px}
+.thread-tool-button{min-height:40px;border:1px solid rgba(196,181,253,.17);border-radius:8px;background:rgba(196,181,253,.035);color:#cfc4f0;padding:9px 12px;font-size:9px;cursor:pointer}
+.thread-results-count{margin:12px 0;color:#777783;font:9px/1.6 ui-monospace,monospace}
+.thread-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.thread-card-enhanced{min-width:0;display:flex;flex-direction:column;align-items:stretch}
+.thread-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.thread-kind-badge{display:inline-flex;align-items:center;max-width:100%;border:1px solid rgba(196,181,253,.18);border-radius:99px;padding:5px 8px;color:#d3c7f2;background:rgba(196,181,253,.05);font-size:8px;line-height:1.4}
+.thread-kind-badge.kind-character{border-color:rgba(147,197,253,.22);color:#bfdbfe;background:rgba(147,197,253,.045)}
+.thread-kind-badge.kind-theme{border-color:rgba(253,186,116,.22);color:#fed7aa;background:rgba(253,186,116,.04)}
+.thread-kind-badge.kind-context{border-color:rgba(167,243,208,.18);color:#a7f3d0;background:rgba(167,243,208,.035)}
+.thread-work-count{color:#777783;font:8px ui-monospace,monospace;white-space:nowrap}
+.thread-card-enhanced h4{margin-top:13px}
+.thread-card-enhanced .thread-label{margin:0 0 8px;color:#b5a6dd;font-size:8px;line-height:1.5}
+.thread-entry-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.thread-card-enhanced .entry-chip{max-width:100%;white-space:normal;text-align:left}
+.thread-incident-area{border-top:1px solid rgba(255,255,255,.065);margin-top:13px;padding-top:10px}
+.thread-related-label{display:block;margin-bottom:7px;color:#8b8998;font-size:8px;letter-spacing:.04em;text-transform:uppercase}
+.thread-incident-links{display:flex;flex-wrap:wrap;gap:6px}
+.thread-incident-link{max-width:100%;border:1px solid rgba(196,181,253,.13);border-radius:7px;background:rgba(196,181,253,.025);color:#c4b5fd;padding:6px 8px;text-align:left;line-height:1.5;font-size:8px;cursor:pointer}
+.thread-incident-link:hover,.thread-incident-link:focus-visible{border-color:rgba(196,181,253,.45);background:rgba(196,181,253,.07)}
+.thread-empty{grid-column:1/-1;border:1px dashed rgba(196,181,253,.19);border-radius:12px;padding:24px;color:#8c8c98;font-size:10px;line-height:1.8;text-align:center}
+@media(max-width:760px){.thread-summary-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.thread-toolbar{grid-template-columns:1fr 1fr}.thread-search-field{grid-column:1/-1}.thread-tool-button{width:100%}.thread-list{grid-template-columns:1fr}}
+@media(max-width:420px){.thread-toolbar{grid-template-columns:1fr}.thread-search-field{grid-column:auto}.thread-summary-stats strong{font-size:20px}}
 </style>
 
 <script>
@@ -1782,10 +1826,51 @@ function initSourceLibraryControls(){
  $('source-library-topic').addEventListener('change',renderSourceLibrary);
  $('source-library-reset').addEventListener('click',()=>{$('source-library-search').value='';$('source-library-kind').value='all';$('source-library-topic').value='all';renderSourceLibrary();});
 }
+function threadKind(thread){
+ const label=String(thread.label||'').toLowerCase();
+ if(/thematic|interpretation|narrative structure/.test(label))return 'theme';
+ if(/recurring|character|faction/.test(label))return 'character';
+ if(/direct|continuity|plot bridge/.test(label))return 'direct';
+ return 'context';
+}
+function threadKindLabel(kind){
+ return ({direct:'Direct plot / continuity',character:'Recurring characters / factions',theme:'Theme / interpretation',context:'Context / reading guidance'})[kind]||'Context / reading guidance';
+}
+function threadIncidentRecords(thread){
+ const ids=Array.isArray(thread.entries)?thread.entries:[];
+ return INCIDENTS.filter(incident=>ids.includes(incident.entry));
+}
 function renderThreads(){
- $('thread-list').innerHTML=LORE_THREADS.map(t=>{
-  return '<article class="thread-card"><span class="thread-label">'+esc(t.label)+'</span><h4>'+esc(t.title)+'</h4><p>'+esc(t.text)+'</p><div class="thread-entry-links">'+t.entries.map(entryChip).join('')+'</div></article>';
- }).join('');
+ const query=($('thread-search')?.value||'').trim().toLowerCase();
+ const kind=$('thread-kind-filter')?.value||'all';
+ const sort=$('thread-sort')?.value||'curated';
+ const allLinkedWorks=new Set();
+ const allLinkedIncidents=new Set();
+ LORE_THREADS.forEach(thread=>{
+  (thread.entries||[]).forEach(id=>allLinkedWorks.add(id));
+  threadIncidentRecords(thread).forEach(incident=>allLinkedIncidents.add(incident.title));
+ });
+ $('thread-stat-count').textContent=String(LORE_THREADS.length);
+ $('thread-stat-works').textContent=String(allLinkedWorks.size);
+ $('thread-stat-direct').textContent=String(LORE_THREADS.filter(thread=>threadKind(thread)==='direct').length);
+ $('thread-stat-incidents').textContent=String(allLinkedIncidents.size);
+ let visible=LORE_THREADS.filter(thread=>{
+  const entries=(thread.entries||[]).map(id=>TIMELINE.find(entry=>entry.id===id)).filter(Boolean);
+  const incidents=threadIncidentRecords(thread);
+  const haystack=[thread.title,thread.label,thread.text,...entries.flatMap(entry=>[entry.title,entry.code,entry.year]),...incidents.map(incident=>incident.title)].join(' ').toLowerCase();
+  return (kind==='all'||threadKind(thread)===kind)&&(!query||haystack.includes(query));
+ });
+ if(sort==='connected')visible.sort((a,b)=>(b.entries||[]).length-(a.entries||[]).length||a.title.localeCompare(b.title));
+ if(sort==='title')visible.sort((a,b)=>a.title.localeCompare(b.title));
+ $('thread-results-count').textContent=visible.length+' of '+LORE_THREADS.length+' connections shown'+(kind!=='all'?' · '+threadKindLabel(kind):'')+(query?' · search: “'+query+'”':'');
+ $('thread-list').innerHTML=visible.length?visible.map(thread=>{
+  const type=threadKind(thread);
+  const entries=(thread.entries||[]).map(id=>TIMELINE.find(entry=>entry.id===id)).filter(Boolean);
+  const incidents=threadIncidentRecords(thread);
+  const workLinks=entries.map(entry=>entryChip(entry.id)).join('');
+  const incidentLinks=incidents.map(incident=>'<button type="button" class="thread-incident-link" data-thread-incident="'+esc(incident.title)+'">↗ '+esc(incident.title)+'</button>').join('');
+  return '<article class="thread-card thread-card-enhanced"><div class="thread-card-top"><span class="thread-kind-badge kind-'+type+'">'+esc(threadKindLabel(type))+'</span><span class="thread-work-count">'+entries.length+' linked '+(entries.length===1?'work':'works')+'</span></div><h4>'+esc(thread.title)+'</h4><p class="thread-label">'+esc(thread.label)+'</p><p>'+esc(thread.text)+'</p><div class="thread-entry-links">'+workLinks+'</div>'+(incidents.length?'<div class="thread-incident-area"><span class="thread-related-label">Related incident dossiers</span><div class="thread-incident-links">'+incidentLinks+'</div></div>':'')+'</article>';
+ }).join(''):'<div class="thread-empty">No lore connections match those filters. Try another title or work code, or reset the filters.</div>';
 }
 function shelfRows(ids,kind){
  if(!ids.length)return '<div class="shelf-empty">'+(kind==='saved'?'Nothing saved yet. Open a lore entry and tap “Save to reading shelf”.':'No entries marked read yet. Open a lore entry and mark it as read.')+'</div>';
@@ -1816,6 +1901,15 @@ $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value
 $('character-search').addEventListener('input',renderCharacterAtlas);
 initChronologyControls();
 initSourceLibraryControls();
+$('thread-search').addEventListener('input',renderThreads);
+$('thread-kind-filter').addEventListener('change',renderThreads);
+$('thread-sort').addEventListener('change',renderThreads);
+$('thread-reset').addEventListener('click',()=>{
+ $('thread-search').value='';
+ $('thread-kind-filter').value='all';
+ $('thread-sort').value='curated';
+ renderThreads();
+});
 $('incident-search').addEventListener('input',renderIncidents);
 $('incident-era-filter').addEventListener('change',renderIncidents);
 $('incident-sort').addEventListener('change',renderIncidents);
@@ -1853,6 +1947,8 @@ $('archive-tools').addEventListener('click',event=>{
  if(chronologyThread){activeChronologyThread=chronologyThread.dataset.chronologyThread;activeToolTab='chronology';$('chronology-thread').value=activeChronologyThread;updateToolTabs();renderChronology();$('chronology-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
  const chronologyIncident=event.target.closest('[data-chronology-incident]');
  if(chronologyIncident){activeIncidentTitle=chronologyIncident.dataset.chronologyIncident;activeToolTab='incidents';renderIncidents();updateToolTabs();$('incidents-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ const threadIncident=event.target.closest('[data-thread-incident]');
+ if(threadIncident){activeIncidentTitle=threadIncident.dataset.threadIncident;activeToolTab='incidents';renderIncidents();updateToolTabs();$('incidents-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
  const selectIncident=event.target.closest('[data-select-incident]');
  if(selectIncident){activeIncidentTitle=selectIncident.dataset.selectIncident;renderIncidents();return;}
  const incidentFavorite=event.target.closest('[data-incident-favorite]');
