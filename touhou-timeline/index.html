@@ -1380,10 +1380,62 @@ function renderRelationshipNetwork(){
  $('network-neighbor-list').innerHTML=linked.length?linked.map(v=>'<button type="button" class="network-neighbor-card" data-network-focus="'+esc(v.node.id)+'"><span class="network-neighbor-type"><i class="network-kind-dot '+v.node.kind+'"></i>'+esc(v.node.kindLabel)+' · '+v.score+' link points</span><strong>'+esc(v.node.name)+'</strong><small>'+esc(v.reasons.join(' · '))+'</small></button>').join(''):'<div class="network-neighbor-empty">No linked entities are indexed for this selection.</div>';
  renderNetworkSearchResults();
 }
-function renderIncidents(){
- $('incident-grid').innerHTML=INCIDENTS.map(i=>{
-  return '<article class="incident-card"><div class="incident-top"><span class="incident-year">'+esc(i.year)+'</span><span class="incident-status">'+esc(i.status)+'</span></div><h4>'+esc(i.title)+'</h4><p>'+esc(i.summary)+'</p><div class="incident-tags">'+i.tags.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-links">'+i.characters.map(n=>'<span class="entry-chip">'+esc(n)+'</span>').join('')+'</div><button type="button" class="open-entry-link" data-open-entry="'+esc(i.entry)+'">Open full lore entry ↗</button></article>';
+function getIncidentEntry(incident){return TIMELINE.find(entry=>entry.id===incident.entry);}
+function getIncidentLocations(incident){
+ const incidentTags=new Set((incident.tags||[]).map(tag=>String(tag).toLowerCase()));
+ return LOCATIONS.map(location=>{
+  const entryMatch=(location.entries||[]).includes(incident.entry);
+  const sharedCharacters=(incident.characters||[]).filter(name=>(location.characters||[]).includes(name));
+  const sharedTags=(location.tags||[]).filter(tag=>incidentTags.has(String(tag).toLowerCase()));
+  return {location,entryMatch,sharedCharacters,sharedTags,score:sharedCharacters.length*5+sharedTags.length*2+(entryMatch?3:0)};
+ }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score||a.location.name.localeCompare(b.location.name)).slice(0,6);
+}
+function getIncidentThreads(incident){return LORE_THREADS.filter(thread=>(thread.entries||[]).includes(incident.entry));}
+function renderIncidentDetail(incident){
+ const panel=$('incident-detail');
+ if(!incident){
+  panel.innerHTML='<div class="incident-detail-kicker">NO INCIDENT SELECTED</div><h4 class="incident-detail-title">Nothing matches this view</h4><p class="incident-detail-summary">Change your search or year range, or turn off “Saved only” to see the other indexed incidents.</p>';
+  return;
+ }
+ const entry=getIncidentEntry(incident),locations=getIncidentLocations(incident),threads=getIncidentThreads(incident),saved=incidentFavorites.includes(incident.title);
+ const cast=(incident.characters||[]).map(name=>{
+  const exists=CHARACTERS.some(character=>character.name===name);
+  if(exists)return '<button type="button" class="incident-person" data-network-focus="character:'+esc(name)+'"><i class="incident-mini-dot"></i><span>'+esc(name)+'<small>Open in relationship network</small></span></button>';
+  return '<div class="incident-person"><i class="incident-mini-dot"></i><span>'+esc(name)+'</span></div>';
  }).join('');
+ const placeCards=locations.map(item=>{
+  const l=item.location;
+  const evidence=[item.entryMatch?'Shared game/story entry':null,item.sharedCharacters.length?'Shared cast: '+item.sharedCharacters.slice(0,2).join(', '):null,item.sharedTags.length?'Shared tags: '+item.sharedTags.slice(0,2).join(', '):null].filter(Boolean).join(' · ');
+  return '<button type="button" class="incident-place-link" data-open-location="'+esc(l.id)+'"><i class="incident-mini-dot" style="background:#72b59b"></i><span>'+esc(l.name)+'<small>'+esc(evidence||l.status)+'</small></span></button>';
+ }).join('');
+ const threadCards=threads.map(thread=>'<article class="incident-thread-card"><strong>'+esc(thread.title)+'</strong><p>'+esc(thread.label)+' · '+esc(thread.text)+'</p></article>').join('');
+ const tagMarkup=(incident.tags||[]).map(tag=>'<span>'+esc(tag)+'</span>').join('');
+ panel.innerHTML='<div class="incident-detail-top"><div><div class="incident-detail-kicker">INCIDENT DOSSIER · '+esc(entry?.code||incident.entry.toUpperCase())+'</div><h4 class="incident-detail-title">'+esc(incident.title)+'</h4></div><button type="button" class="incident-tool-button" data-incident-favorite="'+esc(incident.title)+'" aria-pressed="'+String(saved)+'">'+(saved?'★ Saved':'☆ Save')+'</button></div><p class="incident-detail-summary">'+esc(incident.summary)+'</p><div class="incident-detail-meta"><span>'+esc(incident.year)+'</span><span>'+esc(entry?.title||'Related archive entry')+'</span><span>'+esc(incident.status)+'</span></div><section class="incident-detail-section"><h5>Key participants · '+(incident.characters||[]).length+'</h5><div class="incident-cast-list">'+(cast||'<div class="shelf-empty">No participants indexed.</div>')+'</div></section><section class="incident-detail-section"><h5>Related places in the map index</h5><div class="incident-place-list">'+(placeCards||'<div class="shelf-empty">No places are currently cross-linked to this incident.</div>')+'</div><p class="incident-source-note">Places are ranked from shared story entries, named characters, and tags in this archive. This is an index connection, not a full scene-by-scene location claim.</p></section><section class="incident-detail-section"><h5>Incident keywords</h5><div class="incident-tag-list">'+(tagMarkup||'<span>No tags indexed</span>')+'</div></section><section class="incident-detail-section"><h5>Related lore threads</h5><div class="incident-thread-list">'+(threadCards||'<div class="shelf-empty">No lore thread directly indexes this entry yet.</div>')+'</div></section><div class="incident-detail-source">'+(entry?'<button type="button" class="open-entry-link" data-open-entry="'+esc(incident.entry)+'">Open full lore entry · '+esc(entry.code)+' ↗</button>':'')+'</div><p class="incident-source-note">Incident descriptions are concise paraphrases. Route-specific details and endings can differ in Touhou games with multiple character routes.</p>';
+}
+function renderIncidents(){
+ const q=($('incident-search').value||'').trim().toLowerCase(),range=$('incident-era-filter').value||'all',sort=$('incident-sort').value||'oldest';
+ let visible=INCIDENTS.filter(incident=>{
+  const year=Number(incident.year);
+  if(showIncidentFavoritesOnly&&!incidentFavorites.includes(incident.title))return false;
+  if(range==='early'&&(year<2002||year>2005))return false;
+  if(range==='middle'&&(year<2006||year>2013))return false;
+  if(range==='recent'&&(year<2014||year>2025))return false;
+  const entry=getIncidentEntry(incident);
+  return [incident.title,incident.summary,incident.year,incident.status,incident.entry,entry?.title,entry?.code,...(incident.characters||[]),...(incident.tags||[])].join(' ').toLowerCase().includes(q);
+ });
+ visible.sort((a,b)=>sort==='newest'?(Number(b.year)-Number(a.year)||a.title.localeCompare(b.title)):sort==='title'?a.title.localeCompare(b.title):(Number(a.year)-Number(b.year)||a.title.localeCompare(b.title)));
+ if(!visible.some(item=>item.title===activeIncidentTitle))activeIncidentTitle=visible[0]?.title||'';
+ $('incident-total-count').textContent=String(INCIDENTS.length);
+ $('incident-visible-count').textContent=String(visible.length);
+ $('incident-saved-count').textContent=String(incidentFavorites.length);
+ $('incident-archive-count').textContent=visible.length+' of '+INCIDENTS.length+' incidents shown'+(showIncidentFavoritesOnly?' · saved filter on':'');
+ $('incident-favorites-toggle').setAttribute('aria-pressed',String(showIncidentFavoritesOnly));
+ $('incident-favorites-toggle').textContent=showIncidentFavoritesOnly?'★ Saved only':'☆ Saved only';
+ $('incident-grid').innerHTML=visible.length?visible.map(incident=>{
+  const entry=getIncidentEntry(incident),active=incident.title===activeIncidentTitle,saved=incidentFavorites.includes(incident.title);
+  return '<article class="incident-card'+(active?' is-active':'')+'"><button type="button" class="incident-card-select" data-select-incident="'+esc(incident.title)+'" aria-pressed="'+String(active)+'"><div class="incident-top"><span class="incident-year">'+esc(incident.year)+' · '+esc(entry?.code||incident.entry.toUpperCase())+'</span><span class="incident-status">'+esc(incident.status)+'</span></div><h4>'+esc(incident.title)+'</h4><p>'+esc(incident.summary)+'</p><div class="incident-tags">'+(incident.tags||[]).map(tag=>'<span>'+esc(tag)+'</span>').join('')+'</div><div class="incident-source-note">'+(incident.characters||[]).length+' indexed participants</div></button><div class="incident-card-actions"><button type="button" class="incident-card-action" data-incident-favorite="'+esc(incident.title)+'" aria-pressed="'+String(saved)+'">'+(saved?'★ Saved':'☆ Save incident')+'</button>'+(entry?'<button type="button" class="incident-card-action" data-open-entry="'+esc(incident.entry)+'">Open lore entry ↗</button>':'')+'</div></article>';
+ }).join(''):'<div class="incident-empty">No incidents match these filters. Try another title or year range, or reset the archive view.</div>';
+ renderIncidentDetail(INCIDENTS.find(item=>item.title===activeIncidentTitle)||null);
 }
 function renderThreads(){
  $('thread-list').innerHTML=LORE_THREADS.map(t=>{
@@ -1417,6 +1469,20 @@ $('clear-filters').addEventListener('click',()=>{filters.game=filters.print=filt
 $('search').addEventListener('input',event=>{searchText=event.target.value;renderTimeline();});
 $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value;renderTimeline();});
 $('character-search').addEventListener('input',renderCharacterAtlas);
+$('incident-search').addEventListener('input',renderIncidents);
+$('incident-era-filter').addEventListener('change',renderIncidents);
+$('incident-sort').addEventListener('change',renderIncidents);
+$('incident-reset').addEventListener('click',()=>{
+ $('incident-search').value='';
+ $('incident-era-filter').value='all';
+ $('incident-sort').value='oldest';
+ showIncidentFavoritesOnly=false;
+ renderIncidents();
+});
+$('incident-favorites-toggle').addEventListener('click',()=>{
+ showIncidentFavoritesOnly=!showIncidentFavoritesOnly;
+ renderIncidents();
+});
 $('network-search').addEventListener('input',renderNetworkSearchResults);
 $('network-kind-filter').addEventListener('change',renderNetworkSearchResults);
 $('relationship-graph').addEventListener('keydown',event=>{const node=event.target.closest('[data-network-focus]');if(node&&(event.key==='Enter'||event.key===' ')){event.preventDefault();activeNetworkFocus=node.dataset.networkFocus;renderRelationshipNetwork();}});
@@ -1434,8 +1500,14 @@ document.addEventListener('keydown',event=>{if(!selectedId)return;if(event.key==
 $('archive-tools').addEventListener('click',event=>{
  const tab=event.target.closest('[data-tool-tab]');
  if(tab){activeToolTab=tab.dataset.toolTab;updateToolTabs();return;}
+ const selectIncident=event.target.closest('[data-select-incident]');
+ if(selectIncident){activeIncidentTitle=selectIncident.dataset.selectIncident;renderIncidents();return;}
+ const incidentFavorite=event.target.closest('[data-incident-favorite]');
+ if(incidentFavorite){toggleIncidentFavorite(incidentFavorite.dataset.incidentFavorite);return;}
+ const openLocation=event.target.closest('[data-open-location]');
+ if(openLocation){activeLocation=openLocation.dataset.openLocation;activeToolTab='map';updateToolTabs();renderMapDetail();$('map-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
  const networkFocus=event.target.closest('[data-network-focus]');
- if(networkFocus){activeNetworkFocus=networkFocus.dataset.networkFocus;renderRelationshipNetwork();return;}
+ if(networkFocus){activeNetworkFocus=networkFocus.dataset.networkFocus;activeToolTab='network';renderRelationshipNetwork();updateToolTabs();return;}
  const favorite=event.target.closest('[data-toggle-place-favorite]');
  if(favorite){toggleMapFavorite(favorite.dataset.togglePlaceFavorite);return;}
  const pin=event.target.closest('[data-location]');
