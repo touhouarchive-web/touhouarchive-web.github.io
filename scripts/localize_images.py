@@ -266,6 +266,330 @@ for url in [MOF_LB_COVER, MOF_LB_GAMEPLAY, MOF_LB_BG]:
     URL_CREDIT.setdefault(url, {"source_page": MOF_LB_PAGE, "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith", "alt": "Touhou 10 game artwork."})
 
 
+
+# A researched pool of distinct, subject-matched images gathered from each game's
+# LaunchBox media gallery, official Steam store pages, official Touhou promotional
+# material, and publisher/retailer book listings. A selected URL is used only once
+# outside the character portraits, preventing duplicated non-character artwork.
+DIVERSE_IMAGE_CATALOG: list[dict[str, str]] = []
+_CATALOG_IMAGE_KEYS: set[str] = set()
+
+
+def _image_identity(url: str) -> str:
+    parts = urlsplit(url)
+    return parts.netloc.lower() + unquote(parts.path)
+
+
+def register_game_gallery(game: str, title: str, page: str, images: list[tuple[str, str]]) -> None:
+    for url, label in images:
+        identity = _image_identity(url)
+        if identity in _CATALOG_IMAGE_KEYS:
+            continue
+        _CATALOG_IMAGE_KEYS.add(identity)
+        lower_label = label.lower()
+        if "screenshot" in lower_label:
+            kind = "screenshot"
+            alt = f"{label} from {title}."
+        elif "fanart - background" in lower_label:
+            kind = "background"
+            alt = f"Community-contributed background artwork catalogued for {title}."
+        elif "clear logo" in lower_label:
+            kind = "logo"
+            alt = f"Game logo artwork for {title}."
+        elif "disc" in lower_label:
+            kind = "disc"
+            alt = f"Disc artwork for {title}."
+        elif "box" in lower_label:
+            kind = "cover"
+            alt = f"Game packaging artwork for {title}."
+        elif "banner" in lower_label:
+            kind = "background"
+            alt = f"Banner artwork for {title}."
+        else:
+            kind = "artwork"
+            alt = f"Game artwork catalogued for {title}."
+        record = {
+            "url": url, "source_page": page,
+            "credit": f"LaunchBox Games Database — {title}",
+            "game": game, "kind": kind, "alt": alt,
+            "label": label, "title": title,
+        }
+        DIVERSE_IMAGE_CATALOG.append(record)
+        URL_CREDIT[url] = {
+            "source_page": page, "credit": record["credit"], "alt": alt
+        }
+
+
+def register_custom_image(url: str, page: str, credit: str, game: str, kind: str, alt: str) -> None:
+    identity = _image_identity(url)
+    if identity in _CATALOG_IMAGE_KEYS:
+        return
+    _CATALOG_IMAGE_KEYS.add(identity)
+    record = {
+        "url": url, "source_page": page, "credit": credit,
+        "game": game, "kind": kind, "alt": alt,
+        "label": kind, "title": credit,
+    }
+    DIVERSE_IMAGE_CATALOG.append(record)
+    URL_CREDIT[url] = {"source_page": page, "credit": credit, "alt": alt}
+
+
+register_game_gallery("th01", "Touhou 1: Highly Responsive to Prayers",
+    "https://gamesdb.launchbox-app.com/games/images/72360-touhou-01-the-highly-responsive-to-prayers", [
+    (PC98_COVER, "Box - Front (Japan)"), (PC98_GAMEPLAY, "Screenshot - Gameplay (World)"),
+    ("https://images.launchbox-app.com/7ffb213e-7532-44a7-afdc-b6edaed8afa5.png", "Fanart - Background"),
+    ("https://images.launchbox-app.com/376c2162-6416-4095-b351-decd11073032.png", "Box - 3D"),
+    ("https://images.launchbox-app.com/d54f1a2d-767a-438a-ae2a-3cf10615ba52.png", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/df3d8eca-408d-4abe-8e1d-a7c5b53626ee.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/39a45dac-81ee-4075-8717-9ab9fbf71c32.jpg", "Screenshot - Game Title"),
+    ("https://images.launchbox-app.com/97d47218-3b70-42dc-8e98-c9d2845e3496.png", "Screenshot - Gameplay"),
+])
+register_game_gallery("th02", "Touhou 2: The Story of Eastern Wonderland",
+    "https://gamesdb.launchbox-app.com/games/images/75780-touhou-02-the-story-of-eastern-wonderland", [
+    ("https://images.launchbox-app.com/r2_f362b8ea-e9c5-4cd4-9aa9-f8ee2237b6c6.png", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/40336462-1c4f-4d7f-b6ce-ead01d3d9144.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/0363e6f7-8295-472b-8faf-5bc8577f7790.png", "Box - 3D"),
+    ("https://images.launchbox-app.com/ccf7d764-4975-4c7c-b4f7-95aefc79f01c.png", "Fanart - Disc"),
+    ("https://images.launchbox-app.com/2f83cfed-bede-47c0-ac59-242ebe86ffe1.png", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/d67b9edd-d9a2-47b1-9289-6ff3f6061d24.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/1f85d319-4765-4a38-9d83-d561703dd66e.jpg", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/3b48af0f-d574-4e52-8933-429cdabd184c.jpg", "Screenshot - Game Title"),
+    ("https://images.launchbox-app.com/159fda35-062e-4693-afdd-ad89f3b836e7.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/9cde24eb-155a-47ff-b229-e96ecf5b6fad.jpg", "Fanart - Box - Front"),
+])
+register_game_gallery("th03", "Touhou 3: Phantasmagoria of Dim.Dream",
+    "https://gamesdb.launchbox-app.com/games/images/75781-touhou-03-phantasmagoria-of-dimdream", [
+    ("https://images.launchbox-app.com/r2_8471b6ea-d2f2-4600-88da-7482f0e83de1.png", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/9d54534e-995a-4e8b-a836-99e0b567b826.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/18d5e2df-758b-4d27-98c0-aab27fcd66e6.png", "Box - 3D"),
+    ("https://images.launchbox-app.com/fa63b590-db7a-41a1-86e8-8626423f7389.jpg", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/b82e64ae-6f7d-48ac-9db5-f3b801fdc55c.png", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/f00788d1-0691-434a-99a2-99d2f778bba6.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/7af044e3-b58d-49b7-af24-3837153eb2e4.png", "Disc"),
+    ("https://images.launchbox-app.com/5017632e-b98a-4e6a-8ef6-2f8c5983c73c.png", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/9d43dc89-7857-4f79-8bee-fe9567154c85.png", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/f2681c2d-0a5f-4150-8d32-aed10d157547.png", "Screenshot - Gameplay (Japan)"),
+    ("https://images.launchbox-app.com/9c0b2f68-279b-4741-8796-e5cf9638902d.png", "Screenshot - Game Title (Japan)"),
+])
+register_game_gallery("th04", "Touhou 4: Lotus Land Story",
+    "https://gamesdb.launchbox-app.com/games/images/75782-touhou-04-lotus-land-story", [
+    ("https://images.launchbox-app.com/r2_1c489ae8-691a-4f9e-b146-b22b43a9ff96.png", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/b93ce9fb-4f10-49dc-8d5b-907496c063f5.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/73c2dce6-d6fc-414b-8c1b-dd51713059dd.png", "Disc"),
+    ("https://images.launchbox-app.com/4da11e0d-c419-4df4-83bc-00fb8bf36b05.jpg", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/21cbb711-ee12-40de-b5d6-cb9f4590b426.png", "Clear Logo (Japan)"),
+    ("https://images.launchbox-app.com/5ae92120-6b83-4b73-90b7-1d95df5aaa96.png", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/1fc2640f-fcad-4b0b-9e78-e209001222e1.png", "Screenshot - Game Title"),
+    ("https://images.launchbox-app.com/ccf1aa42-55ae-4e30-84a2-f4912208c591.png", "Clear Logo (Japan)"),
+    ("https://images.launchbox-app.com/3ed38ed1-0565-4a37-87c7-edb8a268d5cb.png", "Box - 3D"),
+    ("https://images.launchbox-app.com/60081925-92a7-4348-9816-cb5845d49abe.png", "Fanart - Box - Front"),
+])
+register_game_gallery("th05", "Touhou 5: Mystic Square",
+    "https://gamesdb.launchbox-app.com/games/images/75783-touhou-05-mystic-square", [
+    ("https://images.launchbox-app.com/r2_fc7d778b-d67a-4e1a-b42e-460ab98d411f.png", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/d7793dc7-8b6c-4947-8acd-40284dd9ab4a.png", "Fanart - Background"),
+    ("https://images.launchbox-app.com/3a9bd4b9-c9e5-4ad2-9ba8-d475a4f8ecc3.png", "Disc"),
+    ("https://images.launchbox-app.com/37615073-baec-4942-945e-52ffeb0091d2.png", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/d69abd07-c39f-40c7-b3c4-9ed46539b90c.png", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/c983a6d2-4fb0-43c5-9844-475318d3cdbe.png", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/6d2f391e-ca4a-4b67-b0ff-a29788a42a3e.png", "Screenshot - Game Select"),
+    ("https://images.launchbox-app.com/16910fd9-e885-4e9a-be8c-8b8a375e2979.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/71d1c053-77c9-4b76-940c-4d2ce2fc2113.png", "Box - 3D"),
+    ("https://images.launchbox-app.com/2d684c91-3a99-4b5c-bb90-819a2e58bae2.png", "Fanart - Box - Front"),
+    ("https://images.launchbox-app.com/95a76c34-24eb-45f1-979c-9dd9ede6f2b1.jpg", "Screenshot - Game Title"),
+])
+register_game_gallery("th06", "Touhou 6: Embodiment of Scarlet Devil",
+    EOSD_LB_PAGE, [
+    (EOSD_COVER, "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/f84901d7-9ba7-44fe-979f-1cd79ef1d941.png", "Clear Logo (World)"),
+    (EOSD_GAMEPLAY, "Screenshot - Gameplay (Japan)"),
+    (EOSD_GAMEPLAY_ALT, "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/1da13c92-9a5d-4bc7-8328-9432948f9e64.png", "Disc (World)"),
+    (EOSD_GAMESELECT, "Screenshot - Game Select (Japan)"),
+    ("https://images.launchbox-app.com/6e456ffd-bf5b-4560-a5d2-8a6b425613d1.jpg", "Box - Spine (Japan)"),
+    ("https://images.launchbox-app.com/306ef84c-41af-4e6f-8563-3438d807c890.jpg", "Box - Back (Japan)"),
+    (EOSD_BG_1, "Fanart - Background (World)"),
+    (EOSD_GAMEOVER, "Screenshot - Game Over (Japan)"),
+    ("https://images.launchbox-app.com/5da9a32f-4df7-4261-ad4e-522a65ec6e7e.jpg", "Clear Logo (World)"),
+    (EOSD_BG_2, "Fanart - Background (World)"),
+    (EOSD_TITLE, "Screenshot - Game Title (Japan)"),
+])
+register_game_gallery("th07", "Touhou 7: Perfect Cherry Blossom",
+    PCB_LB_PAGE, [
+    (PCB_COVER, "Box - Front"),
+    ("https://images.launchbox-app.com/8cd7c38e-6234-4329-8209-fedb53d5ccbc.png", "Clear Logo (World)"),
+    (PCB_GAMEPLAY, "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/7fc1f60e-d20c-4439-be9e-06fe5f3e8230.jpg", "Box - Back (Japan)"),
+    (PCB_BG, "Fanart - Background"),
+    ("https://images.launchbox-app.com/179242cc-62a1-42f5-8ec4-e3200c65e048.jpg", "Disc (World)"),
+    ("https://images.launchbox-app.com/3f5bd783-f3be-411b-9066-6e140f648a88.jpg", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/393f9894-3bfb-4c5d-8230-a15a889ae137.png", "Fanart - Background"),
+    ("https://images.launchbox-app.com/3b126a2b-6153-4a66-b615-e58eeb3dab46.png", "Box - Spine (Japan)"),
+])
+register_game_gallery("th08", "Touhou 8: Imperishable Night",
+    IN_LB_PAGE, [
+    (IN_COVER, "Box - Front"),
+    ("https://images.launchbox-app.com/c445d03d-da65-44d7-94bc-331efe527ce6.png", "Clear Logo (World)"),
+    (IN_GAMEPLAY, "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/r2_def09171-30ce-48b0-9ea5-cfcaf4c3b3d2.jpg", "Box - Spine (Japan)"),
+    ("https://images.launchbox-app.com/r2_a535007e-225b-4ca8-a181-0a13864b346e.jpg", "Box - Back (Japan)"),
+    (IN_BG, "Fanart - Background"),
+    ("https://images.launchbox-app.com/bc84f681-3ee3-476d-9a4e-86688f1689ba.jpg", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/cc985d03-e1ed-4b2a-862f-2d3df105bcc8.png", "Disc (World)"),
+])
+register_game_gallery("th09", "Touhou 9: Phantasmagoria of Flower View",
+    "https://gamesdb.launchbox-app.com/games/images/7352-touhou-09-phantasmagoria-of-flower-view", [
+    ("https://images.launchbox-app.com/f13f52a0-b6cb-46fa-8328-1f7298062df6.png", "Box - Front (World)"),
+    ("https://images.launchbox-app.com/eb6edcbf-e335-45f1-8488-beb60b0d84e4.png", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/b113889b-6fb0-48fd-9b94-8f927dfab69f.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/e4473ad7-980a-49cf-b4f4-6d1a82fe2494.jpg", "Box - Back (Japan)"),
+    ("https://images.launchbox-app.com/r2_2c20686d-11eb-4054-9004-d45322edd20f.jpg", "Fanart - Background (World)"),
+    ("https://images.launchbox-app.com/ef6e9850-463f-499d-9800-cdea07c511e6.png", "Disc (Japan)"),
+    ("https://images.launchbox-app.com/50a19648-6d61-4abc-bc3c-6cca5aea9f4c.jpg", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/852e2a6d-9080-4e42-bd75-f23744f9ff4c.png", "Fanart - Background"),
+    ("https://images.launchbox-app.com/f61073df-7220-404e-919a-2f2033235dd2.png", "Box - Spine (Japan)"),
+])
+register_game_gallery("th10", "Touhou 10: Mountain of Faith",
+    MOF_LB_PAGE, [
+    (MOF_LB_COVER, "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/1b4e1ae8-3e05-4c96-aad5-ec08502d14dd.png", "Clear Logo (World)"),
+    (MOF_LB_GAMEPLAY, "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/72bfd9ca-a729-40ef-b94a-cc2f2becbd16.png", "Disc (Japan)"),
+    ("https://images.launchbox-app.com/r2_7bb06148-68f2-48d0-ba90-d7c64c28d457.jpg", "Box - Back (Japan)"),
+    (MOF_LB_BG, "Fanart - Background"),
+    ("https://images.launchbox-app.com/5ed6c12b-5d00-4b7e-840d-5b5c0681f190.jpg", "Box - Spine (Japan)"),
+    ("https://images.launchbox-app.com/r2_85219efc-1854-4105-bac7-cca14ba5021c.jpg", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/9629bfc6-e2a9-41db-8a1e-068f817ed586.png", "Screenshot - Gameplay"),
+])
+register_game_gallery("th11", "Touhou 11: Subterranean Animism",
+    "https://gamesdb.launchbox-app.com/games/images/7365-touhou-11-subterranean-animism", [
+    ("https://images.launchbox-app.com/2a7d7a65-4b98-4771-a18b-29ef85d24dc4.jpg", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/ed51dbbd-a68b-4818-ad34-fb74e851345d.png", "Clear Logo (Japan)"),
+    ("https://images.launchbox-app.com/192c70c9-039f-4f39-acf3-7ff621646183.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/r2_8973029a-691b-4592-95c7-51cc9d763066.png", "Disc (Japan)"),
+    ("https://images.launchbox-app.com/r2_6152dd91-4a6f-40f2-b32f-d84f22ed0ff2.jpg", "Box - Back (Japan)"),
+    ("https://images.launchbox-app.com/31d1e925-0304-4260-8cbd-706f37235df3.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/a32a22a5-5b9f-4c96-b7d2-3ebc12b08005.jpg", "Box - Spine (Japan)"),
+    ("https://images.launchbox-app.com/r2_8e1c0e54-41b1-4a3a-9f20-dc765603b576.jpg", "Clear Logo (Japan)"),
+])
+register_game_gallery("th12", "Touhou 12: Undefined Fantastic Object",
+    "https://gamesdb.launchbox-app.com/games/images/7366-touhou-12-undefined-fantastic-object", [
+    ("https://images.launchbox-app.com/a40d949e-136e-4ac5-98f1-38b94f58fe56.jpg", "Box - Front (World)"),
+    ("https://images.launchbox-app.com/a5add165-84af-49e5-bd6d-100606f81c3e.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/e6df00a4-a4f4-484e-b134-e7b840430290.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/6eacf4ac-e6af-48f1-aea6-06ac70054ad3.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/r2_5e9ba65a-ccac-494d-bb9d-0ef7ae20840a.png", "Box - Back (Japan)"),
+    ("https://images.launchbox-app.com/dba94e49-f464-46f8-adbb-ba7bcd6a1ccc.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/c0ee32fa-d5fb-4955-8ae8-21739389ab23.jpg", "Disc (Japan)"),
+    ("https://images.launchbox-app.com/r2_005c9e9a-8a5d-4dcd-af17-c8bb598da2cf.png", "Clear Logo (World)"),
+])
+register_game_gallery("th13", "Touhou 13: Ten Desires",
+    "https://gamesdb.launchbox-app.com/games/images/7371-touhou-13-ten-desires", [
+    ("https://images.launchbox-app.com/df5259c7-2df7-4d64-9f23-7db53e44df3a.jpg", "Box - Front"),
+    ("https://images.launchbox-app.com/66ff1f67-265d-4fc1-8c08-7c4398c68724.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/ce5b770d-67e7-4cf3-9a4f-6357ad99c920.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/4a20b9b9-c2ee-419a-8a13-f98599f0674d.png", "Clear Logo (World)"),
+    ("https://images.launchbox-app.com/d0ceab18-5ab6-4033-9f9c-7b6214db9e7c.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/15830020-346f-4129-85f8-bbe210aa1e73.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/a95f5a80-ae22-4bec-995f-9e2e0cadfb75.jpg", "Screenshot - Gameplay"),
+])
+register_game_gallery("th14", "Touhou 14: Double Dealing Character",
+    "https://gamesdb.launchbox-app.com/games/images/24476-touhou-14-double-dealing-character", [
+    ("https://images.launchbox-app.com/2f967582-78ee-4b06-8943-080d0f1555d9.jpg", "Box - Front"),
+    ("https://images.launchbox-app.com/54bcaa61-f7a3-4de9-aabd-bdf7d194d9cb.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/ab2ac598-9b96-4602-9028-7283d658a623.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/0fafc98f-1465-411b-933b-156813130076.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/c93fb1c1-4876-4c82-9da9-eeba294cfb5a.jpg", "Fanart - Background (World)"),
+])
+register_game_gallery("th15", "Touhou 15: Legacy of Lunatic Kingdom",
+    "https://gamesdb.launchbox-app.com/games/images/31253-touhou-15-legacy-of-lunatic-kingdom", [
+    ("https://images.launchbox-app.com/abddfd82-544e-4e86-9f0a-48965b434752.jpg", "Box - Front"),
+    ("https://images.launchbox-app.com/d9012ecb-60ae-4e71-81eb-5dcfa062ecd8.jpg", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/a6c44234-bd64-4802-b16a-937db32f1366.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/3316e14c-33b3-4763-a5a6-89963f209d5f.jpg", "Fanart - Background (World)"),
+])
+register_game_gallery("th16", "Touhou 16: Hidden Star in Four Seasons",
+    "https://gamesdb.launchbox-app.com/games/images/84947-touhou-16-hidden-star-in-four-seasons", [
+    ("https://images.launchbox-app.com/74dcb163-38f2-4542-9964-6f1a45b43408.jpg", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/463ae839-4393-4719-965f-c819b74193eb.jpg", "Fanart - Background"),
+    ("https://images.launchbox-app.com/37d97647-6e12-4f5a-a7da-1278ac18cc63.png", "Clear Logo"),
+    ("https://images.launchbox-app.com/8f49ffa7-a471-4350-b9bf-2558b152128d.jpg", "Screenshot - Game Title"),
+    ("https://images.launchbox-app.com/ae222db7-b2ce-46cc-a0ac-c1f271253974.png", "Fanart - Background"),
+])
+register_game_gallery("th17", "Touhou 17: Wily Beast and Weakest Creature",
+    "https://gamesdb.launchbox-app.com/games/images/117033-touhou-17-wily-beast-and-weakest-creature", [
+    ("https://images.launchbox-app.com/c2d7a263-2410-4ce1-b04e-bb04bf696747.jpg", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/59ae4d43-a763-4700-833f-e60c510cc2c1.png", "Screenshot - Gameplay"),
+    ("https://images.launchbox-app.com/97c97026-c082-44db-affa-d30c523eabfa.jpg", "Banner"),
+    ("https://images.launchbox-app.com/62b21a6c-2ef1-4f4f-89e6-470771a835d8.png", "Clear Logo (Japan)"),
+    ("https://images.launchbox-app.com/6c0c264a-3b9b-4451-b154-68c3ed310792.png", "Screenshot - Game Title"),
+    ("https://images.launchbox-app.com/0103ec1b-5507-4c83-b9dc-cb2f3e85a848.png", "Fanart - Background"),
+    ("https://images.launchbox-app.com/3ffc2b49-0a69-4d12-abf6-2010fc5eb9ed.jpg", "Screenshot - Gameplay"),
+])
+register_game_gallery("th18", "Touhou 18: Unconnected Marketeers",
+    "https://gamesdb.launchbox-app.com/games/images/151407-touhou-18-unconnected-marketeers", [
+    ("https://images.launchbox-app.com/e48b6f94-e3bb-4ebf-b4ac-e40710cad170.jpg", "Box - Front (Japan)"),
+    ("https://images.launchbox-app.com/d661f383-4f38-4034-8a27-fd558e3dc7fe.jpg", "Screenshot - Gameplay (Japan)"),
+    ("https://images.launchbox-app.com/86da4998-b0c8-4b0f-95dd-40abdcc728f5.jpg", "Clear Logo (Japan)"),
+    ("https://images.launchbox-app.com/60139dc0-3d20-405d-9552-8fac41760544.png", "Screenshot - Game Title (Japan)"),
+    ("https://images.launchbox-app.com/3de03654-a136-4da2-9667-772af39eddf1.jpg", "Screenshot - Gameplay (Japan)"),
+    ("https://images.launchbox-app.com/beedb004-2a65-460a-97b1-bf6e1b2bbed4.png", "Screenshot - Gameplay (Japan)"),
+    ("https://images.launchbox-app.com/5ec4fd11-26e4-49da-84e5-ce35a2460c36.jpg", "Screenshot - Gameplay (Japan)"),
+])
+
+# Individual print-work covers from their publisher/retailer pages keep bibliography
+# cards distinct as well as being a better fit than reusing game art.
+register_custom_image(PMISS_COVER, "https://www.neowing.co.jp/product/NEOBK-395940",
+    "Neowing — Perfect Memento in Strict Sense", "print", "cover",
+    "Cover of Perfect Memento in Strict Sense, an official Touhou reference book.")
+register_custom_image(FORBIDDEN_SCROLLERY, "https://yenpress.com/titles/9780316511971-forbidden-scrollery-vol-1",
+    "Yen Press — Forbidden Scrollery, Vol. 1", "print", "cover",
+    "Publisher cover for Forbidden Scrollery, volume 1.")
+register_custom_image("https://images.yenpress.com/imgs/9780316512008.jpg?w=408&h=612&type=books&s=876b2917f3191483c6d19bba743f8452",
+    "https://yenpress.com/titles/9780316512008-forbidden-scrollery-vol-2",
+    "Yen Press — Forbidden Scrollery, Vol. 2", "print", "cover",
+    "Publisher cover for Forbidden Scrollery, volume 2.")
+register_custom_image("https://images.yenpress.com/imgs/9780316512015.jpg?w=285&h=422&type=books&s=701d506b9563326056ce3133a8252411",
+    "https://yenpress.com/series/forbidden-scrollery", "Yen Press — Forbidden Scrollery, Vol. 3",
+    "print", "cover", "Publisher cover for Forbidden Scrollery, volume 3.")
+register_custom_image("https://images.yenpress.com/imgs/9780316512039.jpg?w=285&h=422&type=books&s=8d2060290f2b4eb5e1df7d79d2f70c1c",
+    "https://yenpress.com/series/forbidden-scrollery", "Yen Press — Forbidden Scrollery, Vol. 4",
+    "print", "cover", "Publisher cover for Forbidden Scrollery, volume 4.")
+register_custom_image("https://images.yenpress.com/imgs/9780316512084.jpg?w=285&h=422&type=books&s=905b389fd900e24bd0eb3f884c734bee",
+    "https://yenpress.com/series/forbidden-scrollery", "Yen Press — Forbidden Scrollery, Vol. 5",
+    "print", "cover", "Publisher cover for Forbidden Scrollery, volume 5.")
+register_custom_image("https://images.yenpress.com/imgs/9780316512091.jpg?w=285&h=422&type=books&s=0c564290b8756033095b51c7a17c746d",
+    "https://yenpress.com/series/forbidden-scrollery", "Yen Press — Forbidden Scrollery, Vol. 6",
+    "print", "cover", "Publisher cover for Forbidden Scrollery, volume 6.")
+register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758012317.jpg?v=1722506606&width=800",
+    "https://shop.akbh.jp/en/products/9784758012317",
+    "AKIBA-HOBBY — Symposium of Post-mysticism", "print", "cover",
+    "Retail cover for Symposium of Post-mysticism, an official Touhou reference book.")
+register_custom_image(SILENT_SINNER, "https://shop.akbh.jp/en/products/9784758060899",
+    "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 1", "print", "cover",
+    "Retail cover for Silent Sinner in Blue, volume 1.")
+
+# Official visuals remain in the source pool, but each one is assigned to at most
+# one non-character image slot.
+for _url, _label, _kind, _alt in [
+    (COVER, "Touhou New Classic — official cover", "cover", "Official Touhou Koumakyou: New Classic cover artwork."),
+    (SHOT_NEW, "Touhou New Classic — gameplay screenshot", "screenshot", "Official Touhou New Classic gameplay screenshot."),
+    (SHOT_SYSTEM, "Touhou New Classic — system screenshot", "screenshot", "Official Touhou New Classic gameplay/system screenshot."),
+    (SHOT_CLASSIC, "Touhou New Classic — classic screenshot", "screenshot", "Official Touhou New Classic classic-mode screenshot."),
+    (TITLE_LOGO, "Touhou New Classic — title logo", "logo", "Official Touhou New Classic title artwork."),
+    (MOON_BG, "Touhou New Classic — moon background", "background", "Moonlit atmospheric artwork from the official Touhou New Classic site."),
+    (FOG_1, "Touhou New Classic — mist background", "background", "Atmospheric background artwork from the official Touhou New Classic site."),
+    (FOG_3, "Touhou New Classic — mist background", "background", "Atmospheric background artwork from the official Touhou New Classic site."),
+    (FOG_4, "Touhou New Classic — mist background", "background", "Atmospheric background artwork from the official Touhou New Classic site."),
+    (MOF_BG, "Steam — Mountain of Faith", "background", "Official Mountain of Faith store background artwork."),
+    (MOF_HEADER, "Steam — Mountain of Faith", "cover", "Official Mountain of Faith header artwork."),
+    (MOF_COMMUNITY, "Steam — Mountain of Faith", "artwork", "Mountain of Faith community artwork hosted on Steam."),
+]:
+    register_custom_image(_url, OFFICIAL_PAGE if _url in [COVER, SHOT_NEW, SHOT_SYSTEM, SHOT_CLASSIC, TITLE_LOGO, MOON_BG, FOG_1, FOG_3, FOG_4] else MOF_PAGE,
+        _label, "th06" if _url in [COVER, SHOT_NEW, SHOT_SYSTEM, SHOT_CLASSIC, TITLE_LOGO, MOON_BG, FOG_1, FOG_3, FOG_4] else "th10",
+        _kind, _alt)
+
+
 IMG_TAG_RE = re.compile(r"<img\b[^>]*>", re.IGNORECASE | re.DOTALL)
 IMG_SRC_RE = re.compile(r'\bsrc\s*=\s*(["\'])(.*?)\1', re.IGNORECASE | re.DOTALL)
 CSS_URL_RE = re.compile(r'url\(\s*(?P<quote>["\']?)(?P<url>https?://[^)"\']+)(?P=quote)\s*\)', re.IGNORECASE)
@@ -526,23 +850,224 @@ def apply_context_overrides(relative_path: str, content: str) -> str:
     return content
 
 
+
+CHARACTER_FILES = {
+    "Th06Reimu.png", "Th105Reimu.png", "Th06Marisa.png",
+    "Th06Cirno.png", "Th06Meiling.png", "Th06Flandre.png",
+    "Th06Remilia.png", "Th105Aya.png", "Th10KanakoYasaka.png",
+}
+CARD_OR_FIGURE_RE = re.compile(
+    r'<article\b[^>]*class=["\'][^"\']*\barchive-card\b[^"\']*["\'][^>]*>[\s\S]*?</article>|<figure\b[\s\S]*?</figure>',
+    re.IGNORECASE,
+)
+SOURCE_ANCHOR_RE = re.compile(
+    r'<a\s+href="https://en\.touhouwiki\.net/wiki/File:[^"]+"[^>]*>[\s\S]*?</a>',
+    re.IGNORECASE,
+)
+GAME_CONTEXT_RULES = [
+    (("highly responsive to prayers", "pc-98", "pc98 era"), ("th01", "th02", "th03", "th04", "th05")),
+    (("story of eastern wonderland", "eastern wonderland"), ("th02",)),
+    (("phantasmagoria of dim", "dim.dream"), ("th03",)),
+    (("lotus land story",), ("th04",)),
+    (("mystic square",), ("th05",)),
+    (("embodiment of scarlet devil", "scarlet devil mansion", "scarlet mist", "misty lake", "eosd"), ("th06",)),
+    (("perfect cherry blossom", "hakugyokurou", "netherworld", "missing spring"), ("th07",)),
+    (("imperishable night", "bamboo forest", "eientei"), ("th08",)),
+    (("phantasmagoria of flower view", "flower view"), ("th09",)),
+    (("mountain of faith", "moriya shrine", "youkai mountain"), ("th10",)),
+    (("subterranean animism", "hell", "underground", "geyser"), ("th11",)),
+    (("undefined fantastic object", "treasure ship", "ufo"), ("th12",)),
+    (("ten desires", "divine spirit"), ("th13",)),
+    (("double dealing character", "miracle mallet", "tsukumogami"), ("th14",)),
+    (("legacy of lunatic kingdom", "lunarian", "lunatic kingdom"), ("th15",)),
+    (("hidden star in four seasons", "four seasons", "seasonal"), ("th16",)),
+    (("wily beast", "beast spirits", "animal spirits"), ("th17",)),
+    (("unconnected marketeers", "ability cards", "mysterious cards"), ("th18",)),
+    (("perfect memento", "forbidden scrollery", "print works", "bohemian archive", "symposium of post-mysticism", "silent sinner"), ("print",)),
+]
+
+
+def is_character_reference(url: str) -> bool:
+    name = wiki_filename(url)
+    return bool(name and name in CHARACTER_FILES)
+
+
+def _context_game(context: str, relative_path: str) -> tuple[str, ...]:
+    lower = html.unescape(re.sub(r"<[^>]+>", " ", context)).lower()
+    for phrases, games in GAME_CONTEXT_RULES:
+        if any(phrase in lower for phrase in phrases):
+            return games
+    basename = Path(relative_path).name.lower()
+    if "chronology" in basename:
+        return ("th01", "th02", "th03", "th04", "th05", "th06", "th07", "th08", "th10", "th15", "th16", "th18")
+    if "print-works" in basename or "sources" in basename:
+        return ("print", "th10", "th13", "th06")
+    if "locations" in basename:
+        return ("th10", "th06", "th07", "th08", "th16", "th09")
+    if "spell-cards" in basename or "music" in basename:
+        return ("th06", "th09", "th10", "th12", "th18")
+    if "games" in basename:
+        return ("th06", "th07", "th08", "th10", "th12", "th15", "th16", "th18")
+    return ("th06", "th10", "th07", "th08", "th12", "th13", "th16", "th18", "th01", "th04", "th09")
+
+
+def _context_kind(context: str, is_css_background: bool = False) -> tuple[str, ...]:
+    lower = html.unescape(re.sub(r"<[^>]+>", " ", context)).lower()
+    if is_css_background:
+        return ("background", "artwork", "screenshot", "cover", "disc", "logo")
+    if any(k in lower for k in ("print works", "book cover", "manga", "official book", "reference book", "perfect memento", "forbidden scrollery", "silent sinner", "bohemian archive", "symposium of post-mysticism")):
+        return ("cover", "artwork", "background", "screenshot", "disc", "logo")
+    if any(k in lower for k in ("gameplay", "danmaku", "spell card", "boss pattern", "stage", "projectile", "game interface")):
+        return ("screenshot", "background", "cover", "artwork", "disc", "logo")
+    if any(k in lower for k in ("location", "shrine", "forest", "lake", "mansion", "barrier", "gensokyo", "moon", "mountain", "setting")):
+        return ("background", "screenshot", "cover", "artwork", "disc", "logo")
+    if any(k in lower for k in ("cover", "title screen", "first touhou game", "re-release")):
+        return ("cover", "screenshot", "background", "artwork", "disc", "logo")
+    return ("background", "screenshot", "cover", "artwork", "disc", "logo")
+
+
+def choose_distinct_image(context: str, relative_path: str, used_assets: set[str], background: bool = False) -> dict[str, str]:
+    if not DIVERSE_IMAGE_CATALOG:
+        raise RuntimeError("The diverse image catalogue is empty.")
+    desired_games = _context_game(context, relative_path)
+    desired_kinds = _context_kind(context, background)
+    preferred_headings = re.findall(r"<h[1-4][^>]*>(.*?)</h[1-4]>", context, flags=re.IGNORECASE | re.DOTALL)
+    display_context = " — ".join(re.sub(r"<[^>]+>", "", html.unescape(x)).strip() for x in preferred_headings[:2])
+    if not display_context:
+        display_context = Path(relative_path).stem.replace("-", " ").title()
+
+    available = []
+    for candidate in DIVERSE_IMAGE_CATALOG:
+        identity = _image_identity(candidate["url"])
+        if identity in used_assets:
+            continue
+        available.append(candidate)
+    if not available:
+        raise RuntimeError("Not enough distinct image assets to avoid all non-character repeats.")
+
+    def score(candidate: dict[str, str]) -> tuple[int, int, int]:
+        game_score = (len(desired_games) - desired_games.index(candidate["game"])) * 100 if candidate["game"] in desired_games else 0
+        kind_score = (len(desired_kinds) - desired_kinds.index(candidate["kind"])) * 12 if candidate["kind"] in desired_kinds else 0
+        # Prefer real covers/screens/backgrounds over logos and disc scans if otherwise tied.
+        quality_score = 3 if candidate["kind"] in ("cover", "screenshot", "background", "artwork") else 0
+        return (game_score, kind_score, quality_score)
+
+    chosen = max(available, key=score)
+    used_assets.add(_image_identity(chosen["url"]))
+    source_page = chosen["source_page"]
+    context_alt = chosen["alt"]
+    if display_context:
+        context_alt += f" Used as an illustrative reference alongside {display_context}."
+    credit = chosen["credit"]
+    URL_CREDIT[chosen["url"]] = {
+        "source_page": source_page, "credit": credit, "alt": context_alt
+    }
+    return {
+        **chosen,
+        "context": display_context,
+        "context_alt": context_alt,
+    }
+
+
+def diversify_image_container(container: str, relative_path: str, used_assets: set[str]) -> str:
+    match = IMG_TAG_RE.search(container)
+    if not match:
+        return container
+    tag = match.group(0)
+    src_match = IMG_SRC_RE.search(tag)
+    if not src_match:
+        return container
+    original_url = src_match.group(2)
+    if not is_external_image(original_url) or is_character_reference(original_url):
+        return container
+
+    selected = choose_distinct_image(container, relative_path, used_assets, background=False)
+    url = selected["url"]
+    alt = selected["context_alt"].replace("&", "&amp;").replace('"', "&quot;")
+    credit = selected["credit"].replace("&", "&amp;").replace('"', "&quot;")
+    source_page = selected["source_page"].replace("&", "&amp;").replace('"', "&quot;")
+
+    tag = tag[:src_match.start(2)] + url + tag[src_match.end(2):]
+    tag = re.sub(r'\balt\s*=\s*(["\']).*?\1', f'alt="{alt}"', tag, count=1, flags=re.IGNORECASE | re.DOTALL)
+    tag = re.sub(r'\btitle\s*=\s*(["\']).*?\1', f'title="Image source: {credit}"', tag, count=1, flags=re.IGNORECASE | re.DOTALL)
+    if not re.search(r'\btitle\s*=', tag, flags=re.IGNORECASE):
+        tag = tag[:-1] + f' title="Image source: {credit}">'
+    tag = re.sub(r'\sdata-wiki-file=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+    # srcset could preserve the old external hotlink even after src was replaced.
+    tag = re.sub(r'\s+srcset=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+    container = container[:match.start()] + tag + container[match.end():]
+
+    # Redirect the card/figure's attribution link to the true source of its new image.
+    def replace_source_anchor(_match: re.Match[str]) -> str:
+        return f'<a href="{source_page}" target="_blank" rel="noopener">Image source: {credit} ↗</a>'
+    container = SOURCE_ANCHOR_RE.sub(replace_source_anchor, container, count=1)
+    return container
+
+
+def diversify_page_images(relative_path: str, content: str, used_assets: set[str]) -> str:
+    # Cards and hero figures get a source-specific credit link, alt text and image.
+    content = CARD_OR_FIGURE_RE.sub(
+        lambda m: diversify_image_container(m.group(0), relative_path, used_assets),
+        content,
+    )
+    # Handle any remaining image tags not inside a card or figure.
+    def replace_orphan_img(match: re.Match[str]) -> str:
+        tag = match.group(0)
+        src_match = IMG_SRC_RE.search(tag)
+        if not src_match:
+            return tag
+        old_url = src_match.group(2)
+        if not is_external_image(old_url) or is_character_reference(old_url):
+            return tag
+        selected = choose_distinct_image(tag + " " + content[max(0, match.start()-500):match.start()], relative_path, used_assets)
+        url = selected["url"]
+        alt = selected["context_alt"].replace("&", "&amp;").replace('"', "&quot;")
+        credit = selected["credit"].replace("&", "&amp;").replace('"', "&quot;")
+        tag = tag[:src_match.start(2)] + url + tag[src_match.end(2):]
+        tag = re.sub(r'\balt\s*=\s*(["\']).*?\1', f'alt="{alt}"', tag, count=1, flags=re.IGNORECASE | re.DOTALL)
+        tag = re.sub(r'\sdata-wiki-file=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+        tag = re.sub(r'\s+srcset=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+        return tag
+    content = IMG_TAG_RE.sub(replace_orphan_img, content)
+
+    # Every CSS hero/background URL is assigned a fresh image too; no card image
+    # or second page may reuse the same background asset.
+    def replace_css_background(match: re.Match[str]) -> str:
+        old_url = match.group("url").strip()
+        if not is_external_image(old_url):
+            return match.group(0)
+        context = content[max(0, match.start()-1800):min(len(content), match.end()+1800)]
+        selected = choose_distinct_image(context, relative_path, used_assets, background=True)
+        quote_char = match.group("quote")
+        return "url(" + quote_char + selected["url"] + quote_char + ")"
+    content = CSS_URL_RE.sub(replace_css_background, content)
+    return content
+
+
+
 def main() -> None:
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-    html_css_files = [
+    html_css_files = sorted([
         p for p in ROOT.rglob("*")
         if p.is_file()
         and p.suffix.lower() in (".html", ".css")
         and "_site" not in p.parts
         and ".git" not in p.parts
         and "assets/images" not in p.as_posix()
-    ]
+    ], key=lambda p: p.relative_to(ROOT).as_posix())
 
     references: dict[str, dict[str, str | list[str]]] = {}
+    used_noncharacter_assets: set[str] = set()
     for path in html_css_files:
         content = path.read_text(encoding="utf-8")
         if path.suffix.lower() == ".html":
             relative_path = path.relative_to(ROOT).as_posix()
             content = apply_context_overrides(relative_path, content)
+            content = diversify_page_images(relative_path, content, used_noncharacter_assets)
+            path.write_text(content, encoding="utf-8")
+        elif path.suffix.lower() == ".css":
+            relative_path = path.relative_to(ROOT).as_posix()
+            content = diversify_page_images(relative_path, content, used_noncharacter_assets)
             path.write_text(content, encoding="utf-8")
         urls: list[str] = []
         if path.suffix.lower() == ".html":
