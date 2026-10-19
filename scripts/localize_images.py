@@ -897,21 +897,21 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Places of Gensokyo", "old_filename": "Th10MoriyaShrineEntrance.jpg",
+            "heading": "Places of Gensokyo", "old_filename": "Th10MoriyaShrineEntrance.jpg", "force": True,
             "new_url": FOG_1, "source_page": OFFICIAL_PAGE,
             "credit": "Official Touhou New Classic site",
             "alt": "Atmospheric mist artwork from the official Touhou New Classic site, used as Gensokyo setting imagery.",
             "pin": True,
         },
         {
-            "heading": "Spell cards", "old_filename": "Th06stage2title.jpg",
+            "heading": "Spell cards", "old_filename": "Th06stage2title.jpg", "force": True,
             "new_url": PCB_GAMEPLAY, "source_page": PCB_LB_PAGE,
             "credit": "LaunchBox Games Database — Touhou 7: Perfect Cherry Blossom",
             "alt": "Gameplay screenshot with danmaku patterns from Touhou 7: Perfect Cherry Blossom.",
             "pin": True,
         },
         {
-            "heading": "Music & themes", "old_filename": "Th06stage3title.jpg",
+            "heading": "Music & themes", "old_filename": "Th06stage3title.jpg", "force": True,
             "new_url": UM_SOUNDTRACK_COVER,
             "source_page": "https://music.apple.com/us/album/touhou-koryudo-unconnected-marketeers-soundtrack/1580542145",
             "credit": "Apple Music — Touhou 18: Unconnected Marketeers Soundtrack",
@@ -919,7 +919,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Official print works", "old_filename": "FS Tankebon1 cover.jpg",
+            "heading": "Official print works", "old_filename": "FS Tankebon1 cover.jpg", "force": True,
             "new_url": FORBIDDEN_SCROLLERY_VOL3,
             "source_page": "https://yenpress.com/series/forbidden-scrollery",
             "credit": "Yen Press — Forbidden Scrollery, Vol. 3",
@@ -957,7 +957,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Hakurei Shrine", "old_filename": "Th105HakureiShrineBird'sEye.jpg",
+            "heading": "Hakurei Shrine", "old_filename": "Th105HakureiShrineBird'sEye.jpg", "force": True,
             "new_url": MOF_COMMUNITY, "source_page": MOF_PAGE,
             "credit": "Steam — Mountain of Faith",
             "alt": "Mountain of Faith setting artwork used as an illustrative Gensokyo landscape; not a literal shrine map.",
@@ -992,7 +992,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Outside World & the Barrier", "old_filename": "Th105BambooForest.jpg",
+            "heading": "Outside World & the Barrier", "old_filename": "Th105BambooForest.jpg", "force": True,
             "new_url": UFO_BG, "source_page": "https://store.steampowered.com/app/1100160/Touhou_Seirensen_Undefined_Fantastic_Object/",
             "credit": "Steam — Undefined Fantastic Object",
             "alt": "Touhou environment artwork used as a visual metaphor for Gensokyo's boundary, not a map of the Barrier.",
@@ -1008,14 +1008,14 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Danmaku vocabulary", "old_filename": "Th06stage4title.jpg",
+            "heading": "Danmaku vocabulary", "old_filename": "Th06stage4title.jpg", "force": True,
             "new_url": EOSD_GAMEPLAY_ALT, "source_page": EOSD_LB_PAGE,
             "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
             "alt": "Gameplay screenshot showing projectile patterns from Touhou 6.",
             "pin": True,
         },
         {
-            "heading": "Boss phases & difficulty", "old_filename": "Th06stage6title.jpg",
+            "heading": "Boss phases & difficulty", "old_filename": "Th06stage6title.jpg", "force": True,
             "new_url": IN_GAMEPLAY, "source_page": IN_LB_PAGE,
             "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
             "alt": "Gameplay screenshot from Touhou 8, used to illustrate game-stage and boss-phase context.",
@@ -1024,15 +1024,15 @@ PAGE_CONTEXT_OVERRIDES = {
     ],
     "pages/music.html": [
         {
-            "container": "figure", "heading": "", "old_filename": "Th06stage3title.jpg",
-            "new_url": EOSD_SOUNDTRACK_COVER,
+            "container": "figure", "heading": "", "old_url": "https://images.launchbox-app.com/d661f383-4f38-4034-8a27-fd558e3dc7fe.jpg",
+            "new_url": EOSD_SOUNDTRACK_COVER, "force": True,
             "source_page": "https://music.apple.com/us/album/touhou-koumakyo-the-embodiment-of-scarlet/1581514712",
             "credit": "Apple Music — Touhou 6: Embodiment of Scarlet Devil Soundtrack",
             "alt": "Official soundtrack album artwork for Touhou 6: Embodiment of Scarlet Devil.",
             "pin": True,
         },
         {
-            "heading": "Shanghai Teahouse ~ Chinese Tea", "old_filename": "Th06stage3title.jpg",
+            "heading": "Shanghai Teahouse ~ Chinese Tea", "old_filename": "Th06stage3title.jpg", "force": True,
             "new_url": MEILING, "source_page": OFFICIAL_PAGE,
             "credit": "Official Touhou New Classic site",
             "alt": "Hong Meiling character portrait, associated with the Chinese-themed setting of Shanghai Teahouse.",
@@ -1057,7 +1057,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Perfect Memento in Strict Sense", "old_filename": "Thgscover.jpg",
+            "heading": "Perfect Memento in Strict Sense", "old_filename": "Thgscover.jpg", "force": True,
             "new_url": PMISS_COVER,
             "source_page": "https://www.neowing.co.jp/product/NEOBK-395940",
             "credit": "Neowing — Perfect Memento in Strict Sense",
@@ -1065,7 +1065,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Silent Sinner in Blue", "old_filename": "9784758060899.jpg",
+            "heading": "Silent Sinner in Blue", "old_filename": "9784758060899.jpg", "force": True,
             "new_url": SILENT_SINNER,
             "source_page": "https://shop.akbh.jp/en/products/9784758060899",
             "credit": "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 1",
@@ -1073,7 +1073,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Symposium of Post-mysticism", "old_filename": "Th10KanakoYasaka.png",
+            "heading": "Symposium of Post-mysticism", "old_filename": "Th10KanakoYasaka.png", "force": True,
             "new_url": SYMPOSIUM_COVER,
             "source_page": "https://shop.akbh.jp/en/products/9784758012317",
             "credit": "AKIBA-HOBBY — Symposium of Post-mysticism",
@@ -1081,7 +1081,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Wild and Horned Hermit", "old_filename": "Th105HakureiShrineBird'sEye.jpg",
+            "heading": "Wild and Horned Hermit", "old_filename": "Th105HakureiShrineBird'sEye.jpg", "force": True,
             "new_url": WILD_HERMIT_VOL1,
             "source_page": "https://shop.akbh.jp/en/products/9784758012225",
             "credit": "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 1",
@@ -1089,7 +1089,7 @@ PAGE_CONTEXT_OVERRIDES = {
             "pin": True,
         },
         {
-            "heading": "Forbidden Scrollery", "old_filename": "FS Tankebon1 cover.jpg",
+            "heading": "Forbidden Scrollery", "old_filename": "FS Tankebon1 cover.jpg", "force": True,
             "new_url": FORBIDDEN_SCROLLERY,
             "source_page": "https://yenpress.com/titles/9780316511971-forbidden-scrollery-vol-1",
             "credit": "Yen Press — Forbidden Scrollery, Vol. 1",
@@ -1111,9 +1111,11 @@ PAGE_CONTEXT_OVERRIDES = {
 
 def apply_context_overrides(relative_path: str, content: str) -> str:
     for override in PAGE_CONTEXT_OVERRIDES.get(relative_path, []):
-        old_url = "https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(
-            override["old_filename"], safe="()'!._-"
-        )
+        old_url = str(override.get("old_url") or (
+            "https://en.touhouwiki.net/wiki/Special:FilePath/" + quote(
+                override.get("old_filename", ""), safe="()'!._-"
+            )
+        ))
         new_url = str(override["new_url"])
         source_page = str(override["source_page"])
         credit = str(override["credit"])
@@ -1129,9 +1131,20 @@ def apply_context_overrides(relative_path: str, content: str) -> str:
             heading = str(override.get("heading", ""))
             if heading and heading not in html.unescape(container):
                 return container
-            if old_url not in container:
-                return container
-            container = container.replace(old_url, new_url)
+            if override.get("force"):
+                image_match = IMG_TAG_RE.search(container)
+                if not image_match:
+                    return container
+                src_match = IMG_SRC_RE.search(image_match.group(0))
+                if not src_match:
+                    return container
+                old_tag = image_match.group(0)
+                new_tag = old_tag[:src_match.start(2)] + new_url + old_tag[src_match.end(2):]
+                container = container[:image_match.start()] + new_tag + container[image_match.end():]
+            else:
+                if old_url not in container:
+                    return container
+                container = container.replace(old_url, new_url)
             if override.get("pin"):
                 # Preserve a curated source/subject match through the automatic image pass.
                 container = IMG_TAG_RE.sub(
