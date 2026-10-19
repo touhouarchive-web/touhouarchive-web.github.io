@@ -513,6 +513,43 @@ const TIMELINE = [
  {id:'th20',theme:{"accent":"#9dcf9a","secondary":"#c6a86b","tertiary":"#5fc7c0","soft":"rgba(105,170,119,.10)","border":"rgba(157,207,154,.34)","glow":"rgba(95,199,192,.15)","label":"Ancient jade · fossil amber · deep teal","swatches":[{"hex":"#9dcf9a","name":"Ancient jade"},{"hex":"#c6a86b","name":"Fossil amber"},{"hex":"#176b68","name":"Deep teal"}]},order:"17",year:'2025',era:'The twentieth mainline game',code:'TH20',title:'Fossilized Wonders',originalTitle:'東方錦上京 〜 Fossilized Wonders',type:'game',releaseDate:'16 August 2025 (Steam); 17 August (Comiket 106)',releaseSort:20250816,readingLabel:'Latest mainline milestone',connection:'Directly reopens Moon-related threads through Watatsuki no Toyohime; the sanctuary itself is a new story thread',summary:'A strange disturbance draws Reimu and Marisa into a forbidden sanctuary at the foot of Youkai Mountain. Eight Anomaly Stones echo powers from earlier incidents, guiding them through a buried sacred site and a revelation tied to the Lunar Capital, the flow of information, and a goddess of permanence.',characters:['Reimu Hakurei','Marisa Kirisame','Chirizuka Ubame','Chimi Houjuu','Michigami Nareko','Yuiman Asama','Watatsuki no Toyohime','Iwanaga Ariya','Watari Nina','Okina Matara','Kanako Yasaka','Yuyuko Saigyouji'],loreImpact:'The twentieth official Touhou Project game brings the Lunar Capital back into the foreground and frames the incident around permanence, impurity, memory, and the pressure of change. Its ending points beyond the immediate battle toward consequences for Gensokyo and the outside world.',whyRead:'This entry is the current mainline endpoint of this guide. Earlier Moon-related works give context for Toyohime, but TH20 is not simply a direct sequel to Silent Sinner in Blue; the story has its own incident and new setting.',tags:['Anomaly Stones','Asama Purifying Mountain','Lunar Capital','Permanence','Outside World'],sources:[{label:'Official Touhou announcement — TH20',url:'https://touhou-project.news/news/13976/'},{label:'Steam — Fossilized Wonders',url:'https://store.steampowered.com/app/3671710/'},{label:'Touhou Wiki — Fossilized Wonders',url:'https://en.touhouwiki.net/wiki/Fossilized_Wonders'},{label:'Touhou Patch Center — Reimu endings (English translation)',url:'https://www.thpatch.net/wiki/Th20/Reimu%27s_Endings/en'},{label:'Touhou Patch Center — Marisa endings (English translation)',url:'https://www.thpatch.net/wiki/Th20/Marisa%27s_Endings/en'}]}
 
 ];
+
+// Normalize the legacy TH09–TH19 timeline records.
+// Those records had their cast array stored under loreImpact and a paragraph under characters.
+// The drawer calls .map() on characters, so the bad field shape made these game cards appear unclickable.
+const TIMELINE_SCHEMA_REPAIRS = {
+ th09:{connection:"A multi-route versus shooter: character paths converge on the flower incident involving Komachi and Eiki.",whyRead:"Read the parallel character routes as perspectives on one shared incident; endings and dialogue can differ by route."},
+ th10:{connection:"Kanako and Suwako's attempt to secure faith for the Moriya Shrine leads into the underground energy project of TH11.",whyRead:"This entry introduces the Moriya Shrine gods and helps explain the context behind Subterranean Animism."},
+ th11:{connection:"The underground incident follows the Moriya Shrine's nuclear-fusion project introduced in TH10.",whyRead:"Follow the descent into Former Hell and the different characters' roles in Utsuho's new power."},
+ th12:{connection:"Byakuren's rescue establishes Myouren Temple, which becomes important in TH13.",whyRead:"The story links the flying-object mystery, Makai, Byakuren's followers, and the temple's founding."},
+ th13:{connection:"The Great Mausoleum sits beneath Myouren Temple; Miko's return introduces a lasting Taoist counterpart to Byakuren's Buddhist group.",whyRead:"This entry helps explain the religious factions and the Great Mausoleum's role in later stories."},
+ th14:{connection:"The Miracle Mallet empowers tools and tsukumogami; its transferable-power idea can be compared with the separate Ability Card market in TH18.",whyRead:"Read the main route and Extra Stage together to see the distinction between the Mallet's temporary effects and Raiko's search for lasting power."},
+ th15:{connection:"The Lunar Capital conflict expands Moon-related lore, while Junko's revenge remains a distinct incident with its own motives.",whyRead:"The route structure and Extra Stage add context to the Moon invasion and the Dream World."},
+ th16:{connection:"Seasonal energy and hidden doors introduce Okina Matara's Land of the Back Door.",whyRead:"The Extra Stage is important to the incident's resolution and to understanding Okina's role."},
+ th17:{connection:"The Animal Realm's competing beast factions return in TH19's separate land-ownership crisis.",whyRead:"The different animal-spirit routes clarify the conflict among the beast factions and Keiki's idols."},
+ th18:{connection:"The Ability Card market establishes portable, tradable powers before TH19's separate crisis over land ownership.",whyRead:"This entry provides context for the market concept while keeping the later land crisis distinct."},
+ th19:{connection:"A large versus-shooter cast follows competing perspectives on land ownership; several Animal Realm leaders return from TH17.",whyRead:"Compare multiple character routes rather than collapsing their distinct perspectives into a single route-specific script."}
+};
+TIMELINE.forEach(entry=>{
+ const oldCharacterText=typeof entry.characters==="string"?entry.characters:"";
+ const cast=Array.isArray(entry.characters)?entry.characters:
+   (Array.isArray(entry.loreImpact)?entry.loreImpact:
+   (Array.isArray(entry.connection)?entry.connection:[]));
+ if(!Array.isArray(entry.characters))entry.characters=cast;
+ if(Array.isArray(entry.loreImpact))entry.loreImpact=oldCharacterText||entry.summary;
+ if(typeof entry.loreImpact!=="string")entry.loreImpact=entry.summary||"Story details are indexed in this archive.";
+ if(Array.isArray(entry.connection)||typeof entry.connection!=="string"){
+  const castNames=entry.characters.slice(0,3).join(", ");
+  entry.connection=TIMELINE_SCHEMA_REPAIRS[entry.id]?.connection||
+   (castNames?("Key participants indexed in this archive include "+castNames+"."):"A related story connection in the current archive.");
+ }
+ if(!Array.isArray(entry.characters))entry.characters=[];
+ if(!Array.isArray(entry.tags))entry.tags=[];
+ if(TIMELINE_SCHEMA_REPAIRS[entry.id]){
+  if(!entry.connection)entry.connection=TIMELINE_SCHEMA_REPAIRS[entry.id].connection;
+  if(TIMELINE_SCHEMA_REPAIRS[entry.id].whyRead)entry.whyRead=TIMELINE_SCHEMA_REPAIRS[entry.id].whyRead;
+ }
+});
 const FULL_STORIES = {
  th06: {
   articleTitle: "Touhou Koumakyou ~ the Embodiment of Scarlet Devil",
@@ -1137,6 +1174,10 @@ function renderStoryArticle(e){
 function closeDrawer(){selectedId=null;$('drawer-host').innerHTML='';document.body.style.overflow='';if(lastFocus&&document.contains(lastFocus))lastFocus.focus();lastFocus=null;}
 function openDrawer(id,trigger){
  const e=TIMELINE.find(x=>x.id===id);if(!e)return;
+ // Keep an incomplete legacy record from breaking the entire lore drawer.
+ if(!Array.isArray(e.characters))e.characters=[];
+ if(!Array.isArray(e.tags))e.tags=[];
+ if(!Array.isArray(e.sources))e.sources=[];
  selectedId=id;lastFocus=trigger||document.activeElement;
  const m=MEDIA[e.type],story=FULL_STORIES[e.id];
  const articleTitle=story?.articleTitle||e.title;
