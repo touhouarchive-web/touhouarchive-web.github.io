@@ -147,8 +147,50 @@
 .community-map-notes p{margin:9px 0 0;color:#8b8b98;font-size:10px;line-height:1.85}
 .community-map-notes strong{color:#ccc5e7;font-weight:600}
 .map-explorer-intro{margin:6px 0 15px;padding-top:1px}
-@media(max-width:650px){
- .community-map-header{flex-direction:column;gap:12px;padding:15px 14px 12px}
+ .community-map-explorer-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(220px,.72fr);gap:13px;align-items:start;padding:0 12px 13px}
+ .community-map-figure{min-width:0;padding:0}
+ .map-image-stage{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(196,181,253,.18);border-radius:12px;background:#090a0d}
+ .map-image-stage .community-map-image{display:block;width:100%;height:auto;max-width:100%;max-height:none;object-fit:contain}
+ .image-map-marker-layer{position:absolute;inset:0;pointer-events:none}
+ .image-map-marker{position:absolute;z-index:2;pointer-events:auto;display:grid;place-items:center;width:34px;height:34px;padding:0;border:1px solid rgba(236,231,255,.8);border-radius:50%;transform:translate(-50%,-50%);background:rgba(20,17,34,.94);color:#eee8ff;font:800 10px/1 ui-monospace,monospace;cursor:pointer;box-shadow:0 2px 9px rgba(0,0,0,.6);transition:transform .16s,background .16s,border-color .16s}
+ .image-map-marker:hover{transform:translate(-50%,-50%) scale(1.1);background:#393052}
+ .image-map-marker[aria-pressed=true]{z-index:4;border:2px solid #fff;background:#a78bfa;color:#171225;box-shadow:0 0 0 4px rgba(196,181,253,.27),0 3px 12px rgba(0,0,0,.65)}
+ .image-map-marker::after{content:attr(data-place);position:absolute;left:calc(100% + 7px);top:50%;transform:translateY(-50%);display:none;width:max-content;max-width:155px;padding:6px 8px;border:1px solid rgba(196,181,253,.45);border-radius:7px;background:rgba(13,13,19,.97);color:#f2edff;font:600 10px/1.35 system-ui,sans-serif;text-align:left;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.35)}
+ .image-map-marker[aria-pressed=true]::after{display:block}
+ .image-map-marker.edge-right::after{left:auto;right:calc(100% + 7px)}
+ .image-map-marker.edge-top::after{left:50%;top:calc(100% + 7px);transform:translateX(-50%)}
+ .image-map-marker.edge-right.edge-top::after{left:auto;right:calc(100% + 7px);top:50%;transform:translateY(-50%)}
+ .map-image-note{margin:8px 1px 0;color:#797985;font-size:9px;line-height:1.7}
+ .map-fullsize-link{display:inline-flex;align-items:center;margin:8px 0 0;border:1px solid rgba(196,181,253,.17);border-radius:8px;padding:8px 10px;color:#c8bee9;background:rgba(196,181,253,.035);font-size:9px;text-decoration:none}
+ .map-fullsize-link:hover{border-color:rgba(196,181,253,.42);color:#fff}
+ .community-map-explorer-layout>.map-detail{position:sticky;top:12px}
+ .map-index-phase{margin:24px 0 0;padding:19px;border:1px solid rgba(196,181,253,.12);border-radius:15px;background:linear-gradient(145deg,rgba(196,181,253,.035),rgba(255,255,255,.006))}
+ .map-index-phase-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:17px}
+ .map-index-phase-heading h3{font:500 clamp(22px,3vw,28px)/1.18 Georgia,serif;letter-spacing:-.035em;color:#f4f4f5;margin:7px 0 0}
+ .map-index-phase-heading p{max-width:660px;margin:8px 0 0;color:#858592;font-size:10px;line-height:1.8}
+ .map-phase-badge{flex:0 0 auto;border:1px solid rgba(196,181,253,.18);border-radius:8px;padding:9px 10px;color:#bdb2e4;background:rgba(196,181,253,.04);font:800 8px/1.5 ui-monospace,monospace;letter-spacing:.08em}
+ .map-location-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) minmax(170px,.55fr) auto;align-items:end;gap:9px;margin-bottom:11px}
+ .map-location-search,.map-region-select{display:grid;gap:6px;min-width:0;color:#90909c;font-size:9px}
+ .map-location-search input,.map-region-select select{width:100%;min-width:0;min-height:42px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:#111214;color:#e6e4ee;padding:10px 11px;font:inherit;font-size:11px}
+ .map-location-search input::placeholder{color:#656571}
+ .map-reset-button{min-height:42px;border:1px solid rgba(196,181,253,.18);border-radius:9px;background:rgba(196,181,253,.045);color:#c7bde5;padding:9px 12px;font-size:10px;cursor:pointer}
+ .map-reset-button:hover{border-color:rgba(196,181,253,.42);color:#fff}
+ .map-index-status{margin:0 0 9px;color:#747481;font:9px/1.7 ui-monospace,monospace}
+ .map-index-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .map-index-card{display:flex;align-items:center;gap:9px;min-width:0;min-height:56px;border:1px solid rgba(255,255,255,.075);border-radius:10px;background:rgba(255,255,255,.012);color:#d4d4dc;text-align:left;padding:9px;cursor:pointer;transition:border-color .16s,background .16s}
+ .map-index-card:hover{border-color:rgba(196,181,253,.3);background:rgba(196,181,253,.04)}
+ .map-index-card[aria-pressed=true]{border-color:rgba(196,181,253,.58);background:rgba(120,93,183,.13)}
+ .map-index-number{display:grid;place-items:center;flex:0 0 29px;width:29px;height:29px;border:1px solid rgba(196,181,253,.22);border-radius:8px;color:#c4b5fd;background:rgba(196,181,253,.045);font:800 9px/1 ui-monospace,monospace}
+ .map-index-copy{display:grid;gap:4px;min-width:0}
+ .map-index-copy strong{font:500 13px/1.25 Georgia,serif;color:#e5e4eb;overflow-wrap:anywhere}
+ .map-index-copy small{font-size:8px;line-height:1.4;color:#777782}
+ .map-index-arrow{margin-left:auto;color:#8175a7;font-size:13px;flex:0 0 auto}
+ .map-index-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.1);border-radius:10px;padding:16px;color:#8a8996;font-size:10px;line-height:1.7}
+ @media(max-width:900px){.community-map-explorer-layout{grid-template-columns:1fr}.community-map-explorer-layout>.map-detail{position:static}.map-index-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:650px){.map-index-phase{padding:13px}.map-index-phase-heading{align-items:stretch;flex-direction:column}.map-phase-badge{align-self:flex-start}.map-location-toolbar{grid-template-columns:1fr}.map-location-search input,.map-region-select select{font-size:16px}.map-reset-button{width:100%}.image-map-marker{width:32px;height:32px;font-size:9px}.map-index-list{grid-template-columns:repeat(2,minmax(0,1fr))}.community-map-explorer-layout{padding:0 7px 10px}}
+ @media(max-width:390px){.map-index-list{grid-template-columns:1fr}.image-map-marker{width:30px;height:30px}.map-index-phase{padding:11px}}
+ @media(max-width:650px){
+  .community-map-header{flex-direction:column;gap:12px;padding:15px 14px 12px}
  .community-map-resolution{align-self:flex-start;text-align:left}
  .community-map-figure{padding:0 7px 7px}
  .community-map-image{max-height:70vh}
@@ -208,11 +250,19 @@
     </div>
     <span class="community-map-resolution">4096 × 3413 px<br>Community reconstruction</span>
    </div>
-   <figure class="community-map-figure">
-    <a href="https://i.redd.it/t118a4520yna1.jpg" target="_blank" rel="noopener noreferrer" aria-label="Open the full-resolution Gensokyo map image">
-     <img class="community-map-image" src="https://i.redd.it/t118a4520yna1.jpg" alt="High-resolution fan-made Gensokyo map v2.0 by Armixi, showing Gensokyo's terrain, landmarks, and surrounding realms." loading="lazy" decoding="async" referrerpolicy="no-referrer" data-image-pinned="armixi-gensokyo-map-v2">
-    </a>
-   </figure>
+   <div class="community-map-explorer-layout">
+     <figure class="community-map-figure">
+      <div class="map-image-stage" id="map-image-stage" aria-label="Interactive location map based on Armixi's Gensokyo Map v2.0">
+       <img class="community-map-image" src="https://i.redd.it/t118a4520yna1.jpg" alt="High-resolution fan-made Gensokyo map v2.0 by Armixi. Numbered interactive markers identify places and realms on the main map and its surrounding reference panels." loading="lazy" decoding="async" referrerpolicy="no-referrer" data-image-pinned="armixi-gensokyo-map-v2">
+       <div class="image-map-marker-layer" id="image-map-markers" aria-label="Select a numbered location marker"></div>
+      </div>
+      <figcaption class="map-image-note" id="map-stage-note">Tap a numbered marker to inspect that place. The numbered index below uses approximate positions on this community reconstruction; it is not an official coordinate grid.</figcaption>
+      <a class="map-fullsize-link" href="https://i.redd.it/t118a4520yna1.jpg" target="_blank" rel="noopener noreferrer">Open the full-resolution map ↗</a>
+     </figure>
+     <aside class="map-detail" id="map-detail" aria-live="polite" aria-label="Selected location details">
+      <div class="place-group">Choose a map marker</div><h4>Explore Gensokyo</h4><p>Select a numbered pin on the image or a place in the index below to see its details and related lore entries.</p>
+     </aside>
+    </div>
    <div class="community-map-footer">
     <div class="community-map-credit">
      <strong>Map artwork: Armixi</strong>
@@ -233,11 +283,29 @@
     </div>
    </details>
   </section>
-  <div class="panel-intro map-explorer-intro">
-   <div><div class="section-kicker">Interactive location index</div><h3 class="serif">Explore the places</h3><p>The schematic below is a clickable guide to the archive's locations, not a scale-accurate map. Select a marker to see related lore entries.</p></div>
-  </div>
-  <div class="map-layout"><div class="map-board" id="map-board" aria-label="Schematic map of selected Touhou locations"><svg class="map-lines" viewBox="0 0 800 500" aria-hidden="true"><path d="M120 360 C190 315 230 250 370 210 S540 155 650 100" /><path d="M120 360 C220 370 280 300 390 295 S550 320 660 385" /><path d="M190 180 C280 195 335 250 385 295" /><path d="M385 295 C420 265 430 225 470 190 S580 130 650 100" /><path d="M385 295 C420 350 410 400 345 442" /><path d="M385 295 C480 270 560 250 650 245" /></svg></div><aside class="map-detail" id="map-detail" aria-live="polite"></aside></div>
-  <p class="map-disclaimer">Schematic only: positions and connecting lines help explain reading relationships; they are not official distances, routes, borders, or a complete world map. The Lunar Sea is shown off-map in spirit even though it shares this display.</p>
+  <section class="map-index-phase" aria-labelledby="location-index-title">
+   <div class="map-index-phase-heading">
+    <div><div class="section-kicker">PHASE II · MAP-FIRST EXPLORER</div><h3 class="serif" id="location-index-title">Interactive location index</h3><p>Search the archive's places, filter by region, then select a numbered result to highlight its pin on Armixi's map and open connected lore.</p></div>
+    <span class="map-phase-badge">19 PLACES INDEXED</span>
+   </div>
+   <div class="map-location-toolbar">
+    <label class="map-location-search"><span>Find a place</span><input type="search" id="map-location-search" placeholder="Try “Human Village” or “Moon”…" autocomplete="off" aria-label="Search mapped locations"></label>
+    <label class="map-region-select"><span>Region</span><select id="map-region-filter" aria-label="Filter locations by region">
+     <option value="all">All regions</option>
+     <option value="core">Gensokyo</option>
+     <option value="settlements">Settlements &amp; forests</option>
+     <option value="mountain">Youkai Mountain</option>
+     <option value="afterlife">Higan &amp; the afterlife</option>
+     <option value="underground">Underground &amp; hell realms</option>
+     <option value="offworld">Moon / off-world</option>
+     <option value="hidden">Hidden realms</option>
+    </select></label>
+    <button type="button" class="map-reset-button" id="map-reset-filters">Reset filters</button>
+   </div>
+   <div class="map-index-status" id="map-index-count" role="status" aria-live="polite">19 of 19 places shown</div>
+   <div class="map-index-list" id="map-index-list"></div>
+   <p class="map-disclaimer">Map note: these pins are approximate navigational anchors on Armixi's fan-made reconstruction, not official Team Shanghai Alice coordinates. Some locations point to a surrounding reference panel (such as the Moon or Underground) rather than a precise scene location. Canon relationships and uncertainty are described in each location's detail card.</p>
+  </section>
  </section>
  <section class="tool-panel hidden" id="incidents-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">What happened, and where to read it</div><h3 class="serif">Incident archive</h3><p>A compact record of the incidents covered by the current entries. Incident summaries are paraphrases; each opens the source article.</p></div></div>
@@ -775,7 +843,33 @@ const LOCATIONS = [
  {id:"animal-realm",name:"Animal Realm",group:"Hell / underworld",x:60,y:88,description:"A factional underworld where animal-spirit leaders compete for power. TH17's invasion and TH19's land crisis place it at the centre of the story.",status:"Direct TH17 and TH19 setting",characters:["Yachie Kicchou","Keiki Haniyasushin","Saki Kurokoma","Yuuma Toutetsu","Zanmu Nippaku"],entries:["th17","th19"],tags:["animal spirits","factions"]},
  {id:"rainbow-cave",name:"Rainbow Dragon Cave",group:"Youkai Mountain",x:70,y:69,description:"A strange mountain cave linked to Momoyo Himemushi and dragon jewels, explored in TH18's Extra Stage.",status:"Direct TH18 Extra Stage setting",characters:["Momoyo Himemushi"],entries:["th18"],tags:["cave","dragon jewels"]},
  {id:"lunar-capital",name:"Lunar Capital",group:"Moon / off-world",x:75,y:29,description:"The Lunarians' city, central to TH15's transfer plan and connected to later lunar stories in TH20.",status:"Direct TH15 setting; later links are contextual",characters:["Sagume Kishin","Junko","Hecatia Lapislazuli","Watatsuki no Toyohime"],entries:["th08","silent-sinner","th15","th20"],tags:["Moon","purity","Lunarians"]},
-];
+ ];
+const MAP_REGION_LABELS = {
+ core:"Gensokyo",settlements:"Settlements & forests",mountain:"Youkai Mountain",
+ afterlife:"Higan & the afterlife",underground:"Underground & hell realms",
+ offworld:"Moon / off-world",hidden:"Hidden realms"
+};
+const IMAGE_MAP_POSITIONS = {
+ "hakurei":{x:64,y:63,region:"core"},
+ "human-village":{x:48,y:60,region:"settlements"},
+ "scarlet-mansion":{x:45,y:43,region:"settlements"},
+ "forest-magic":{x:52,y:49,region:"settlements"},
+ "youkai-mountain":{x:39,y:24,region:"mountain"},
+ "moriya-shrine":{x:43,y:19,region:"mountain"},
+ "netherworld":{x:87,y:44,region:"afterlife"},
+ "bamboo-eientei":{x:56,y:65,region:"settlements"},
+ "former-hell":{x:13,y:86,region:"underground"},
+ "sanctuary":{x:41,y:31,region:"mountain"},
+ "lunar-sea":{x:85,y:8,region:"offworld"},
+ "higan":{x:27,y:12,region:"afterlife"},
+ "myouren":{x:39,y:53,region:"settlements"},
+ "mausoleum":{x:84,y:73,region:"underground"},
+ "earth-palace":{x:89,y:81,region:"underground"},
+ "back-door":{x:88,y:49,region:"hidden"},
+ "animal-realm":{x:91,y:91,region:"underground"},
+ "rainbow-cave":{x:48,y:34,region:"mountain"},
+ "lunar-capital":{x:85,y:15,region:"offworld"}
+};
 const INCIDENTS = [
  {title:"The Scarlet Mist Incident",entry:"th06",year:"2002",status:"Direct game event",summary:"A scarlet mist blocks sunlight across Gensokyo. Reimu or Marisa follows it to the Scarlet Devil Mansion and confronts Remilia Scarlet.",characters:["Reimu Hakurei","Marisa Kirisame","Remilia Scarlet"],tags:["mist","sunlight","vampire"]},
  {title:"The Missing Spring",entry:"th07",year:"2003",status:"Direct game event",summary:"An unnatural winter continues into spring. The trail leads to the Netherworld and Yuyuko Saigyouji's desire to see the Saigyou Ayakashi bloom.",characters:["Youmu Konpaku","Yuyuko Saigyouji","Yukari Yakumo"],tags:["winter","spring","Netherworld"]},
@@ -1000,15 +1094,50 @@ function renderCharacterAtlas(){
   return '<article class="character-card"><h4 class="character-name">'+esc(c.name)+'</h4><div class="character-role">'+esc(c.role)+'</div><p class="character-desc">'+esc(c.description)+'</p><div class="character-meta"><span>'+c.entries.length+' linked '+(c.entries.length===1?'entry':'entries')+'</span><button type="button" class="character-search-button" data-search-character="'+esc(c.name)+'">Find in archive ↗</button></div><div class="character-links">'+links+'</div></article>';
  }).join('')||'<div class="shelf-empty">No characters match that search. Try a name, species, location, or ability.</div>';
 }
+function getVisibleLocations(){
+ const query=($('map-location-search')?.value||'').trim().toLowerCase();
+ const region=$('map-region-filter')?.value||'all';
+ return LOCATIONS.filter(l=>{
+  const meta=IMAGE_MAP_POSITIONS[l.id]||{region:'core'};
+  const matchesRegion=region==='all'||meta.region===region;
+  const haystack=[l.name,l.group,l.description,l.status,...l.characters,...l.tags,...l.entries,MAP_REGION_LABELS[meta.region]||''].join(' ').toLowerCase();
+  return matchesRegion&&(!query||haystack.includes(query));
+ });
+}
 function renderMap(){
- $('map-board').innerHTML='<svg class="map-lines" viewBox="0 0 800 500" aria-hidden="true"><path d="M120 360 C190 315 230 250 370 210 S540 155 650 100" /><path d="M120 360 C220 370 280 300 390 295 S550 320 660 385" /><path d="M190 180 C280 195 335 250 385 295" /><path d="M385 295 C420 265 430 225 470 190 S580 130 650 100" /><path d="M385 295 C420 350 410 400 345 442" /><path d="M385 295 C480 270 560 250 650 245" /></svg>'+
-  LOCATIONS.map(l=>'<button type="button" class="map-pin" data-location="'+esc(l.id)+'" aria-pressed="'+String(l.id===activeLocation)+'" style="left:'+l.x+'%;top:'+l.y+'%" title="'+esc(l.name)+'"><span class="pin-dot"></span><span>'+esc(l.name)+'</span></button>').join('');
+ const layer=$('image-map-markers');
+ layer.innerHTML=LOCATIONS.map((l,index)=>{
+  const pos=IMAGE_MAP_POSITIONS[l.id]||{x:50,y:50,region:'core'};
+  const number=String(index+1).padStart(2,'0');
+  const edgeClass=(pos.x>=78?' edge-right':'')+(pos.y<=17?' edge-top':'');
+  return '<button type="button" class="image-map-marker'+edgeClass+'" data-location="'+esc(l.id)+'" data-place="'+esc(l.name)+'" aria-label="Location '+number+': '+esc(l.name)+'" aria-pressed="'+String(l.id===activeLocation)+'" style="left:'+pos.x+'%;top:'+pos.y+'%" title="'+esc(number+' · '+l.name)+'">'+number+'</button>';
+ }).join('');
+ renderMapIndex();
+}
+function renderMapIndex(){
+ const visible=getVisibleLocations();
+ if(visible.length&&!visible.some(l=>l.id===activeLocation))activeLocation=visible[0].id;
+ const count=$('map-index-count');
+ if(count)count.textContent=visible.length+' of '+LOCATIONS.length+' places shown';
+ const list=$('map-index-list');
+ list.innerHTML=visible.length?visible.map(l=>{
+  const index=LOCATIONS.findIndex(x=>x.id===l.id)+1;
+  const pos=IMAGE_MAP_POSITIONS[l.id]||{region:'core'};
+  return '<button type="button" class="map-index-card" data-location="'+esc(l.id)+'" aria-pressed="'+String(l.id===activeLocation)+'"><span class="map-index-number">'+String(index).padStart(2,'0')+'</span><span class="map-index-copy"><strong>'+esc(l.name)+'</strong><small>'+esc(MAP_REGION_LABELS[pos.region]||l.group)+'</small></span><span class="map-index-arrow" aria-hidden="true">↗</span></button>';
+ }).join(''):'<div class="map-index-empty">No locations match that search. Try a shorter place name or choose “All regions”.</div>';
+ document.querySelectorAll('.image-map-marker').forEach(button=>{
+  const shown=visible.some(l=>l.id===button.dataset.location);
+  button.hidden=!shown;
+  button.disabled=!shown;
+  button.setAttribute('aria-hidden',String(!shown));
+ });
  renderMapDetail();
 }
 function renderMapDetail(){
  const l=LOCATIONS.find(x=>x.id===activeLocation)||LOCATIONS[0];
- document.querySelectorAll('.map-pin').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.location===l.id)));
- $('map-detail').innerHTML='<div class="place-group">'+esc(l.group)+'</div><h4>'+esc(l.name)+'</h4><p>'+esc(l.description)+'</p><div class="canon-badge">'+esc(l.status)+'</div><div class="detail-subhead">Characters in this archive</div><div class="character-links">'+(l.characters.length?l.characters.map(name=>'<span class="entry-chip">'+esc(name)+'</span>').join(''):'<span class="shelf-empty">No character profile attached yet.</span>')+'</div><div class="detail-subhead">Related reading</div><div class="character-links">'+l.entries.map(entryChip).join('')+'</div>';
+ const pos=IMAGE_MAP_POSITIONS[l.id]||{region:'core'};
+ document.querySelectorAll('[data-location]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.location===l.id)));
+ $('map-detail').innerHTML='<div class="place-group">'+esc(MAP_REGION_LABELS[pos.region]||l.group)+' · '+esc(l.group)+'</div><h4>'+esc(l.name)+'</h4><p>'+esc(l.description)+'</p><div class="canon-badge">'+esc(l.status)+'</div><div class="detail-subhead">Characters in this archive</div><div class="character-links">'+(l.characters.length?l.characters.map(name=>'<span class="entry-chip">'+esc(name)+'</span>').join(''):'<span class="shelf-empty">No character profile attached yet.</span>')+'</div><div class="detail-subhead">Related reading</div><div class="character-links">'+(l.entries.length?l.entries.map(entryChip).join(''):'<span class="shelf-empty">No full lore entry is connected to this location yet.</span>')+'</div>';
 }
 function renderIncidents(){
  $('incident-grid').innerHTML=INCIDENTS.map(i=>{
@@ -1047,6 +1176,9 @@ $('clear-filters').addEventListener('click',()=>{filters.game=filters.print=filt
 $('search').addEventListener('input',event=>{searchText=event.target.value;renderTimeline();});
 $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value;renderTimeline();});
 $('character-search').addEventListener('input',renderCharacterAtlas);
+$('map-location-search').addEventListener('input',renderMapIndex);
+$('map-region-filter').addEventListener('change',renderMapIndex);
+$('map-reset-filters').addEventListener('click',()=>{$('map-location-search').value='';$('map-region-filter').value='all';renderMapIndex();$('map-location-search').focus();});
 $('search-clear').addEventListener('click',()=>{searchText='';$('search').value='';renderTimeline();$('search').focus();});
 $('reset-view').addEventListener('click',()=>{filters.game=filters.print=filters.music=true;searchText='';$('search').value='';renderAll();});
 $('filter-toggle').addEventListener('click',()=>{filterExpanded=!filterExpanded;$('filter-content').classList.toggle('hidden',!filterExpanded);$('filter-toggle').setAttribute('aria-expanded',String(filterExpanded));$('chevron').textContent=filterExpanded?'⌄':'›';});
