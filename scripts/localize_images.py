@@ -70,6 +70,16 @@ SILENT_SINNER = "https://shop.akbh.jp/cdn/shop/products/9784758060899.jpg?v=1722
 REMILIA_ART = "https://aenigmatrices.github.io/touhou-translations/_astro/remilia.DsxaxEe-_Z2t5UPm.webp"
 AYA_ART = "https://aenigmatrices.github.io/touhou-translations/_astro/aya.Bs9Y13l-_ZWBqoJ.webp"
 KANAKO_ART = "https://i.redd.it/zbb0y9ujn27g1.png"
+EOSD_SOUNDTRACK_COVER = "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/50/e5/9a/50e59a3d-3064-abab-6407-7dc564078d31/4580547332575.jpg/632x632bb.webp"
+UM_SOUNDTRACK_COVER = "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/93/18/cc/9318cce8-03c9-9055-5a79-8d65cc07057e/4580547332698.jpg/632x632bb.webp"
+PCB_SOUNDTRACK_COVER = "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/11/1a/ae/111aae76-c9d9-d787-cbfa-f051890678aa/4580547332582.jpg/632x632bb.webp"
+IN_SOUNDTRACK_COVER = "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/d8/db/94/d8db9490-4512-8d88-73cc-a387199dfa51/4580547332599.jpg/632x632bb.webp"
+MOF_SOUNDTRACK_COVER = "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/da/a9/9c/daa99c1c-9785-8c27-7bcf-b77a92c46c35/4580547332612.jpg/632x632bb.webp"
+FORBIDDEN_SCROLLERY_VOL2 = "https://images.yenpress.com/imgs/9780316512008.jpg?w=408&h=612&type=books&s=876b2917f3191483c6d19bba743f8452"
+FORBIDDEN_SCROLLERY_VOL3 = "https://images.yenpress.com/imgs/9780316512015.jpg?w=285&h=422&type=books&s=701d506b9563326056ce3133a8252411"
+FORBIDDEN_SCROLLERY_VOL4 = "https://images.yenpress.com/imgs/9780316512039.jpg?w=285&h=422&type=books&s=8d2060290f2b4eb5e1df7d79d2f70c1c"
+SYMPOSIUM_COVER = "https://shop.akbh.jp/cdn/shop/products/9784758012317.jpg?v=1722506606&width=800"
+WILD_HERMIT_VOL1 = "https://shop.akbh.jp/cdn/shop/products/9784758012225.jpg?v=1722506116&width=800"
 
 # Each source is a subject-matched replacement for a blocked Touhou Wiki media file.
 # Official game/publisher images are preferred; community images are explicitly credited.
@@ -575,6 +585,28 @@ register_custom_image("https://images.yenpress.com/imgs/9781975303525.jpg?w=408&
     "Yen Press — Forbidden Scrollery, Vol. 7", "print", "cover",
     "Publisher cover for Forbidden Scrollery, volume 7.")
 
+# Official soundtrack album artwork sourced from Apple Music album listings.
+register_custom_image(EOSD_SOUNDTRACK_COVER,
+    "https://music.apple.com/us/album/touhou-koumakyo-the-embodiment-of-scarlet/1581514712",
+    "Apple Music — Touhou 6: Embodiment of Scarlet Devil Soundtrack", "music", "cover",
+    "Official soundtrack album artwork for Touhou 6: Embodiment of Scarlet Devil.")
+register_custom_image(UM_SOUNDTRACK_COVER,
+    "https://music.apple.com/us/album/touhou-koryudo-unconnected-marketeers-soundtrack/1580542145",
+    "Apple Music — Touhou 18: Unconnected Marketeers Soundtrack", "music", "cover",
+    "Official soundtrack album artwork for Touhou 18: Unconnected Marketeers.")
+register_custom_image(PCB_SOUNDTRACK_COVER,
+    "https://music.apple.com/us/album/touhou-yoyomu-perfect-cherry-blossm-soundtrack/1581515120",
+    "Apple Music — Touhou 7: Perfect Cherry Blossom Soundtrack", "music", "cover",
+    "Official soundtrack album artwork for Touhou 7: Perfect Cherry Blossom.")
+register_custom_image(IN_SOUNDTRACK_COVER,
+    "https://music.apple.com/us/album/touhou-eiyasho-imperishable-night-soundtrack/1581515037",
+    "Apple Music — Touhou 8: Imperishable Night Soundtrack", "music", "cover",
+    "Official soundtrack album artwork for Touhou 8: Imperishable Night.")
+register_custom_image(MOF_SOUNDTRACK_COVER,
+    "https://music.apple.com/us/album/touhou-fujinroku-mountain-of-faith-soundtrack/1581515418",
+    "Apple Music — Touhou 10: Mountain of Faith Soundtrack", "music", "cover",
+    "Official soundtrack album artwork for Touhou 10: Mountain of Faith.")
+
 # Additional print-work cover images from distinct products on the official AKIBA-HOBBY Touhou shop.
 # These add enough unique book jackets that a print-work image never has to borrow a game screenshot.
 register_custom_image("https://shop.akbh.jp/cdn/shop/products/9784758012225.jpg?v=1722506116&width=800",
@@ -820,35 +852,258 @@ def rewrite_sources_section(content: str) -> str:
 
 
 PAGE_CONTEXT_OVERRIDES = {
+    "index.html": [
+        {
+            "container": "figure", "heading": "", "old_filename": "Th06cover.jpg",
+            "new_url": EOSD_COVER, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Original box-front artwork for Touhou 6: Embodiment of Scarlet Devil.",
+            "pin": True,
+        },
+        {
+            "container": "figure", "heading": "", "old_filename": "Th06screenLayout.jpg",
+            "new_url": EOSD_GAMEPLAY, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Gameplay screenshot from Touhou 6 showing danmaku and the game interface.",
+            "pin": True,
+        },
+        {
+            "heading": "Learn the setting", "old_filename": "Th10YoukaiMountain.jpg",
+            "new_url": MOF_LB_BG, "source_page": MOF_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 10: Mountain of Faith",
+            "alt": "Mountain of Faith environment artwork used as a setting illustration.",
+            "pin": True,
+        },
+        {
+            "heading": "Follow an incident", "old_filename": "Th06titlescreen.jpg",
+            "new_url": EOSD_TITLE, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Title-screen artwork from Touhou 6: Embodiment of Scarlet Devil.",
+            "pin": True,
+        },
+        {
+            "heading": "Check the sources", "old_filename": "Thgscover.jpg",
+            "new_url": FORBIDDEN_SCROLLERY_VOL2,
+            "source_page": "https://yenpress.com/titles/9780316512008-forbidden-scrollery-vol-2",
+            "credit": "Yen Press — Forbidden Scrollery, Vol. 2",
+            "alt": "Publisher cover for volume 2 of the official Forbidden Scrollery manga, used as an example of a print source.",
+            "pin": True,
+        },
+        {
+            "heading": "Games &amp; incidents", "old_filename": "Th06stage1title.jpg",
+            "new_url": EOSD_GAMEOVER, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Game-state screen from Touhou 6: Embodiment of Scarlet Devil.",
+            "pin": True,
+        },
+        {
+            "heading": "Places of Gensokyo", "old_filename": "Th10MoriyaShrineEntrance.jpg",
+            "new_url": FOG_1, "source_page": OFFICIAL_PAGE,
+            "credit": "Official Touhou New Classic site",
+            "alt": "Atmospheric mist artwork from the official Touhou New Classic site, used as Gensokyo setting imagery.",
+            "pin": True,
+        },
+        {
+            "heading": "Spell cards", "old_filename": "Th06stage2title.jpg",
+            "new_url": PCB_GAMEPLAY, "source_page": PCB_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 7: Perfect Cherry Blossom",
+            "alt": "Gameplay screenshot with danmaku patterns from Touhou 7: Perfect Cherry Blossom.",
+            "pin": True,
+        },
+        {
+            "heading": "Music &amp; themes", "old_filename": "Th06stage3title.jpg",
+            "new_url": UM_SOUNDTRACK_COVER,
+            "source_page": "https://music.apple.com/us/album/touhou-koryudo-unconnected-marketeers-soundtrack/1580542145",
+            "credit": "Apple Music — Touhou 18: Unconnected Marketeers Soundtrack",
+            "alt": "Official Unconnected Marketeers soundtrack album artwork.",
+            "pin": True,
+        },
+        {
+            "heading": "Official print works", "old_filename": "FS Tankebon1 cover.jpg",
+            "new_url": FORBIDDEN_SCROLLERY_VOL3,
+            "source_page": "https://yenpress.com/series/forbidden-scrollery",
+            "credit": "Yen Press — Forbidden Scrollery, Vol. 3",
+            "alt": "Publisher cover for volume 3 of the official Forbidden Scrollery manga.",
+            "pin": True,
+        },
+        {
+            "heading": "Timeline", "old_filename": "Th06ScarletMoon.jpg",
+            "new_url": PC98_COVER, "source_page": PC98_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 1: Highly Responsive to Prayers",
+            "alt": "Original packaging artwork for the first Touhou game, used to illustrate release history.",
+            "pin": True,
+        },
+        {
+            "heading": "Canon policy", "old_filename": "Th06SDMInterior.jpg",
+            "new_url": MOON_BG, "source_page": OFFICIAL_PAGE,
+            "credit": "Official Touhou New Classic site",
+            "alt": "Moonlit atmospheric artwork from the official Touhou New Classic site, used as an editorial illustration.",
+            "pin": True,
+        },
+        {
+            "heading": "Places and boundaries", "old_filename": "Th06SDMEntrance.jpg",
+            "new_url": FOG_3, "source_page": OFFICIAL_PAGE,
+            "credit": "Official Touhou New Classic site",
+            "alt": "Misty atmospheric background from the official Touhou New Classic site.",
+            "pin": True,
+        },
+    ],
     "pages/locations.html": [
         {
-            "heading": "Outside World & the Barrier",
-            "old_filename": "Th105BambooForest.jpg",
-            "new_url": IN_BG,
-            "source_page": IN_LB_PAGE,
-            "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
-            "alt": "Night-sky background artwork associated with Touhou 8: Imperishable Night, used as an atmospheric illustration for the boundary between Gensokyo and the Outside World.",
-        }
-    ],
-    "pages/chronology.html": [
+            "container": "figure", "heading": "", "old_filename": "Th10YoukaiMountain.jpg",
+            "new_url": FOG_4, "source_page": OFFICIAL_PAGE,
+            "credit": "Official Touhou New Classic site",
+            "alt": "Atmospheric mist background used as an illustrative landscape for Gensokyo.",
+            "pin": True,
+        },
         {
-            "heading": "",
-            "container": "figure",
-            "old_filename": "Th06screenLayout.jpg",
-            "new_url": PC98_GAMEPLAY,
-            "source_page": PC98_LB_PAGE,
-            "credit": "LaunchBox Games Database — Touhou 1: Highly Responsive to Prayers",
-            "alt": "PC-98-era gameplay screenshot from Touhou 1: Highly Responsive to Prayers, used to introduce release history.",
-        }
+            "heading": "Hakurei Shrine", "old_filename": "Th105HakureiShrineBird'sEye.jpg",
+            "new_url": MOF_COMMUNITY, "source_page": MOF_PAGE,
+            "credit": "Steam — Mountain of Faith",
+            "alt": "Mountain of Faith setting artwork used as an illustrative Gensokyo landscape; not a literal shrine map.",
+            "pin": True,
+        },
+        {
+            "heading": "Scarlet Devil Mansion", "old_filename": "Th06SDMEntrance.jpg",
+            "new_url": EOSD_BG_2, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Touhou 6 background artwork used to illustrate the Scarlet Devil Mansion setting.",
+            "pin": True,
+        },
+        {
+            "heading": "Misty Lake", "old_filename": "Th06MistyLake.jpg",
+            "new_url": DDC_BG, "source_page": "https://store.steampowered.com/app/1043240/Touhou_Kishinjou_Double_Dealing_Character/",
+            "credit": "Steam — Double Dealing Character",
+            "alt": "Touhou game environment artwork used as an illustrative lake-and-landscape image.",
+            "pin": True,
+        },
+        {
+            "heading": "Forest of Magic", "old_filename": "Th10YoukaiForest.jpg",
+            "new_url": IN_BG, "source_page": IN_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
+            "alt": "Nighttime game environment artwork used as illustrative forest scenery.",
+            "pin": True,
+        },
+        {
+            "heading": "Inside the Scarlet Devil Mansion", "old_filename": "Th06SDMInterior.jpg",
+            "new_url": EOSD_BG_1, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Touhou 6 environment artwork used as illustrative mansion-interior scenery.",
+            "pin": True,
+        },
+        {
+            "heading": "Outside World &amp; the Barrier", "old_filename": "Th105BambooForest.jpg",
+            "new_url": UFO_BG, "source_page": "https://store.steampowered.com/app/1100160/Touhou_Seirensen_Undefined_Fantastic_Object/",
+            "credit": "Steam — Undefined Fantastic Object",
+            "alt": "Touhou environment artwork used as a visual metaphor for Gensokyo's boundary, not a map of the Barrier.",
+            "pin": True,
+        },
+    ],
+    "pages/spell-cards.html": [
+        {
+            "container": "figure", "heading": "", "old_filename": "Th06screenLayout.jpg",
+            "new_url": UM_GAMEPLAY, "source_page": "https://store.steampowered.com/app/1566410/Touhou_Kouryudou_Unconnected_Marketeers/",
+            "credit": "Steam — Unconnected Marketeers",
+            "alt": "Gameplay screenshot showing danmaku patterns, illustrating spell-card combat.",
+            "pin": True,
+        },
+        {
+            "heading": "Danmaku vocabulary", "old_filename": "Th06stage4title.jpg",
+            "new_url": EOSD_GAMEPLAY_ALT, "source_page": EOSD_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 6: Embodiment of Scarlet Devil",
+            "alt": "Gameplay screenshot showing projectile patterns from Touhou 6.",
+            "pin": True,
+        },
+        {
+            "heading": "Boss phases &amp; difficulty", "old_filename": "Th06stage6title.jpg",
+            "new_url": IN_GAMEPLAY, "source_page": IN_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 8: Imperishable Night",
+            "alt": "Gameplay screenshot from Touhou 8, used to illustrate game-stage and boss-phase context.",
+            "pin": True,
+        },
     ],
     "pages/music.html": [
         {
-            "heading": "Shanghai Teahouse ~ Chinese Tea",
-            "old_filename": "Th06stage3title.jpg",
-            "new_url": MEILING,
-            "source_page": OFFICIAL_PAGE,
+            "container": "figure", "heading": "", "old_filename": "Th06stage3title.jpg",
+            "new_url": EOSD_SOUNDTRACK_COVER,
+            "source_page": "https://music.apple.com/us/album/touhou-koumakyo-the-embodiment-of-scarlet/1581514712",
+            "credit": "Apple Music — Touhou 6: Embodiment of Scarlet Devil Soundtrack",
+            "alt": "Official soundtrack album artwork for Touhou 6: Embodiment of Scarlet Devil.",
+            "pin": True,
+        },
+        {
+            "heading": "Shanghai Teahouse ~ Chinese Tea", "old_filename": "Th06stage3title.jpg",
+            "new_url": MEILING, "source_page": OFFICIAL_PAGE,
             "credit": "Official Touhou New Classic site",
-            "alt": "Hong Meiling character portrait from the official Touhou Koumakyou: New Classic website, matching the Shanghai Teahouse theme card.",
+            "alt": "Hong Meiling character portrait, associated with the Chinese-themed setting of Shanghai Teahouse.",
+            "pin": True,
+        },
+        {
+            "heading": "Listening notes", "old_filename": "Th06screenLayout.jpg",
+            "new_url": IN_SOUNDTRACK_COVER,
+            "source_page": "https://music.apple.com/us/album/touhou-eiyasho-imperishable-night-soundtrack/1581515037",
+            "credit": "Apple Music — Touhou 8: Imperishable Night Soundtrack",
+            "alt": "Official Imperishable Night soundtrack album artwork, used for listening and release comparisons.",
+            "pin": True,
+        },
+    ],
+    "pages/print-works.html": [
+        {
+            "container": "figure", "heading": "", "old_filename": "Th06SDMLibrary1.jpg",
+            "new_url": FORBIDDEN_SCROLLERY_VOL4,
+            "source_page": "https://yenpress.com/series/forbidden-scrollery",
+            "credit": "Yen Press — Forbidden Scrollery, Vol. 4",
+            "alt": "Publisher cover for volume 4 of Forbidden Scrollery, an official Touhou print work.",
+            "pin": True,
+        },
+        {
+            "heading": "Perfect Memento in Strict Sense", "old_filename": "Thgscover.jpg",
+            "new_url": PMISS_COVER,
+            "source_page": "https://www.neowing.co.jp/product/NEOBK-395940",
+            "credit": "Neowing — Perfect Memento in Strict Sense",
+            "alt": "Cover of Perfect Memento in Strict Sense, an official Touhou reference book.",
+            "pin": True,
+        },
+        {
+            "heading": "Silent Sinner in Blue", "old_filename": "9784758060899.jpg",
+            "new_url": SILENT_SINNER,
+            "source_page": "https://shop.akbh.jp/en/products/9784758060899",
+            "credit": "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 1",
+            "alt": "Cover of volume 1 of Silent Sinner in Blue, an official Touhou manga.",
+            "pin": True,
+        },
+        {
+            "heading": "Symposium of Post-mysticism", "old_filename": "Th10KanakoYasaka.png",
+            "new_url": SYMPOSIUM_COVER,
+            "source_page": "https://shop.akbh.jp/en/products/9784758012317",
+            "credit": "AKIBA-HOBBY — Symposium of Post-mysticism",
+            "alt": "Cover of Symposium of Post-mysticism, an official Touhou reference book.",
+            "pin": True,
+        },
+        {
+            "heading": "Wild and Horned Hermit", "old_filename": "Th105HakureiShrineBird'sEye.jpg",
+            "new_url": WILD_HERMIT_VOL1,
+            "source_page": "https://shop.akbh.jp/en/products/9784758012225",
+            "credit": "AKIBA-HOBBY — Wild and Horned Hermit, Vol. 1",
+            "alt": "Cover of volume 1 of Wild and Horned Hermit, an official Touhou manga.",
+            "pin": True,
+        },
+        {
+            "heading": "Forbidden Scrollery", "old_filename": "FS Tankebon1 cover.jpg",
+            "new_url": FORBIDDEN_SCROLLERY,
+            "source_page": "https://yenpress.com/titles/9780316511971-forbidden-scrollery-vol-1",
+            "credit": "Yen Press — Forbidden Scrollery, Vol. 1",
+            "alt": "Publisher cover of volume 1 of Forbidden Scrollery, an official Touhou manga.",
+            "pin": True,
+        },
+    ],
+    "pages/chronology.html": [
+        {
+            "container": "figure", "heading": "", "old_filename": "Th06screenLayout.jpg",
+            "new_url": PC98_GAMEPLAY, "source_page": PC98_LB_PAGE,
+            "credit": "LaunchBox Games Database — Touhou 1: Highly Responsive to Prayers",
+            "alt": "PC-98-era gameplay screenshot from Touhou 1: Highly Responsive to Prayers, used to introduce release history.",
+            "pin": True,
         }
     ],
 }
@@ -877,6 +1132,14 @@ def apply_context_overrides(relative_path: str, content: str) -> str:
             if old_url not in container:
                 return container
             container = container.replace(old_url, new_url)
+            if override.get("pin"):
+                # Preserve a curated source/subject match through the automatic image pass.
+                container = IMG_TAG_RE.sub(
+                    lambda im: re.sub(r">$", ' data-image-pinned="true">', im.group(0), count=1)
+                    if IMG_SRC_RE.search(im.group(0)) else im.group(0),
+                    container,
+                    count=1,
+                )
             container = re.sub(
                 r'\balt\s*=\s*(["\']).*?\1',
                 lambda m: 'alt="' + alt.replace("&", "&amp;").replace('"', "&quot;") + '"',
@@ -899,7 +1162,7 @@ def apply_context_overrides(relative_path: str, content: str) -> str:
             content = re.sub(r'<figure\b[\s\S]*?</figure>', replace_container, content, count=1, flags=re.IGNORECASE)
         else:
             content = re.sub(
-                r'<article\b[^>]*class="[^"]*archive-card[^"]*"[^>]*>[\s\S]*?</article>',
+                r'<article\b[^>]*class="[^"]*archive-card[^"]*"[^>]*>[\s\S]*?</article>|<a\b[^>]*class="[^"]*archive-card[^"]*"[^>]*>[\s\S]*?</a>',
                 replace_container,
                 content,
                 flags=re.IGNORECASE,
@@ -1235,7 +1498,21 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
 
     catalog_by_identity = {_image_identity(item["url"]): item for item in DIVERSE_IMAGE_CATALOG}
 
-    def can_keep(candidate: dict[str, str] | None) -> bool:
+    # Explicitly pinned images are curated by their page + card heading, so never
+    # rerank them using generic page text. Reserve each non-character image once.
+    if re.search(r'\bdata-image-pinned\s*=', tag, flags=re.IGNORECASE):
+        metadata = URL_CREDIT.get(original_url, {})
+        identity = _image_identity(original_url)
+        if original_url not in {REIMU, MARISA, CIRNO, MEILING, FLANDRE, REMILIA_ART, AYA_ART, KANAKO_ART}:
+            used_assets.add(identity)
+        return attribute_image_container(
+            container,
+            str(metadata.get("source_page", "")),
+            str(metadata.get("credit", "Curated Touhou image")),
+            str(metadata.get("alt", "Touhou reference image.")),
+        )
+
+    def can_keep(candidate: dict[str, str] | None:
         if not candidate:
             return False
         if _image_identity(candidate["url"]) in used_assets:
@@ -1436,6 +1713,7 @@ def main() -> None:
         tag = re.sub(r'\sdata-wiki-file=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
         # This is build-only metadata; the published site does not need it.
         tag = re.sub(r'\sdata-image-processed=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
+        tag = re.sub(r'\sdata-image-pinned=(["\']).*?\1', "", tag, flags=re.IGNORECASE | re.DOTALL)
         return tag
 
     def replace_css_url(match: re.Match[str]) -> str:
