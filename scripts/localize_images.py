@@ -1512,7 +1512,7 @@ def diversify_image_container(container: str, relative_path: str, used_assets: s
             str(metadata.get("alt", "Touhou reference image.")),
         )
 
-    def can_keep(candidate: dict[str, str] | None:
+    def can_keep(candidate: dict[str, str] | None) -> bool:
         if not candidate:
             return False
         if _image_identity(candidate["url"]) in used_assets:
