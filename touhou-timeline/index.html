@@ -402,7 +402,8 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
   <div class="progress-card" aria-live="polite"><div class="progress-top"><span>YOUR READING PATH</span><strong id="progress-count">0 / 17 read</strong></div><div class="progress-track"><span id="progress-bar"></span></div><div class="progress-bottom"><span id="saved-count">0 saved</span><span>Saved on this device</span></div></div>
  </div>
  <div class="tool-tabs" role="tablist" aria-label="Archive explorer sections">
-  <button type="button" role="tab" data-tool-tab="characters" aria-selected="true" aria-controls="characters-panel">♙ Character atlas</button>
+  <button type="button" role="tab" data-tool-tab="command" aria-selected="true" aria-controls="command-panel">✦ Investigation desk</button>
+  <button type="button" role="tab" data-tool-tab="characters" aria-selected="false aria-controls="characters-panel">♙ Character atlas</button>
   <button type="button" role="tab" data-tool-tab="network" aria-selected="false" aria-controls="network-panel">⌘ Relationship network</button>
   <button type="button" role="tab" data-tool-tab="map" aria-selected="false" aria-controls="map-panel">⌖ Gensokyo map</button>
   <button type="button" role="tab" data-tool-tab="incidents" aria-selected="false" aria-controls="incidents-panel">✧ Incident archive</button>
@@ -412,7 +413,46 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
   <button type="button" role="tab" data-tool-tab="threads" aria-selected="false" aria-controls="threads-panel">⌘ Lore threads</button>
   <button type="button" role="tab" data-tool-tab="shelf" aria-selected="false" aria-controls="shelf-panel">♡ Reading shelf</button>
  </div>
- <section class="tool-panel" id="characters-panel" role="tabpanel">
+
+ <section class="tool-panel" id="command-panel" role="tabpanel">
+  <div class="command-hero">
+   <div class="command-hero-copy"><div class="section-kicker">PHASE X · THE GRAND ARCHIVE</div><h3 class="serif">The Gensokyo Investigation Desk</h3><p>One search across the works, cast, places, incidents, lore threads, research notes, sources, and reading routes. Gather clues into a personal case file—but keep primary sources, reference material, and your own interpretation distinct.</p></div>
+   <div class="command-seal" aria-hidden="true"><span>幻想郷</span><i>✦</i><small>ARCHIVE / X</small></div>
+  </div>
+  <div class="command-summary-stats" aria-label="Archive index summary">
+   <div><strong id="command-stat-works">—</strong><span>Indexed works</span></div><div><strong id="command-stat-characters">—</strong><span>Characters</span></div><div><strong id="command-stat-places">—</strong><span>Locations</span></div><div><strong id="command-stat-incidents">—</strong><span>Incident dossiers</span></div>
+  </div>
+  <section class="command-search-panel" aria-label="Search the whole archive">
+   <label class="command-search-field"><span>Search across the archive</span><div class="command-search-input-wrap"><span aria-hidden="true">⌕</span><input type="search" id="command-search" placeholder="Try Reimu, the false moon, Youkai Mountain, a source…" autocomplete="off" aria-label="Search all Touhou archive content"><button type="button" id="command-search-clear" aria-label="Clear archive search">×</button></div></label>
+   <div class="command-filters">
+    <label><span>Archive section</span><select id="command-category"><option value="all">Everything</option><option value="work">Works</option><option value="character">Characters</option><option value="location">Locations</option><option value="incident">Incidents</option><option value="thread">Lore threads</option><option value="source">Source references</option><option value="note">Research notes</option><option value="route">Reading routes</option></select></label>
+    <label><span>Sort results</span><select id="command-sort"><option value="relevance">Best match / featured</option><option value="title">Title A–Z</option><option value="category">By archive section</option></select></label>
+    <button type="button" class="command-surprise-button" id="command-surprise">✧ Surprise me</button>
+   </div>
+   <div class="command-suggestions" aria-label="Suggested archive searches"><span>OPEN A TRAIL</span><button type="button" data-command-preset="Moon">Moon lore</button><button type="button" data-command-preset="Scarlet Devil">Scarlet Devil</button><button type="button" data-command-preset="Anomaly-Stone">TH20 incident</button><button type="button" data-command-preset="ownership">Ownership &amp; markets</button><button type="button" data-command-preset="outside world">Outside world</button></div>
+  </section>
+  <div class="command-results-heading"><div><div class="section-kicker">CROSS-INDEX RESULTS</div><h4 id="command-results-title">A few doors to open</h4></div><span id="command-result-count" role="status" aria-live="polite">Featured archive records</span></div>
+  <div class="command-results-grid" id="command-results"></div>
+  <section class="casebook-panel" aria-labelledby="casebook-heading">
+   <div class="casebook-heading"><div><div class="section-kicker">YOUR PERSONAL RESEARCH SPACE</div><h4 id="casebook-heading">The Gensokyo casebook</h4><p>Pin works, characters, locations, incidents, threads, and source records as evidence. Your notes are personal research—not official canon—and stay in this browser unless you export a backup.</p></div><div class="casebook-count-badge"><strong id="casebook-case-count">1</strong><span>case files</span></div></div>
+   <div class="casebook-controls">
+    <label><span>Current case file</span><select id="casebook-case-select" aria-label="Select a saved case file"></select></label>
+    <div class="casebook-control-buttons"><button type="button" class="casebook-button" id="casebook-new">＋ New case</button><button type="button" class="casebook-button danger" id="casebook-delete">Delete case</button></div>
+   </div>
+   <div id="casebook-delete-confirm-wrap" class="casebook-delete-confirm hidden" role="group" aria-label="Confirm deleting this case"><span>Delete this case file and its pinned evidence?</span><button type="button" class="casebook-button danger" id="casebook-delete-confirm">Confirm delete</button><button type="button" class="casebook-button" id="casebook-delete-cancel">Keep case</button></div>
+   <div class="casebook-fields">
+    <label><span>Case title</span><input id="casebook-title" type="text" maxlength="100" placeholder="Name this investigation"></label>
+    <label><span>Central question / working hypothesis</span><input id="casebook-question" type="text" maxlength="300" placeholder="What are you trying to understand?"></label>
+   </div>
+   <label class="casebook-notes-label"><span>Research notes</span><textarea id="casebook-notes" rows="4" maxlength="12000" placeholder="Record observations, competing explanations, uncertainties, and where you want to investigate next…"></textarea></label>
+   <div class="casebook-evidence-heading"><div><h5>Pinned evidence</h5><p id="casebook-evidence-count">Nothing pinned yet.</p></div><span>LOCAL CASE FILE</span></div>
+   <div id="casebook-evidence-list" class="casebook-evidence-list"></div>
+   <div class="casebook-export-row"><button type="button" class="casebook-export-primary" id="casebook-export-json">Export casebook (.json)</button><button type="button" class="casebook-export-button" id="casebook-export-markdown">Export current report (.md)</button><button type="button" class="casebook-export-button" id="casebook-import-trigger">Import casebook</button><input type="file" id="casebook-import-file" accept=".json,application/json" hidden></div>
+   <p class="casebook-status" id="casebook-status" role="status" aria-live="polite">Changes save on this device as you work. Export a JSON backup to move your casebook to another device.</p>
+  </section>
+  <div class="command-footnote"><span>HOW TO READ THE EVIDENCE</span><p>An official work, a reference wiki, a community discussion, and an interpretation are different kinds of evidence. A shared character or theme is a useful lead—not proof that two events are directly connected.</p></div>
+ </section>
+ <section class="tool-panel hidden" id="characters-panel" role="tabpanel">
   <div class="panel-intro"><div><div class="section-kicker">People, spirits, gods, and youkai</div><h3 class="serif">Character atlas</h3><p>Index entries are limited to characters attached to the stories currently in this archive, not the entire Touhou cast.</p></div><label class="atlas-search">⌕ <input type="search" id="character-search" placeholder="Find a character…" aria-label="Search the character atlas"></label></div>
   <div id="character-count" class="panel-count"></div><div class="character-grid" id="character-grid"></div>
  </section>
@@ -697,6 +737,26 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
 @media(max-width:860px){.route-explorer-layout{grid-template-columns:1fr}.route-catalog-list{grid-template-columns:repeat(2,minmax(0,1fr))}.route-summary-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.route-catalog-list,.route-builder-fields,.route-builder-entry-list{grid-template-columns:1fr}.route-catalog,.route-detail,.route-builder{padding:11px}.route-builder-heading{display:block}.route-builder-mark{display:inline-block;margin-top:9px}.route-detail-top h4{font-size:23px}.route-step{grid-template-columns:27px minmax(0,1fr);gap:8px;padding:9px}.route-step-number{width:26px;height:26px}.route-builder-actions>*{flex:1 1 100%}}
 .route-delete-prompt{align-self:center;color:#fca5a5;font-size:8px;line-height:1.5}.route-delete-button.is-confirm{border-color:rgba(248,113,113,.55);background:rgba(248,113,113,.1);color:#fecaca}.route-delete-button.is-confirm:focus-visible{outline:2px solid #fca5a5;outline-offset:2px}
+
+/* Phase X · Grand Archive command desk and evidence casebook */
+.command-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;overflow:hidden;border:1px solid rgba(196,181,253,.2);border-radius:18px;padding:clamp(18px,3vw,30px);background:radial-gradient(ellipse at 92% 8%,rgba(167,139,250,.14),transparent 38%),linear-gradient(125deg,rgba(196,181,253,.055),rgba(255,255,255,.008) 58%);margin-bottom:14px}
+.command-hero-copy{position:relative;z-index:1;max-width:780px;min-width:0}.command-hero-copy h3{font-size:clamp(24px,4vw,38px);line-height:1.12;margin:9px 0 12px;color:#f1edf8}.command-hero-copy p{max-width:760px;margin:0;color:#a19eaf;font-size:10px;line-height:1.95}
+.command-seal{flex:0 0 105px;width:105px;height:105px;border:1px solid rgba(196,181,253,.23);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#d6c8f4;background:radial-gradient(circle,rgba(196,181,253,.1),rgba(196,181,253,.01) 68%);box-shadow:0 0 0 7px rgba(196,181,253,.02),inset 0 0 24px rgba(196,181,253,.05)}
+.command-seal span{font:500 17px Georgia,serif;letter-spacing:.12em}.command-seal i{font-style:normal;color:#f0c6a4;font-size:20px}.command-seal small{font:7px ui-monospace,monospace;letter-spacing:.12em;color:#8d829f}
+.command-summary-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0 16px}.command-summary-stats>div{display:grid;gap:5px;min-width:0;padding:12px;border:1px solid rgba(196,181,253,.12);border-radius:11px;background:rgba(255,255,255,.012)}.command-summary-stats strong{font:500 23px/1 Georgia,serif;color:#e0d5f5}.command-summary-stats span{font-size:8px;color:#8b8998;letter-spacing:.04em}
+.command-search-panel{border:1px solid rgba(196,181,253,.17);border-radius:15px;padding:14px;background:linear-gradient(145deg,rgba(196,181,253,.04),rgba(255,255,255,.008))}
+.command-search-field{display:grid;gap:8px;color:#aba6ba;font-size:9px}.command-search-input-wrap{display:flex;align-items:center;gap:10px;min-width:0;min-height:52px;border:1px solid rgba(196,181,253,.25);border-radius:11px;padding:0 12px;background:rgba(10,10,14,.7)}.command-search-input-wrap>span{color:#c4b5fd;font-size:20px}.command-search-input-wrap input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#f0edf6;font:13px/1.5 inherit}.command-search-input-wrap input::placeholder{color:#666473}.command-search-input-wrap button{width:28px;height:28px;border:0;border-radius:7px;background:rgba(255,255,255,.04);color:#bdb8cc;font-size:18px;cursor:pointer}
+.command-filters{display:grid;grid-template-columns:minmax(160px,1fr) minmax(160px,.8fr) auto;gap:9px;align-items:end;margin-top:12px}.command-filters label{display:grid;gap:6px;min-width:0;color:#8d8b99;font-size:8px}.command-filters select{width:100%;min-width:0;min-height:39px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#111214;color:#e7e4ee;padding:8px 10px;font-size:9px}.command-surprise-button{min-height:39px;border:1px solid rgba(240,198,164,.25);border-radius:8px;padding:9px 13px;color:#f2d5bf;background:rgba(240,198,164,.045);font-size:9px;white-space:nowrap;cursor:pointer}.command-surprise-button:hover,.command-surprise-button:focus-visible{background:rgba(240,198,164,.1)}
+.command-suggestions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px}.command-suggestions>span{margin-right:3px;color:#777582;font:7px ui-monospace,monospace;letter-spacing:.1em}.command-suggestions button{border:1px solid rgba(196,181,253,.12);border-radius:99px;padding:6px 9px;color:#c4bdd5;background:rgba(255,255,255,.012);font-size:8px;cursor:pointer}.command-suggestions button:hover,.command-suggestions button:focus-visible{border-color:rgba(196,181,253,.35);color:#e6ddfa}
+.command-results-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:21px 0 11px}.command-results-heading h4{margin:4px 0 0;font:500 23px/1.25 Georgia,serif;color:#eae6f2}.command-results-heading>span{max-width:50%;color:#82808e;font:8px/1.6 ui-monospace,monospace;text-align:right}.command-results-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.command-result-card{display:flex;flex-direction:column;align-items:stretch;min-width:0;border:1px solid rgba(255,255,255,.075);border-radius:13px;padding:13px;background:linear-gradient(140deg,rgba(255,255,255,.022),rgba(255,255,255,.006));transition:border-color .15s,transform .15s}.command-result-card:hover{border-color:rgba(196,181,253,.23);transform:translateY(-1px)}.command-result-top{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap}.command-type-pill{display:inline-flex;align-items:center;max-width:80%;border:1px solid rgba(196,181,253,.16);border-radius:99px;padding:4px 7px;color:#d4c8f0;background:rgba(196,181,253,.035);font-size:7px;line-height:1.5;overflow-wrap:anywhere}.command-type-pill.type-character{color:#b7d8fa;border-color:rgba(147,197,253,.22);background:rgba(147,197,253,.035)}.command-type-pill.type-location{color:#a7f3d0;border-color:rgba(110,231,183,.2)}.command-type-pill.type-incident{color:#fecaca;border-color:rgba(248,113,113,.2)}.command-type-pill.type-thread,.command-type-pill.type-route{color:#f4c6a4;border-color:rgba(240,198,164,.18)}.command-type-pill.type-source,.command-type-pill.type-note{color:#d7d3df;border-color:rgba(255,255,255,.14)}
+.command-result-linked{color:#777684;font:7px ui-monospace,monospace}.command-result-card h5{margin:12px 0 5px;color:#eeeaf5;font:500 19px/1.25 Georgia,serif;overflow-wrap:anywhere}.command-result-subtitle{color:#b9abd9;font-size:8px;line-height:1.5}.command-result-card>p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;margin:9px 0;color:#9794a3;font-size:9px;line-height:1.85}.command-result-tags{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 10px}.command-result-tags span{border:1px solid rgba(255,255,255,.06);border-radius:5px;padding:4px 6px;color:#777582;font-size:7px;line-height:1.5}
+.command-result-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:8px}.command-open-button,.command-pin-button,.command-external-link{display:inline-flex;align-items:center;justify-content:center;min-height:32px;border:1px solid rgba(196,181,253,.18);border-radius:7px;padding:7px 9px;color:#d4c6ef;background:rgba(196,181,253,.035);font-size:8px;text-decoration:none;cursor:pointer}.command-pin-button{border-color:rgba(255,255,255,.09);color:#a8a6b4;background:rgba(255,255,255,.012)}.command-pin-button[aria-pressed=true]{border-color:rgba(110,231,183,.22);color:#a7f3d0;background:rgba(110,231,183,.035)}.command-external-link{color:#f0c6a4;border-color:rgba(240,198,164,.17)}.command-no-results{grid-column:1/-1;border:1px dashed rgba(196,181,253,.19);border-radius:13px;padding:25px;text-align:center;color:#908c9d}.command-no-results>span{font-size:26px;color:#c4b5fd}.command-no-results h5{font:500 19px Georgia,serif;color:#e7e2f1;margin:10px 0}.command-no-results p{font-size:9px;line-height:1.8;max-width:440px;margin:0 auto}
+.casebook-panel{margin-top:22px;border:1px solid rgba(196,181,253,.2);border-radius:16px;padding:clamp(13px,2.2vw,20px);background:radial-gradient(ellipse at 0% 0%,rgba(196,181,253,.055),transparent 36%),rgba(255,255,255,.008)}.casebook-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.casebook-heading h4{margin:5px 0 7px;color:#f0ebf8;font:500 clamp(22px,3vw,29px)/1.2 Georgia,serif}.casebook-heading p{max-width:720px;margin:0;color:#92909f;font-size:9px;line-height:1.9}.casebook-count-badge{flex:0 0 auto;display:grid;justify-items:center;gap:3px;border:1px solid rgba(196,181,253,.18);border-radius:10px;padding:8px 10px;background:rgba(196,181,253,.035)}.casebook-count-badge strong{font:500 20px Georgia,serif;color:#dcd1f5}.casebook-count-badge span{color:#827c94;font-size:7px;letter-spacing:.06em;text-transform:uppercase}
+.casebook-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin-top:16px}.casebook-controls label,.casebook-fields label,.casebook-notes-label{display:grid;gap:6px;min-width:0;color:#9592a2;font-size:8px}.casebook-controls select,.casebook-fields input,.casebook-notes-label textarea{width:100%;min-width:0;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#111214;color:#eae6f3;padding:10px;font:10px/1.7 inherit}.casebook-control-buttons{display:flex;gap:7px;flex-wrap:wrap}.casebook-button,.casebook-export-button,.casebook-export-primary{min-height:36px;border:1px solid rgba(196,181,253,.15);border-radius:8px;padding:8px 10px;background:rgba(196,181,253,.035);color:#ccc2e3;font-size:8px;cursor:pointer}.casebook-button.danger{border-color:rgba(248,113,113,.17);color:#e9aaaa;background:rgba(248,113,113,.02)}.casebook-delete-confirm{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding:10px;border:1px solid rgba(248,113,113,.17);border-radius:8px;background:rgba(248,113,113,.025);color:#e8b8b8;font-size:8px;line-height:1.6}.casebook-delete-confirm span{margin-right:auto}.casebook-fields{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;margin-top:12px}.casebook-fields input,.casebook-notes-label textarea{font-family:inherit;font-size:10px}.casebook-notes-label{margin-top:12px}.casebook-notes-label textarea{min-height:100px;resize:vertical;line-height:1.85}.casebook-fields input:focus,.casebook-notes-label textarea:focus,.casebook-controls select:focus{outline:1px solid rgba(196,181,253,.35);border-color:rgba(196,181,253,.32)}
+.casebook-evidence-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:9px;margin:18px 0 10px}.casebook-evidence-heading h5{margin:0;color:#e3dcef;font:500 17px Georgia,serif}.casebook-evidence-heading p{margin:5px 0 0;color:#81808d;font-size:8px}.casebook-evidence-heading>span{color:#8b829d;font:7px ui-monospace,monospace;letter-spacing:.09em}.casebook-evidence-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.case-evidence-card{min-width:0;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:11px;background:rgba(255,255,255,.012)}.case-evidence-head{display:flex;align-items:center;justify-content:space-between;gap:7px}.case-evidence-remove{flex:0 0 auto;border:0;background:none;color:#9c8790;padding:4px;font-size:8px;cursor:pointer}.case-evidence-card h6{margin:9px 0 4px;color:#e6e1ee;font:500 15px/1.35 Georgia,serif;overflow-wrap:anywhere}.case-evidence-sub{color:#b6a8d7;font-size:8px;line-height:1.6}.case-evidence-card>p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;margin:8px 0;color:#9693a1;font-size:8px;line-height:1.8}.case-evidence-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.case-evidence-actions button,.case-evidence-actions a{border:1px solid rgba(196,181,253,.13);border-radius:6px;padding:6px 8px;color:#c4b5fd;background:rgba(196,181,253,.02);font-size:7px;text-decoration:none;cursor:pointer}.case-evidence-empty{grid-column:1/-1;display:grid;justify-items:center;border:1px dashed rgba(196,181,253,.18);border-radius:11px;padding:21px;text-align:center}.case-evidence-empty>span{color:#d0bdf3;font-size:22px}.case-evidence-empty strong{margin-top:8px;color:#e5e0ef;font:500 17px Georgia,serif}.case-evidence-empty p{max-width:440px;margin:8px 0 0;color:#858391;font-size:8px;line-height:1.9}
+.casebook-export-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.casebook-export-primary{border-color:rgba(196,181,253,.3);background:rgba(196,181,253,.09);color:#e5daf9}.casebook-status{margin:11px 0 0;color:#868392;font-size:8px;line-height:1.8}.command-footnote{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;margin-top:14px;padding:12px;border-left:2px solid rgba(196,181,253,.22);background:rgba(196,181,253,.02)}.command-footnote>span{color:#c5b5e6;font:7px/1.7 ui-monospace,monospace;letter-spacing:.08em}.command-footnote p{margin:0;color:#858391;font-size:8px;line-height:1.85}
+@media(max-width:760px){.command-summary-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.command-results-grid,.casebook-evidence-list{grid-template-columns:1fr}.command-seal{flex-basis:78px;width:78px;height:78px}.command-seal span{font-size:13px}.command-seal small{font-size:6px}.command-filters{grid-template-columns:1fr 1fr}.command-surprise-button{grid-column:1/-1}.casebook-controls{grid-template-columns:1fr}.casebook-fields{grid-template-columns:1fr}.casebook-control-buttons>*{flex:1}.command-results-heading{align-items:flex-start}.command-results-heading>span{max-width:48%}}
+@media(max-width:480px){.command-hero{padding:14px;gap:10px}.command-seal{flex-basis:58px;width:58px;height:58px}.command-seal span{font-size:10px}.command-seal i{font-size:15px}.command-seal small{font-size:5px}.command-hero-copy h3{font-size:24px}.command-hero-copy p{font-size:9px}.command-search-panel,.casebook-panel{padding:11px}.command-filters{grid-template-columns:1fr}.command-surprise-button{grid-column:auto}.command-results-heading{display:block}.command-results-heading>span{display:block;max-width:none;text-align:left;margin-top:7px}.casebook-heading{gap:8px}.casebook-count-badge{padding:6px}.command-footnote{grid-template-columns:1fr;gap:5px}}
 </style>
 
 <script>
@@ -1415,7 +1475,7 @@ function openDrawer(id,trigger){
 }
 
 let sortMode='path';
-let activeToolTab='characters';
+let activeToolTab='command';
 let activeLocation='hakurei';
 let activeNetworkFocus='character:Reimu Hakurei';
 const INCIDENT_FAVORITES_STORAGE_KEY='touhouArchiveIncidentFavoritesV1';
@@ -1915,6 +1975,215 @@ function initLoreRouteControls(){
  $('route-import-file').addEventListener('change',event=>{const file=event.target.files?.[0];if(!file)return;if(file.size>1000000){showLoreRouteMessage('That file is too large to be a route backup. Choose a JSON file smaller than 1 MB.');event.target.value='';return;}const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(String(reader.result||'{}')),candidates=Array.isArray(data)?data:(Array.isArray(data.routes)?data.routes:[]);let imported=0;candidates.slice(0,50).forEach(route=>{const title=String(route?.title||'').trim().slice(0,80),description=String(route?.description||'').trim().slice(0,260),entries=uniqueValidRouteEntries(route?.entries);if(!title||entries.length<2)return;const id='custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9);loreRouteState.custom.push({id,title,description,entries});loreRouteState.progress[id]=uniqueValidRouteEntries(route?.completed).filter(entry=>entries.includes(entry));activeLoreRouteId=id;imported++;});if(imported){saveLoreRouteState();showLoreRouteMessage('Imported '+imported+' route'+(imported===1?'':'s')+'. Their saved completion steps were restored when available.');renderLoreRoutes();}else showLoreRouteMessage('No usable routes found. A route needs a name and at least two works from this archive.');}catch(_){showLoreRouteMessage('Could not read that file as route JSON. Try exporting a fresh backup from this website.');}};reader.onerror=()=>showLoreRouteMessage('The route file could not be read. Try choosing it again.');reader.readAsText(file);event.target.value='';});
 }
 
+
+const CASEBOOK_STORAGE_KEY='gensokyoArchiveCasebookV1';
+const COMMAND_CATEGORY_LABELS={work:'Work',character:'Character',location:'Location',incident:'Incident',thread:'Lore thread',source:'Source reference',note:'Research note',route:'Reading route'};
+function caseId(){return 'case-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);}
+function cleanCasePin(item){
+ if(!item||typeof item!=='object'||!String(item.refKey||'')||!String(item.title||''))return null;
+ const url=typeof item.url==='string'&&/^https?:\/\//i.test(item.url)?item.url.slice(0,1800):'';
+ return {refKey:String(item.refKey).slice(0,240),category:String(item.category||'note').slice(0,30),typeLabel:String(item.typeLabel||'Research item').slice(0,80),title:String(item.title).slice(0,240),subtitle:String(item.subtitle||'').slice(0,300),summary:String(item.summary||'').slice(0,1800),tags:Array.isArray(item.tags)?item.tags.filter(x=>typeof x==='string').slice(0,12).map(x=>x.slice(0,100)):[],entryId:typeof item.entryId==='string'&&TIMELINE.some(e=>e.id===item.entryId)?item.entryId:'',url,evidence:String(item.evidence||'').slice(0,80)};
+}
+function cleanCaseData(item,index){
+ if(!item||typeof item!=='object')return null;
+ const title=String(item.title||'').trim().slice(0,100);
+ if(!title)return null;
+ const pins=(Array.isArray(item.items)?item.items:[]).map(cleanCasePin).filter(Boolean).slice(0,100);
+ const seen=new Set();
+ const uniquePins=pins.filter(pin=>{if(seen.has(pin.refKey))return false;seen.add(pin.refKey);return true;});
+ return {id:/^case-[a-z0-9-]{1,100}$/i.test(String(item.id||''))?String(item.id):'case-restored-'+index+'-'+Date.now().toString(36),title,question:String(item.question||'').slice(0,300),notes:String(item.notes||'').slice(0,12000),items:uniquePins,updatedAt:String(item.updatedAt||'')};
+}
+function freshCase(title){
+ return {id:caseId(),title:title||'New investigation',question:'',notes:'',items:[],updatedAt:new Date().toISOString()};
+}
+function readCasebookState(){
+ try{
+  const raw=JSON.parse(localStorage.getItem(CASEBOOK_STORAGE_KEY)||'{}');
+  const cases=(Array.isArray(raw.cases)?raw.cases:[]).slice(0,30).map(cleanCaseData).filter(Boolean);
+  if(!cases.length)cases.push(freshCase('My first case file'));
+  const requested=String(raw.activeId||'');
+  return {cases,activeId:cases.some(item=>item.id===requested)?requested:cases[0].id};
+ }catch(_){return {cases:[freshCase('My first case file')],activeId:''};}
+}
+let casebookState=readCasebookState();
+if(!casebookState.activeId&&casebookState.cases[0])casebookState.activeId=casebookState.cases[0].id;
+function activeCase(){return casebookState.cases.find(item=>item.id===casebookState.activeId)||casebookState.cases[0];}
+function saveCasebook(){
+ try{localStorage.setItem(CASEBOOK_STORAGE_KEY,JSON.stringify(casebookState));return true;}
+ catch(_){setCasebookStatus('Browser storage is unavailable or full. Export a JSON backup before closing this page.');return false;}
+}
+function setCasebookStatus(message){const node=$('casebook-status');if(node)node.textContent=message;}
+function updateCasebookSelector(){
+ const select=$('casebook-case-select'),current=activeCase();if(!select||!current)return;
+ select.innerHTML=casebookState.cases.map(item=>'<option value="'+esc(item.id)+'">'+esc(item.title||'Untitled case')+' ('+item.items.length+')</option>').join('');
+ select.value=current.id;
+ $('casebook-case-count').textContent=String(casebookState.cases.length);
+}
+function renderCasebookEvidence(){
+ const current=activeCase();if(!current)return;
+ const host=$('casebook-evidence-list');
+ $('casebook-evidence-count').textContent=current.items.length+' pinned item'+(current.items.length===1?'':'s')+' · '+current.items.filter(x=>x.category==='source'||x.category==='note').length+' source / research note'+(current.items.filter(x=>x.category==='source'||x.category==='note').length===1?'':'s');
+ host.innerHTML=current.items.length?current.items.map((item,index)=>'<article class="case-evidence-card"><div class="case-evidence-head"><span class="command-type-pill type-'+esc(item.category)+'">'+esc(item.typeLabel)+'</span><button type="button" class="case-evidence-remove" data-case-remove="'+index+'" aria-label="Remove '+esc(item.title)+' from this case">Remove ×</button></div><h6>'+esc(item.title)+'</h6>'+(item.subtitle?'<div class="case-evidence-sub">'+esc(item.subtitle)+'</div>':'')+'<p>'+esc(item.summary||'Pinned archive reference; review the linked record for context.')+'</p><div class="case-evidence-actions">'+(item.entryId?'<button type="button" data-case-open="'+esc(item.refKey)+'" class="case-evidence-open">Open linked work ↗</button>':'<button type="button" data-case-open="'+esc(item.refKey)+'" class="case-evidence-open">Open archive record ↗</button>')+(item.url?'<a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">Source ↗</a>':'')+'</div></article>').join(''):'<div class="case-evidence-empty"><span>✧</span><strong>No evidence pinned yet</strong><p>Search the archive above and tap “Pin to case” on any result. Your first case can be a question, a theory to compare, or simply a collection of useful references.</p></div>';
+}
+function renderCasebookUI(loadFields){
+ const current=activeCase();if(!current)return;
+ updateCasebookSelector();
+ if(loadFields){$('casebook-title').value=current.title;$('casebook-question').value=current.question;$('casebook-notes').value=current.notes;}
+ $('casebook-delete-confirm-wrap').classList.add('hidden');
+ renderCasebookEvidence();
+}
+function updateCasebookTextField(key,value){
+ const current=activeCase();if(!current)return;
+ current[key]=String(value).slice(0,key==='title'?100:key==='question'?300:12000);
+ current.updatedAt=new Date().toISOString();
+ saveCasebook();
+ if(key==='title'){updateCasebookSelector();}
+}
+function commandRecord(refKey){
+ return buildArchiveCommandRecords().find(record=>record.refKey===refKey)||null;
+}
+function buildArchiveCommandRecords(){
+ const records=[];
+ TIMELINE.forEach(entry=>records.push({refKey:'work:'+entry.id,category:'work',typeLabel:entry.type==='game'?'Mainline game':entry.type==='print'?'Print work':'Music CD / story',title:entry.title,subtitle:(entry.code||'')+' · '+(entry.releaseDate||entry.year||''),summary:entry.summary||entry.connection||'',tags:entry.tags||[],entries:[entry.id],entryId:entry.id,characters:Array.isArray(entry.characters)?entry.characters:[],evidence:'Work / story'}));
+ CHARACTERS.forEach(person=>records.push({refKey:'character:'+person.name,category:'character',typeLabel:person.role||'Character',title:person.name,subtitle:person.role||'Character index',summary:person.description||'',tags:person.tags||[],entries:person.entries||[],characters:[person.name],evidence:'Character index'}));
+ LOCATIONS.forEach(place=>records.push({refKey:'location:'+place.id,category:'location',typeLabel:place.group||'Location',title:place.name,subtitle:place.group||'Gensokyo location',summary:place.description||'',tags:place.tags||[],entries:place.entries||[],characters:place.characters||[],evidence:place.status||'Location index'}));
+ INCIDENTS.forEach(incident=>{const entry=TIMELINE.find(item=>item.id===incident.entry);records.push({refKey:'incident:'+incident.title,category:'incident',typeLabel:incident.status||'Incident dossier',title:incident.title,subtitle:String(incident.year||'')+' · '+(entry?.code||incident.entry||''),summary:incident.summary||'',tags:incident.tags||[],entries:incident.entry?[incident.entry]:[],entryId:incident.entry||'',characters:incident.characters||[],evidence:'Incident archive'});});
+ LORE_THREADS.forEach(thread=>records.push({refKey:'thread:'+thread.title,category:'thread',typeLabel:thread.label||'Lore connection',title:thread.title,subtitle:(thread.entries||[]).map(id=>TIMELINE.find(entry=>entry.id===id)?.code||id).join(' · '),summary:thread.text||'',tags:[],entries:thread.entries||[],characters:[],evidence:thread.label||'Archive interpretation'}));
+ buildSourceLibraryRecords().forEach(record=>{
+  const category=record.recordType==='note'?'note':'source',urls=(record.sources||[]).filter(item=>item&&/^https?:\/\//i.test(item.url||'')).map(item=>({label:item.label||'Source',url:item.url}));
+  records.push({refKey:category+':'+record.id,category,typeLabel:record.label|| (category==='note'?'Research note':'Source reference'),title:record.title,subtitle:[record.topic,record.evidence?'Evidence: '+record.evidence:''].filter(Boolean).join(' · '),summary:record.summary||record.details||'',tags:record.tags||[],entries:record.entries||[],characters:record.characters||[],urls,evidence:record.evidence||'',sources:urls});
+ });
+ allLoreRoutes().forEach(route=>records.push({refKey:'route:'+route.id,category:'route',typeLabel:route.category||(loreRouteState.custom.some(item=>item.id===route.id)?'Your custom route':'Curated reading route'),title:route.title,subtitle:(route.entries||[]).length+' steps · '+(route.label||'Custom route'),summary:route.description||'',tags:[route.category||'reading route'],entries:route.entries||[],entryId:route.entries?.[0]||'',characters:[],evidence:'Reading route'}));
+ return records.map(record=>{
+  const linked=(record.entries||[]).map(id=>TIMELINE.find(entry=>entry.id===id)).filter(Boolean);
+  return {...record,url:record.url||(record.urls&&record.urls[0]?record.urls[0].url:''),linkedEntries:linked,characters:Array.isArray(record.characters)?record.characters:[],tags:Array.isArray(record.tags)?record.tags:[]};
+ });
+}
+function commandHaystack(record){
+ return [record.title,record.subtitle,record.summary,record.typeLabel,record.evidence,...record.tags,...record.characters,...(record.linkedEntries||[]).flatMap(item=>[item.code,item.title,item.originalTitle,item.year]),...(record.urls||[]).flatMap(item=>[item.label,item.url])].join(' ').toLowerCase();
+}
+function caseHasPin(refKey){
+ const current=activeCase();return !!current&&current.items.some(item=>item.refKey===refKey);
+}
+function renderCommandCenter(){
+ const records=buildArchiveCommandRecords(),query=($('command-search').value||'').trim().toLowerCase(),category=$('command-category').value||'all',sort=$('command-sort').value||'relevance';
+ $('command-stat-works').textContent=String(TIMELINE.length);$('command-stat-characters').textContent=String(CHARACTERS.length);$('command-stat-places').textContent=String(LOCATIONS.length);$('command-stat-incidents').textContent=String(INCIDENTS.length);
+ let featured=!query?['work:th20','incident:The Sanctuary and Anomaly-Stone Incident','thread:Moon lore returns, but the plot is new','character:Reimu Hakurei','location:hakurei','route:lunar-threads'].map(key=>records.find(record=>record.refKey===key)).filter(Boolean):[];
+ let results=(query?records.filter(record=>commandHaystack(record).includes(query)):featured).filter(record=>category==='all'||record.category===category);
+ if(sort==='title')results.sort((a,b)=>a.title.localeCompare(b.title));
+ else if(sort==='category')results.sort((a,b)=>a.category.localeCompare(b.category)||a.title.localeCompare(b.title));
+ else if(query)results.sort((a,b)=>{
+  const score=item=>{const t=item.title.toLowerCase();return t===query?0:t.startsWith(query)?1:t.includes(query)?2:3;};
+  return score(a)-score(b)||a.title.localeCompare(b.title);
+ });
+ $('command-results-title').textContent=query?'Search results':'A few doors to open';
+ $('command-result-count').textContent=query?results.length+' matching records across the archive':results.length+' featured records · search for anything else';
+ $('command-results').innerHTML=results.length?results.slice(0,80).map(record=>{
+  const pinned=caseHasPin(record.refKey),tags=record.tags.slice(0,4).map(tag=>'<span>'+esc(tag)+'</span>').join('');
+  const sourceLink=record.url?'<a class="command-external-link" href="'+esc(record.url)+'" target="_blank" rel="noopener noreferrer">Open source ↗</a>':'';
+  return '<article class="command-result-card"><div class="command-result-top"><span class="command-type-pill type-'+esc(record.category)+'">'+esc(record.typeLabel)+'</span><span class="command-result-linked">'+esc((record.linkedEntries||[]).length?record.linkedEntries.length+' linked work'+(record.linkedEntries.length===1?'':'s'):'Archive index')+'</span></div><h5>'+esc(record.title)+'</h5>'+(record.subtitle?'<div class="command-result-subtitle">'+esc(record.subtitle)+'</div>':'')+'<p>'+esc(record.summary||'Open this index record to explore related information.')+'</p>'+(tags?'<div class="command-result-tags">'+tags+'</div>':'')+'<div class="command-result-actions"><button type="button" data-command-open="'+esc(record.refKey)+'" class="command-open-button">Open ↗</button><button type="button" data-command-pin="'+esc(record.refKey)+'" class="command-pin-button" aria-pressed="'+String(pinned)+'">'+(pinned?'✓ Pinned to case':'＋ Pin to case')+'</button>'+sourceLink+'</div></article>';
+ }).join(''):'<div class="command-no-results"><span>⌕</span><h5>No matching records</h5><p>Try a character, work code, incident title, location, theme, or a word from a source description. Use “Everything” to widen the search.</p></div>';
+}
+function openArchiveCommandRecord(record){
+ if(!record)return;
+ const category=record.category;
+ if(category==='work'){openDrawer(record.entryId||record.entries?.[0]);return;}
+ if(category==='character'){activeNetworkFocus='character:'+record.title;renderRelationshipNetwork();activeToolTab='network';updateToolTabs();$('network-focus-detail').scrollIntoView({behavior:'smooth',block:'nearest'});return;}
+ if(category==='location'){activeLocation=record.refKey.slice('location:'.length);activeToolTab='map';updateToolTabs();renderMapDetail();$('map-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ if(category==='incident'){activeIncidentTitle=record.title;activeToolTab='incidents';renderIncidents();updateToolTabs();$('incidents-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ if(category==='thread'){activeToolTab='threads';$('thread-search').value=record.title;$('thread-kind-filter').value='all';renderThreads();updateToolTabs();$('threads-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ if(category==='route'){activeLoreRouteId=record.refKey.slice('route:'.length);activeToolTab='routes';renderLoreRoutes();updateToolTabs();$('routes-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ if(category==='source'||category==='note'){activeToolTab='sources';$('source-library-search').value=record.title;$('source-library-kind').value='all';$('source-library-topic').value='all';renderSourceLibrary();updateToolTabs();$('sources-panel').scrollIntoView({behavior:'smooth',block:'start'});}
+}
+function pinArchiveCommandRecord(refKey){
+ const record=commandRecord(refKey),current=activeCase();if(!record||!current)return;
+ if(current.items.some(item=>item.refKey===record.refKey)){setCasebookStatus('That record is already pinned to “'+current.title+'”.');return;}
+ if(current.items.length>=100){setCasebookStatus('This case already has 100 pinned records. Export it or remove a few before adding more.');return;}
+ current.items.push(cleanCasePin({...record,refKey:record.refKey,typeLabel:record.typeLabel,summary:record.summary,url:record.url}));
+ current.updatedAt=new Date().toISOString();saveCasebook();renderCasebookEvidence();updateCasebookSelector();renderCommandCenter();
+ setCasebookStatus('Pinned “'+record.title+'” to “'+current.title+'”.');
+}
+function openPinnedCaseRecord(refKey){
+ const record=commandRecord(refKey);if(record){openArchiveCommandRecord(record);return;}
+ const current=activeCase(),pin=current?.items.find(item=>item.refKey===refKey);if(pin&&pin.entryId)openDrawer(pin.entryId);
+}
+function downloadTextFile(filename,content,type){
+ const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function casebookReportMarkdown(item){
+ const lines=['# '+item.title,'','> Personal investigation notes. These conclusions are not automatically canon; check each source and distinguish primary works from secondary references.','','## Central question / working hypothesis',item.question||'_No central question added._','','## Research notes',item.notes||'_No notes added._','','## Pinned evidence'];
+ if(!item.items.length)lines.push('_No records pinned._');
+ item.items.forEach((pin,index)=>{lines.push('',String(index+1)+'. **'+pin.title+'** — '+pin.typeLabel);if(pin.subtitle)lines.push('   '+pin.subtitle);if(pin.summary)lines.push('   '+pin.summary.replace(/\s+/g,' '));if(pin.url)lines.push('   Source: '+pin.url);if(pin.entryId){const e=TIMELINE.find(entry=>entry.id===pin.entryId);if(e)lines.push('   Archive entry: '+e.code+' · '+e.title);}});
+ lines.push('','---','Exported from the Touhou Archive Investigation Desk.');
+ return lines.join('\n');
+}
+function importCasebookData(data){
+ const candidates=Array.isArray(data?.cases)?data.cases:(data&&data.title?[data]:[]);
+ if(!candidates.length){setCasebookStatus('No case files found in that JSON. Import a casebook backup exported from this page.');return;}
+ let imported=0;
+ candidates.slice(0,30).forEach(item=>{
+  const cleaned=cleanCaseData({...item,id:caseId()},imported);
+  if(!cleaned)return;
+  cleaned.id=caseId();cleaned.updatedAt=new Date().toISOString();
+  casebookState.cases.push(cleaned);imported++;
+ });
+ casebookState.cases=casebookState.cases.slice(0,30);
+ if(imported){casebookState.activeId=casebookState.cases[casebookState.cases.length-1].id;saveCasebook();renderCasebookUI(true);setCasebookStatus('Imported '+imported+' case file'+(imported===1?'':'s')+'. Check the case selector to switch between them.');}
+ else setCasebookStatus('No valid case files found. Each case needs a title; pinned records can be imported with the case.');
+}
+function initCommandCenterControls(){
+ $('command-search').addEventListener('input',renderCommandCenter);
+ $('command-category').addEventListener('change',renderCommandCenter);
+ $('command-sort').addEventListener('change',renderCommandCenter);
+ $('command-search-clear').addEventListener('click',()=>{$('command-search').value='';$('command-category').value='all';renderCommandCenter();$('command-search').focus();});
+ $('command-surprise').addEventListener('click',()=>{
+  const candidates=buildArchiveCommandRecords().filter(record=>['work','character','location','incident','thread'].includes(record.category));
+  if(!candidates.length)return;
+  const record=candidates[Math.floor(Math.random()*candidates.length)];
+  openArchiveCommandRecord(record);setCasebookStatus('Surprise discovery: '+record.title+'. Pin it from search results to keep it in your casebook.');
+ });
+ $('casebook-case-select').addEventListener('change',event=>{casebookState.activeId=event.target.value;saveCasebook();renderCasebookUI(true);setCasebookStatus('Opened “'+(activeCase()?.title||'case')+'”.');});
+ $('casebook-new').addEventListener('click',()=>{
+  if(casebookState.cases.length>=30){setCasebookStatus('This casebook has reached 30 case files. Export a backup or delete an unused case first.');return;}
+  const item=freshCase('New investigation '+(casebookState.cases.length+1));casebookState.cases.push(item);casebookState.activeId=item.id;saveCasebook();renderCasebookUI(true);setCasebookStatus('Created a new case file. Rename it and start pinning evidence.');
+ });
+ $('casebook-delete').addEventListener('click',()=>{$('casebook-delete-confirm-wrap').classList.remove('hidden');$('casebook-delete-confirm').focus();});
+ $('casebook-delete-cancel').addEventListener('click',()=>$('casebook-delete-confirm-wrap').classList.add('hidden'));
+ $('casebook-delete-confirm').addEventListener('click',()=>{
+  const item=activeCase();casebookState.cases=casebookState.cases.filter(item=>item.id!==casebookState.activeId);
+  if(!casebookState.cases.length)casebookState.cases.push(freshCase('My first case file'));
+  casebookState.activeId=casebookState.cases[0].id;saveCasebook();renderCasebookUI(true);setCasebookStatus('Deleted “'+(item?.title||'case')+'”. Other case files were preserved.');
+ });
+ $('casebook-title').addEventListener('input',event=>updateCasebookTextField('title',event.target.value));
+ $('casebook-question').addEventListener('input',event=>updateCasebookTextField('question',event.target.value));
+ $('casebook-notes').addEventListener('input',event=>updateCasebookTextField('notes',event.target.value));
+ $('casebook-export-json').addEventListener('click',()=>{
+  const payload={format:'touhou-archive-casebook-v1',exportedAt:new Date().toISOString(),activeId:casebookState.activeId,cases:casebookState.cases};
+  downloadTextFile('touhou-archive-casebook.json',JSON.stringify(payload,null,2),'application/json');
+  setCasebookStatus('Exported '+casebookState.cases.length+' case file'+(casebookState.cases.length===1?'':'s')+'. Keep this JSON backup to move your casebook to another device.');
+ });
+ $('casebook-export-markdown').addEventListener('click',()=>{
+  const item=activeCase();if(!item)return;
+  downloadTextFile((item.title||'touhou-case').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.md',casebookReportMarkdown(item),'text/markdown;charset=utf-8');
+  setCasebookStatus('Exported the current case as a Markdown research report.');
+ });
+ $('casebook-import-trigger').addEventListener('click',()=>$('casebook-import-file').click());
+ $('casebook-import-file').addEventListener('change',event=>{
+  const file=event.target.files?.[0];if(!file)return;
+  if(file.size>1000000){setCasebookStatus('That file is too large. Choose a casebook JSON file smaller than 1 MB.');event.target.value='';return;}
+  const reader=new FileReader();
+  reader.onload=()=>{try{importCasebookData(JSON.parse(String(reader.result||'{}')));}catch(_){setCasebookStatus('Could not read that file as JSON. Try exporting a fresh casebook backup first.');}};
+  reader.onerror=()=>setCasebookStatus('The selected casebook file could not be read. Try choosing it again.');
+  reader.readAsText(file);event.target.value='';
+ });
+ document.addEventListener('keydown',event=>{
+  if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey){
+   const node=event.target,tag=(node&&node.tagName||'').toLowerCase();
+   if(tag!=='input'&&tag!=='textarea'&&tag!=='select'&&!node?.isContentEditable){event.preventDefault();activeToolTab='command';updateToolTabs();$('command-search').focus();}
+  }
+ });
+}
+
 function renderThreads(){
  const query=($('thread-search')?.value||'').trim().toLowerCase();
  const kind=$('thread-kind-filter')?.value||'all';
@@ -1962,11 +2231,11 @@ function renderShelfPanel(){
 }
 function updateToolTabs(){
  document.querySelectorAll('[data-tool-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.toolTab===activeToolTab)));
- const panels={characters:'characters-panel',network:'network-panel',map:'map-panel',incidents:'incidents-panel',chronology:'chronology-panel',routes:'routes-panel',sources:'sources-panel',threads:'threads-panel',shelf:'shelf-panel'};
+ const panels={command:'command-panel',characters:'characters-panel',network:'network-panel',map:'map-panel',incidents:'incidents-panel',chronology:'chronology-panel',routes:'routes-panel',sources:'sources-panel',threads:'threads-panel',shelf:'shelf-panel'};
  Object.keys(panels).forEach(k=>$(panels[k]).classList.toggle('hidden',k!==activeToolTab));
 }
 function renderArchiveTools(){
- renderCharacterAtlas();renderMap();renderIncidents();renderChronology();renderLoreRouteBuilderEntries();renderLoreRoutes();renderSourceLibrary();renderThreads();renderShelfPanel();renderRelationshipNetwork();updateToolTabs();
+ renderCommandCenter();renderCasebookUI(true);renderCharacterAtlas();renderMap();renderIncidents();renderChronology();renderLoreRouteBuilderEntries();renderLoreRoutes();renderSourceLibrary();renderThreads();renderShelfPanel();renderRelationshipNetwork();updateToolTabs();
 }
 
 $('filters').addEventListener('click',event=>{const button=event.target.closest('[data-filter]');if(!button)return;const type=button.dataset.filter;filters[type]=!filters[type];renderAll();});
@@ -1976,6 +2245,7 @@ $('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value
 $('character-search').addEventListener('input',renderCharacterAtlas);
 initChronologyControls();
 initLoreRouteControls();
+initCommandCenterControls();
 initSourceLibraryControls();
 $('thread-search').addEventListener('input',renderThreads);
 $('thread-kind-filter').addEventListener('change',renderThreads);
@@ -2017,6 +2287,16 @@ document.addEventListener('keydown',event=>{if(!selectedId)return;if(event.key==
 $('archive-tools').addEventListener('click',event=>{
  const tab=event.target.closest('[data-tool-tab]');
  if(tab){activeToolTab=tab.dataset.toolTab;updateToolTabs();return;}
+ const commandPreset=event.target.closest('[data-command-preset]');
+ if(commandPreset){$('command-search').value=commandPreset.dataset.commandPreset;$('command-category').value='all';renderCommandCenter();$('command-search').focus();return;}
+ const commandOpen=event.target.closest('[data-command-open]');
+ if(commandOpen){openArchiveCommandRecord(commandRecord(commandOpen.dataset.commandOpen));return;}
+ const commandPin=event.target.closest('[data-command-pin]');
+ if(commandPin){pinArchiveCommandRecord(commandPin.dataset.commandPin);return;}
+ const caseRemove=event.target.closest('[data-case-remove]');
+ if(caseRemove){const current=activeCase(),index=Number(caseRemove.dataset.caseRemove);if(current&&Number.isInteger(index)&&index>=0&&index<current.items.length){const [removed]=current.items.splice(index,1);saveCasebook();renderCasebookEvidence();updateCasebookSelector();renderCommandCenter();setCasebookStatus('Removed “'+removed.title+'” from this case.');}return;}
+ const caseOpen=event.target.closest('[data-case-open]');
+ if(caseOpen){openPinnedCaseRecord(caseOpen.dataset.caseOpen);return;}
  const loreRouteSelect=event.target.closest('[data-lore-route-select]');
  if(loreRouteSelect){activeLoreRouteId=loreRouteSelect.dataset.loreRouteSelect;renderLoreRoutes();return;}
  const routeStepToggle=event.target.closest('[data-route-step-toggle]');
