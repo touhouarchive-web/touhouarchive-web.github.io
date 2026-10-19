@@ -447,6 +447,11 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
    <label class="casebook-notes-label"><span>Research notes</span><textarea id="casebook-notes" rows="4" maxlength="12000" placeholder="Record observations, competing explanations, uncertainties, and where you want to investigate next…"></textarea></label>
    <div class="casebook-evidence-heading"><div><h5>Pinned evidence</h5><p id="casebook-evidence-count">Nothing pinned yet.</p></div><span>LOCAL CASE FILE</span></div>
    <div id="casebook-evidence-list" class="casebook-evidence-list"></div>
+   <section class="casebook-analysis" aria-labelledby="casebook-analysis-heading">
+    <div class="casebook-analysis-top"><div><div class="section-kicker">EVIDENCE CONSTELLATION</div><h5 id="casebook-analysis-heading">Connections worth investigating</h5><p>Patterns are calculated from shared archive links, named characters, and tags. Treat them as leads to verify—not proof of canon.</p></div><span id="casebook-analysis-status" role="status" aria-live="polite">Add evidence to begin.</span></div>
+    <div class="casebook-analysis-grid" id="casebook-analysis-grid"></div>
+    <div class="casebook-leads"><div class="casebook-leads-heading"><h6>Potential next leads</h6><span>INDEXED RELATIONSHIPS</span></div><div id="casebook-lead-list" class="casebook-lead-list"></div></div>
+   </section>
    <div class="casebook-export-row"><button type="button" class="casebook-export-primary" id="casebook-export-json">Export casebook (.json)</button><button type="button" class="casebook-export-button" id="casebook-export-markdown">Export current report (.md)</button><button type="button" class="casebook-export-button" id="casebook-import-trigger">Import casebook</button><input type="file" id="casebook-import-file" accept=".json,application/json" hidden></div>
    <p class="casebook-status" id="casebook-status" role="status" aria-live="polite">Changes save on this device as you work. Export a JSON backup to move your casebook to another device.</p>
   </section>
@@ -759,6 +764,48 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
 .casebook-export-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.casebook-export-primary{border-color:rgba(196,181,253,.3);background:rgba(196,181,253,.09);color:#e5daf9}.casebook-status{margin:11px 0 0;color:#868392;font-size:8px;line-height:1.8}.command-footnote{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;margin-top:14px;padding:12px;border-left:2px solid rgba(196,181,253,.22);background:rgba(196,181,253,.02)}.command-footnote>span{color:#c5b5e6;font:7px/1.7 ui-monospace,monospace;letter-spacing:.08em}.command-footnote p{margin:0;color:#858391;font-size:8px;line-height:1.85}
 @media(max-width:760px){.command-summary-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.command-results-grid,.casebook-evidence-list{grid-template-columns:1fr}.command-seal{flex-basis:78px;width:78px;height:78px}.command-seal span{font-size:13px}.command-seal small{font-size:6px}.command-filters{grid-template-columns:1fr 1fr}.command-surprise-button{grid-column:1/-1}.casebook-controls{grid-template-columns:1fr}.casebook-fields{grid-template-columns:1fr}.casebook-control-buttons>*{flex:1}.command-results-heading{align-items:flex-start}.command-results-heading>span{max-width:48%}}
 @media(max-width:480px){.command-hero{padding:14px;gap:10px}.command-seal{flex-basis:58px;width:58px;height:58px}.command-seal span{font-size:10px}.command-seal i{font-size:15px}.command-seal small{font-size:5px}.command-hero-copy h3{font-size:24px}.command-hero-copy p{font-size:9px}.command-search-panel,.casebook-panel{padding:11px}.command-filters{grid-template-columns:1fr}.command-surprise-button{grid-column:auto}.command-results-heading{display:block}.command-results-heading>span{display:block;max-width:none;text-align:left;margin-top:7px}.casebook-heading{gap:8px}.casebook-count-badge{padding:6px}.command-footnote{grid-template-columns:1fr;gap:5px}}
+
+/* Phase X extension · evidence constellation */
+.casebook-analysis{margin-top:17px;border:1px solid rgba(196,181,253,.17);border-radius:15px;padding:15px;background:radial-gradient(ellipse at 95% 0%,rgba(167,139,250,.07),transparent 38%),linear-gradient(145deg,rgba(196,181,253,.025),rgba(255,255,255,.008))}
+.casebook-analysis-top,.casebook-leads-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.casebook-analysis-top h5{margin:5px 0 7px;color:#eeeaf6;font:500 21px/1.3 Georgia,serif}
+.casebook-analysis-top p{max-width:720px;margin:0;color:#8e8c9a;font-size:9px;line-height:1.8}
+.casebook-analysis-top>span{flex:0 0 auto;max-width:155px;border:1px solid rgba(196,181,253,.16);border-radius:99px;padding:6px 8px;color:#bdb0d8;font:8px/1.4 ui-monospace,monospace;text-align:center}
+.casebook-analysis-grid{display:grid;gap:10px;margin-top:14px}
+.casebook-analysis-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.casebook-analysis-metrics>div{display:grid;gap:4px;min-width:0;border:1px solid rgba(255,255,255,.065);border-radius:9px;padding:10px;background:rgba(255,255,255,.012)}
+.casebook-analysis-metrics strong{font:500 19px/1 Georgia,serif;color:#e0d5f5}
+.casebook-analysis-metrics span{font-size:7px;color:#858391;line-height:1.5}
+.casebook-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.casebook-signal-card{min-width:0;border:1px solid rgba(255,255,255,.065);border-radius:10px;padding:11px;background:rgba(255,255,255,.012)}
+.casebook-signal-card-top{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.casebook-signal-card-top span{color:#c4b5fd;font-size:15px}
+.casebook-signal-card-top strong{color:#d8c9f4;font:500 18px Georgia,serif}
+.casebook-signal-card h6{margin:8px 0 9px;color:#d9d5e4;font:500 13px/1.4 Georgia,serif}
+.casebook-signal-list{display:grid;gap:7px}
+.casebook-signal-item{display:grid;gap:3px;padding-top:7px;border-top:1px solid rgba(255,255,255,.055)}
+.casebook-signal-item strong{color:#c4b5fd;font-size:8px;line-height:1.55;overflow-wrap:anywhere}
+.casebook-signal-item small{color:#797785;font-size:7px;line-height:1.6}
+.casebook-signal-empty{margin:0;color:#777684;font-size:8px;line-height:1.8}
+.casebook-leads{margin-top:15px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)}
+.casebook-leads-heading{align-items:center;margin-bottom:9px}
+.casebook-leads-heading h6{margin:0;color:#dad5e6;font:500 15px Georgia,serif}
+.casebook-leads-heading span{color:#7b7988;font:7px ui-monospace,monospace;letter-spacing:.1em}
+.casebook-lead-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.casebook-lead-card{display:grid;gap:8px;min-width:0;border:1px solid rgba(196,181,253,.12);border-radius:10px;padding:11px;background:rgba(196,181,253,.018)}
+.casebook-lead-card-top{display:grid;gap:6px;align-items:start}
+.casebook-lead-reasons{color:#b9a6df;font-size:7px;line-height:1.6;overflow-wrap:anywhere}
+.casebook-lead-card>strong{color:#e2deec;font:500 14px/1.4 Georgia,serif;overflow-wrap:anywhere}
+.casebook-lead-card>p{margin:0;color:#878593;font-size:8px;line-height:1.75}
+.casebook-lead-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.casebook-lead-actions button{border:1px solid rgba(196,181,253,.14);border-radius:7px;padding:7px 8px;background:rgba(196,181,253,.035);color:#cbbce9;font-size:7px;line-height:1.4;cursor:pointer}
+.casebook-lead-actions button:hover,.casebook-lead-actions button:focus-visible{border-color:rgba(196,181,253,.4)}
+.casebook-analysis-empty{display:grid;justify-items:start;gap:6px;border:1px dashed rgba(196,181,253,.17);border-radius:10px;padding:15px;color:#8d8a9a}
+.casebook-analysis-empty>span{color:#c4b5fd;font-size:18px}
+.casebook-analysis-empty strong{color:#d6d0e3;font:500 15px Georgia,serif}
+.casebook-analysis-empty p,.casebook-analysis-empty.compact{margin:0;color:#858391;font-size:8px;line-height:1.8}
+.casebook-analysis-empty.compact{padding:13px}
+@media(max-width:760px){.casebook-analysis-top{display:block}.casebook-analysis-top>span{display:inline-block;max-width:100%;margin-top:10px}.casebook-signals{grid-template-columns:1fr}.casebook-lead-list{grid-template-columns:1fr}.casebook-analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 <script>
@@ -1985,7 +2032,12 @@ function caseId(){return 'case-'+Date.now().toString(36)+'-'+Math.random().toStr
 function cleanCasePin(item){
  if(!item||typeof item!=='object'||!String(item.refKey||'')||!String(item.title||''))return null;
  const url=typeof item.url==='string'&&/^https?:\/\//i.test(item.url)?item.url.slice(0,1800):'';
- return {refKey:String(item.refKey).slice(0,240),category:String(item.category||'note').slice(0,30),typeLabel:String(item.typeLabel||'Research item').slice(0,80),title:String(item.title).slice(0,240),subtitle:String(item.subtitle||'').slice(0,300),summary:String(item.summary||'').slice(0,1800),tags:Array.isArray(item.tags)?item.tags.filter(x=>typeof x==='string').slice(0,12).map(x=>x.slice(0,100)):[],entryId:typeof item.entryId==='string'&&TIMELINE.some(e=>e.id===item.entryId)?item.entryId:'',url,evidence:String(item.evidence||'').slice(0,80)};
+ const rawEntryIds=Array.isArray(item.entryIds)?item.entryIds:Array.isArray(item.entries)?item.entries:Array.isArray(item.linkedEntries)?item.linkedEntries.map(entry=>typeof entry==='string'?entry:entry?.id):[];
+ const entryIds=Array.from(new Set(rawEntryIds.filter(id=>typeof id==='string'&&TIMELINE.some(e=>e.id===id)))).slice(0,30);
+ const entryId=typeof item.entryId==='string'&&TIMELINE.some(e=>e.id===item.entryId)?item.entryId:(entryIds[0]||'');
+ if(entryId&&!entryIds.includes(entryId))entryIds.unshift(entryId);
+ const cleanStrings=value=>Array.isArray(value)?Array.from(new Set(value.filter(x=>typeof x==='string').map(x=>x.trim().slice(0,120)).filter(Boolean))).slice(0,24):[];
+ return {refKey:String(item.refKey).slice(0,240),category:String(item.category||'note').slice(0,30),typeLabel:String(item.typeLabel||'Research item').slice(0,80),title:String(item.title).slice(0,240),subtitle:String(item.subtitle||'').slice(0,300),summary:String(item.summary||'').slice(0,1800),tags:cleanStrings(item.tags).slice(0,12),characters:cleanStrings(item.characters),entryId,entryIds,url,evidence:String(item.evidence||'').slice(0,80)};
 }
 function cleanCaseData(item,index){
  if(!item||typeof item!=='object')return null;
@@ -2022,11 +2074,58 @@ function updateCasebookSelector(){
  select.value=current.id;
  $('casebook-case-count').textContent=String(casebookState.cases.length);
 }
+function casebookPinWorkIds(pin){return uniqueValidRouteEntries([...(Array.isArray(pin.entryIds)?pin.entryIds:[]),pin.entryId].filter(Boolean));}
+function casebookSharedGroups(items,getValues,labelFor){
+ const index=new Map();
+ items.forEach((item,itemIndex)=>new Set(getValues(item).filter(Boolean)).forEach(value=>{
+  const key=String(value).trim().toLowerCase();if(!key)return;
+  if(!index.has(key))index.set(key,{key,label:labelFor(value),items:new Set()});
+  index.get(key).items.add(itemIndex);
+ }));
+ return Array.from(index.values()).filter(group=>group.items.size>1).map(group=>({...group,count:group.items.size,evidenceTitles:Array.from(group.items).map(i=>items[i].title)})).sort((a,b)=>b.count-a.count||a.label.localeCompare(b.label));
+}
+function renderCasebookAnalysis(current){
+ const grid=$('casebook-analysis-grid'),leads=$('casebook-lead-list'),status=$('casebook-analysis-status');
+ if(!grid||!leads||!status)return;
+ const items=current.items||[];
+ if(!items.length){
+  status.textContent='Waiting for pinned evidence';
+  grid.innerHTML='<div class="casebook-analysis-empty"><span>✧</span><strong>No overlap to map yet</strong><p>Pin two or more archive records. The desk will look for works, characters, and tags they share.</p></div>';
+  leads.innerHTML='<div class="casebook-analysis-empty compact">Potential next leads will appear here as soon as you pin evidence.</div>';return;
+ }
+ const works=casebookSharedGroups(items,item=>casebookPinWorkIds(item),id=>{const e=TIMELINE.find(entry=>entry.id===id);return e?(e.code+' · '+e.title):id;});
+ const characters=casebookSharedGroups(items,item=>Array.isArray(item.characters)?item.characters:[],name=>name);
+ const tags=casebookSharedGroups(items,item=>Array.isArray(item.tags)?item.tags:[],tag=>tag);
+ const sourceCount=items.filter(item=>item.category==='source'||item.category==='note').length;
+ const workTotal=new Set(items.flatMap(casebookPinWorkIds)).size;
+ const signalCount=works.length+characters.length+tags.length;
+ status.textContent=items.length+' pinned record'+(items.length===1?'':'s')+' · '+signalCount+' shared signal'+(signalCount===1?'':'s');
+ const signalCard=(icon,title,groups,empty)=>'<article class="casebook-signal-card"><div class="casebook-signal-card-top"><span>'+icon+'</span><strong>'+groups.length+'</strong></div><h6>'+title+'</h6>'+(groups.length?'<div class="casebook-signal-list">'+groups.slice(0,4).map(group=>'<div class="casebook-signal-item"><strong>'+esc(group.label)+'</strong><small>Appears in '+group.count+' pinned records</small></div>').join('')+'</div>':'<p class="casebook-signal-empty">'+empty+'</p>')+'</article>';
+ grid.innerHTML='<div class="casebook-analysis-metrics"><div><strong>'+items.length+'</strong><span>Evidence pins</span></div><div><strong>'+workTotal+'</strong><span>Connected works</span></div><div><strong>'+sourceCount+'</strong><span>Sources / research notes</span></div><div><strong>'+signalCount+'</strong><span>Shared signals</span></div></div><div class="casebook-signals">'+signalCard('◷','Works shared across evidence',works,'No shared work links yet.')+signalCard('♙','Characters named more than once',characters,'No repeated character labels yet.')+signalCard('⌘','Tags that overlap',tags,'No repeated tags yet.')+'</div>';
+ const pinnedRefs=new Set(items.map(item=>item.refKey));
+ const candidates=buildArchiveCommandRecords().filter(record=>!pinnedRefs.has(record.refKey)).map(record=>{
+  const recordWorks=uniqueValidRouteEntries([...(Array.isArray(record.entries)?record.entries:[]),record.entryId].filter(Boolean));
+  const recordChars=new Set((record.characters||[]).map(value=>String(value).toLowerCase()));
+  const recordTags=new Set((record.tags||[]).map(value=>String(value).toLowerCase()));
+  let score=0;const reasons=[];
+  items.forEach(item=>{
+   const itemWorks=new Set(casebookPinWorkIds(item)),sharedWork=recordWorks.find(id=>itemWorks.has(id));
+   if(sharedWork){score+=5;const entry=TIMELINE.find(e=>e.id===sharedWork);reasons.push('shares '+(entry?.code||sharedWork));}
+   const sharedCharacter=(item.characters||[]).find(name=>recordChars.has(String(name).toLowerCase()));
+   if(sharedCharacter){score+=2;reasons.push('character · '+sharedCharacter);}
+   const sharedTag=(item.tags||[]).find(tag=>recordTags.has(String(tag).toLowerCase()));
+   if(sharedTag){score+=1;reasons.push('tag · '+sharedTag);}
+  });
+  return {...record,score,reasons:Array.from(new Set(reasons)).slice(0,2)};
+ }).filter(record=>record.score>0).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title)).slice(0,4);
+ leads.innerHTML=candidates.length?candidates.map(record=>'<article class="casebook-lead-card"><div class="casebook-lead-card-top"><span class="command-type-pill type-'+esc(record.category)+'">'+esc(record.typeLabel)+'</span><span class="casebook-lead-reasons">'+record.reasons.map(esc).join(' · ')+'</span></div><strong>'+esc(record.title)+'</strong><p>'+esc(record.summary||'A related archive record worth checking against your notes.')+'</p><div class="casebook-lead-actions"><button type="button" data-command-open="'+esc(record.refKey)+'">Open lead ↗</button><button type="button" data-command-pin="'+esc(record.refKey)+'">＋ Pin as evidence</button></div></article>').join(''):'<div class="casebook-analysis-empty compact">No strong next leads from these pins yet. Add another work, character, incident, or tagged record to reveal possible links.</div>';
+}
 function renderCasebookEvidence(){
  const current=activeCase();if(!current)return;
  const host=$('casebook-evidence-list');
  $('casebook-evidence-count').textContent=current.items.length+' pinned item'+(current.items.length===1?'':'s')+' · '+current.items.filter(x=>x.category==='source'||x.category==='note').length+' source / research note'+(current.items.filter(x=>x.category==='source'||x.category==='note').length===1?'':'s');
  host.innerHTML=current.items.length?current.items.map((item,index)=>'<article class="case-evidence-card"><div class="case-evidence-head"><span class="command-type-pill type-'+esc(item.category)+'">'+esc(item.typeLabel)+'</span><button type="button" class="case-evidence-remove" data-case-remove="'+index+'" aria-label="Remove '+esc(item.title)+' from this case">Remove ×</button></div><h6>'+esc(item.title)+'</h6>'+(item.subtitle?'<div class="case-evidence-sub">'+esc(item.subtitle)+'</div>':'')+'<p>'+esc(item.summary||'Pinned archive reference; review the linked record for context.')+'</p><div class="case-evidence-actions">'+(item.entryId?'<button type="button" data-case-open="'+esc(item.refKey)+'" class="case-evidence-open">Open linked work ↗</button>':'<button type="button" data-case-open="'+esc(item.refKey)+'" class="case-evidence-open">Open archive record ↗</button>')+(item.url?'<a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">Source ↗</a>':'')+'</div></article>').join(''):'<div class="case-evidence-empty"><span>✧</span><strong>No evidence pinned yet</strong><p>Search the archive above and tap “Pin to case” on any result. Your first case can be a question, a theory to compare, or simply a collection of useful references.</p></div>';
+ renderCasebookAnalysis(current);
 }
 function renderCasebookUI(loadFields){
  const current=activeCase();if(!current)return;
