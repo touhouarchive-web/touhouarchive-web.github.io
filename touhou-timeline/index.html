@@ -145,7 +145,7 @@ button.incident-person,button.incident-place-link{cursor:pointer}button.incident
 .incident-thread-card{border-left:2px solid rgba(196,181,253,.28);padding:3px 0 4px 9px}.incident-thread-card strong{display:block;color:#d9d2ed;font:500 12px/1.4 Georgia,serif}.incident-thread-card p{margin:4px 0 0;color:#858391;font-size:9px;line-height:1.7}
 .incident-detail-source{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.incident-detail-source .open-entry-link{display:inline-block;margin:0}.incident-source-note{margin:11px 0 0;color:#757382;font-size:8px;line-height:1.7}
 /* Phase VI · Chronological Lore Explorer */
-.chronology-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:16px 0}
+.chronology-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:16px 0}
 .chronology-stats>div{display:grid;gap:5px;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px;background:rgba(255,255,255,.012)}
 .chronology-stats strong{font:500 22px/1 Georgia,serif;color:#e1d5fb}.chronology-stats span{font-size:8px;letter-spacing:.04em;color:#888795}
 .chronology-toolbar{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(150px,.72fr) minmax(145px,.7fr) minmax(160px,.8fr) auto;gap:9px;align-items:end;border:1px solid rgba(196,181,253,.12);border-radius:13px;padding:12px;background:rgba(196,181,253,.025)}
@@ -191,9 +191,15 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
 .chronology-thread-card{padding:9px 10px;border-left:2px solid rgba(196,181,253,.27);background:rgba(255,255,255,.012)}
 .chronology-thread-card strong{display:block;font:500 12px/1.4 Georgia,serif;color:#ddd4f0}
 .chronology-thread-card p{margin:5px 0 0;color:#878593;font-size:8px;line-height:1.7}
+.chronology-incident-list{display:grid;gap:8px}
+.chronology-incident-card{display:block;width:100%;border:1px solid rgba(210,161,100,.18);border-radius:9px;background:rgba(210,161,100,.025);padding:10px;text-align:left;cursor:pointer}
+.chronology-incident-card:hover{border-color:rgba(210,161,100,.42);background:rgba(210,161,100,.06)}
+.chronology-incident-card .chronology-incident-meta{display:block;color:#b9956c;font:800 8px/1.5 ui-monospace,monospace;letter-spacing:.04em}
+.chronology-incident-card strong{display:block;margin-top:5px;color:#e6d9c9;font:500 13px/1.35 Georgia,serif}
+.chronology-incident-card p{margin:5px 0 0;color:#9c9285;font-size:8px;line-height:1.7}
 .chronology-empty{border:1px dashed rgba(255,255,255,.11);border-radius:12px;padding:18px;color:#8b8997;font-size:10px;line-height:1.8}
 @media(max-width:1100px){.chronology-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.chronology-search-field{grid-column:1/-1}.chronology-layout{grid-template-columns:1fr}.chronology-detail{position:static}}
-@media(max-width:650px){.chronology-stats{gap:6px}.chronology-stats>div{padding:9px}.chronology-stats strong{font-size:19px}.chronology-stats span{font-size:7px}.chronology-toolbar{grid-template-columns:1fr 1fr;padding:10px}.chronology-search-field{grid-column:1/-1}.chronology-search-field input,.chronology-control-field select{font-size:16px}.chronology-layout{grid-template-columns:1fr}.chronology-rail{padding-left:19px}.chronology-detail{padding:13px}.chronology-detail h4{font-size:22px}}
+@media(max-width:650px){.chronology-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.chronology-stats>div{padding:9px}.chronology-stats strong{font-size:19px}.chronology-stats span{font-size:7px}.chronology-toolbar{grid-template-columns:1fr 1fr;padding:10px}.chronology-search-field{grid-column:1/-1}.chronology-search-field input,.chronology-control-field select{font-size:16px}.chronology-layout{grid-template-columns:1fr}.chronology-rail{padding-left:19px}.chronology-detail{padding:13px}.chronology-detail h4{font-size:22px}}
 
 @media(max-width:1000px){.incident-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.incident-search-field{grid-column:1/-1}.incident-archive-layout{grid-template-columns:minmax(0,1fr)}.incident-detail-panel{position:static}.incident-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.incident-summary-stats{gap:6px}.incident-summary-stats>div{padding:9px}.incident-summary-stats strong{font-size:19px}.incident-summary-stats span{font-size:7px}.incident-toolbar{grid-template-columns:1fr 1fr;padding:10px}.incident-search-field{grid-column:1/-1}.incident-archive-layout{grid-template-columns:1fr}.incident-grid{grid-template-columns:1fr}.incident-detail-panel{padding:13px}.incident-detail-title{font-size:22px}.incident-search-field input,.incident-filter-field select{font-size:16px}}
@@ -487,6 +493,7 @@ button.chronology-chip{background:rgba(255,255,255,.012);cursor:pointer}button.c
    <div><strong id="chronology-total">17</strong><span>Indexed works</span></div>
    <div><strong id="chronology-span">2002–2025</strong><span>Release span</span></div>
    <div><strong id="chronology-visible">17</strong><span>Milestones shown</span></div>
+   <div><strong id="chronology-incident-count">15</strong><span>Connected incident records</span></div>
   </div>
   <section class="chronology-toolbar" aria-label="Chronology controls">
    <label class="chronology-search-field"><span>Search the chronology</span><input id="chronology-search" type="search" placeholder="Game, title, character, topic…" autocomplete="off" aria-label="Search chronological milestones"></label>
@@ -1577,16 +1584,18 @@ function renderChronologyDetail(entry,visible){
   return;
  }
  const threads=chronologyEntryThreads(entry);
+ const linkedIncidents=INCIDENTS.filter(incident=>incident.entry===entry.id);
  const characters=Array.isArray(entry.characters)?entry.characters:[];
  const characterMarkup=characters.map(name=>{
   const indexed=CHARACTERS.some(person=>person.name===name);
   return indexed?'<button type="button" class="chronology-chip" data-network-focus="character:'+esc(name)+'">'+esc(name)+' ↗</button>':'<span class="chronology-chip">'+esc(name)+'</span>';
  }).join('');
  const relatedWorkChips=threads.length?threads.map(thread=>'<button type="button" class="chronology-chip" data-chronology-thread="'+esc(thread.title)+'">'+esc(thread.title)+'</button>').join(''):'<span class="chronology-chip">No named lore thread indexed for this work</span>';
+ const incidentCards=linkedIncidents.map(incident=>'<button type="button" class="chronology-incident-card" data-chronology-incident="'+esc(incident.title)+'"><span class="chronology-incident-meta">'+esc(incident.year)+' · '+esc(incident.status)+'</span><strong>'+esc(incident.title)+'</strong><p>'+esc(incident.summary)+'</p></button>').join('');
  const index=visible.findIndex(item=>item.id===entry.id);
  const previous=index>0?visible[index-1]:null;
  const next=index>=0&&index<visible.length-1?visible[index+1]:null;
- panel.innerHTML='<div class="chronology-detail-kicker">SELECTED MILESTONE · '+esc(entry.code||entry.id.toUpperCase())+'</div><h4>'+esc(entry.title)+'</h4><div class="chronology-detail-original">'+esc(entry.originalTitle||'')+'</div><p class="chronology-detail-description">'+esc(entry.summary||'No summary is indexed yet.')+'</p><div class="chronology-detail-meta"><span>'+esc(entry.releaseDate||entry.year||'Release date not indexed')+'</span><span>'+esc(chronologyMediaLabel(entry))+'</span><span>Reading step '+String(chronologyOrderNumber(entry)).padStart(2,'0')+'</span></div><div class="chronology-detail-section"><h5>Why this milestone matters</h5><p class="chronology-detail-description" style="margin-top:0">'+esc(typeof entry.loreImpact==='string'?entry.loreImpact:entry.summary||'')+'</p><p class="chronology-detail-description">'+esc(entry.whyRead||'Open the full entry for more context.')+'</p></div><div class="chronology-detail-section"><h5>Characters in this entry</h5><div class="chronology-chip-list">'+(characterMarkup||'<span class="chronology-chip">No character list indexed</span>')+'</div></div><div class="chronology-detail-section"><h5>Connected lore threads</h5><div class="chronology-chip-list">'+relatedWorkChips+'</div>'+(threads.length?'<div class="chronology-thread-list" style="margin-top:10px">'+threads.map(thread=>'<article class="chronology-thread-card"><strong>'+esc(thread.title)+'</strong><p>'+esc(thread.label)+' · '+esc(thread.text)+'</p></article>').join('')+'</div>':'')+'</div><div class="chronology-card-actions" style="margin-top:17px">'+(previous?'<button type="button" class="chronology-action" data-chronology-select="'+esc(previous.id)+'">← Previous · '+esc(previous.code||previous.title)+'</button>':'')+(next?'<button type="button" class="chronology-action" data-chronology-select="'+esc(next.id)+'">Next · '+esc(next.code||next.title)+' →</button>':'')+'<button type="button" class="open-entry-link" data-open-entry="'+esc(entry.id)+'">Open full lore article ↗</button></div><p class="incident-source-note">The previous/next controls follow the order currently selected above. Release dates are publication dates, not exact dates for events inside the Touhou setting.</p>';
+ panel.innerHTML='<div class="chronology-detail-kicker">SELECTED MILESTONE · '+esc(entry.code||entry.id.toUpperCase())+'</div><h4>'+esc(entry.title)+'</h4><div class="chronology-detail-original">'+esc(entry.originalTitle||'')+'</div><p class="chronology-detail-description">'+esc(entry.summary||'No summary is indexed yet.')+'</p><div class="chronology-detail-meta"><span>'+esc(entry.releaseDate||entry.year||'Release date not indexed')+'</span><span>'+esc(chronologyMediaLabel(entry))+'</span><span>Reading step '+String(chronologyOrderNumber(entry)).padStart(2,'0')+'</span></div><div class="chronology-detail-section"><h5>Why this milestone matters</h5><p class="chronology-detail-description" style="margin-top:0">'+esc(typeof entry.loreImpact==='string'?entry.loreImpact:entry.summary||'')+'</p><p class="chronology-detail-description">'+esc(entry.whyRead||'Open the full entry for more context.')+'</p></div><div class="chronology-detail-section"><h5>Characters in this entry</h5><div class="chronology-chip-list">'+(characterMarkup||'<span class="chronology-chip">No character list indexed</span>')+'</div></div><div class="chronology-detail-section"><h5>Connected lore threads</h5><div class="chronology-chip-list">'+relatedWorkChips+'</div>'+(threads.length?'<div class="chronology-thread-list" style="margin-top:10px">'+threads.map(thread=>'<article class="chronology-thread-card"><strong>'+esc(thread.title)+'</strong><p>'+esc(thread.label)+' · '+esc(thread.text)+'</p></article>').join('')+'</div>':'')+'</div><div class="chronology-detail-section"><h5>Major incident linked to this work</h5><div class="chronology-incident-list">'+(incidentCards||'<span class="chronology-chip">No separate incident dossier is indexed for this companion work.</span>')+'</div></div><div class="chronology-card-actions" style="margin-top:17px">'+(previous?'<button type="button" class="chronology-action" data-chronology-select="'+esc(previous.id)+'">← Previous · '+esc(previous.code||previous.title)+'</button>':'')+(next?'<button type="button" class="chronology-action" data-chronology-select="'+esc(next.id)+'">Next · '+esc(next.code||next.title)+' →</button>':'')+'<button type="button" class="open-entry-link" data-open-entry="'+esc(entry.id)+'">Open full lore article ↗</button></div><p class="incident-source-note">The previous/next controls follow the order currently selected above. Release dates are publication dates, not exact dates for events inside the Touhou setting.</p>';
 }
 function renderChronology(){
  const nodes=TIMELINE.slice();
@@ -1601,12 +1610,14 @@ function renderChronology(){
   if(activeChronologyThread!=='all'&&!(threadByTitle.get(activeChronologyThread)?.entries||[]).includes(entry.id))return false;
   const threads=chronologyEntryThreads(entry).map(thread=>thread.title+' '+thread.label+' '+thread.text).join(' ');
   const chars=Array.isArray(entry.characters)?entry.characters.join(' '):'';
-  return [entry.id,entry.code,entry.title,entry.originalTitle,entry.year,entry.releaseDate,entry.summary,entry.era,entry.loreImpact,entry.connection,entry.whyRead,chars,(entry.tags||[]).join(' '),threads].join(' ').toLowerCase().includes(query);
+  const incidents=INCIDENTS.filter(incident=>incident.entry===entry.id).map(incident=>incident.title+' '+incident.summary+' '+(incident.tags||[]).join(' ')).join(' ');
+  return [entry.id,entry.code,entry.title,entry.originalTitle,entry.year,entry.releaseDate,entry.summary,entry.era,entry.loreImpact,entry.connection,entry.whyRead,chars,(entry.tags||[]).join(' '),threads,incidents].join(' ').toLowerCase().includes(query);
  });
  visible.sort(order==='path'?(a,b)=>chronologyOrderNumber(a)-chronologyOrderNumber(b)||Number(a.releaseSort)-Number(b.releaseSort):(a,b)=>Number(a.releaseSort||0)-Number(b.releaseSort||0)||chronologyOrderNumber(a)-chronologyOrderNumber(b));
  if(!visible.some(entry=>entry.id===activeChronologyId))activeChronologyId=visible[0]?.id||'';
  const years=nodes.map(chronologyReleaseYear).filter(year=>/^\d{4}$/.test(year)).sort();
  $('chronology-total').textContent=String(TIMELINE.length);
+ $('chronology-incident-count').textContent=String(INCIDENTS.length);
  $('chronology-span').textContent=years.length?years[0]+'–'+years[years.length-1]:'—';
  $('chronology-visible').textContent=String(visible.length);
  $('chronology-results-count').textContent=visible.length+' of '+TIMELINE.length+' milestones shown · '+(order==='path'?'curated reading path':'release chronology')+(activeChronologyThread!=='all'?' · thread: '+activeChronologyThread:'');
@@ -1702,6 +1713,8 @@ $('archive-tools').addEventListener('click',event=>{
  if(chronologySelect){activeChronologyId=chronologySelect.dataset.chronologySelect;renderChronology();return;}
  const chronologyThread=event.target.closest('[data-chronology-thread]');
  if(chronologyThread){activeChronologyThread=chronologyThread.dataset.chronologyThread;activeToolTab='chronology';$('chronology-thread').value=activeChronologyThread;updateToolTabs();renderChronology();$('chronology-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ const chronologyIncident=event.target.closest('[data-chronology-incident]');
+ if(chronologyIncident){activeIncidentTitle=chronologyIncident.dataset.chronologyIncident;activeToolTab='incidents';renderIncidents();updateToolTabs();$('incidents-panel').scrollIntoView({behavior:'smooth',block:'start'});return;}
  const selectIncident=event.target.closest('[data-select-incident]');
  if(selectIncident){activeIncidentTitle=selectIncident.dataset.selectIncident;renderIncidents();return;}
  const incidentFavorite=event.target.closest('[data-incident-favorite]');
