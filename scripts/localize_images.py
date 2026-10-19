@@ -950,7 +950,7 @@ PAGE_CONTEXT_OVERRIDES = {
     ],
     "pages/locations.html": [
         {
-            "container": "figure", "heading": "", "old_filename": "Th10YoukaiMountain.jpg",
+            "container": "figure", "heading": "", "old_filename": "Th10YoukaiForest.jpg",
             "new_url": FOG_4, "source_page": OFFICIAL_PAGE,
             "credit": "Official Touhou New Classic site",
             "alt": "Atmospheric mist background used as an illustrative landscape for Gensokyo.",
@@ -1025,7 +1025,7 @@ PAGE_CONTEXT_OVERRIDES = {
     "pages/music.html": [
         {
             "container": "figure", "heading": "", "old_url": "https://images.launchbox-app.com/d661f383-4f38-4034-8a27-fd558e3dc7fe.jpg",
-            "new_url": EOSD_SOUNDTRACK_COVER, "force": True,
+            "new_url": EOSD_SOUNDTRACK_COVER,
             "source_page": "https://music.apple.com/us/album/touhou-koumakyo-the-embodiment-of-scarlet/1581514712",
             "credit": "Apple Music — Touhou 6: Embodiment of Scarlet Devil Soundtrack",
             "alt": "Official soundtrack album artwork for Touhou 6: Embodiment of Scarlet Devil.",
@@ -1070,6 +1070,14 @@ PAGE_CONTEXT_OVERRIDES = {
             "source_page": "https://shop.akbh.jp/en/products/9784758060899",
             "credit": "AKIBA-HOBBY — Silent Sinner in Blue, Vol. 1",
             "alt": "Cover of volume 1 of Silent Sinner in Blue, an official Touhou manga.",
+            "pin": True,
+        },
+        {
+            "heading": "Bohemian Archive in Japanese Red", "old_filename": "Th105Aya.png", "force": True,
+            "new_url": AYA_ART,
+            "source_page": "https://aenigmatrices.github.io/touhou-translations/gallery/characters/aya/",
+            "credit": "Touhou Translations — Aya Shameimaru community gallery",
+            "alt": "Community illustration of Aya Shameimaru, the reporter featured in Bohemian Archive in Japanese Red.",
             "pin": True,
         },
         {
