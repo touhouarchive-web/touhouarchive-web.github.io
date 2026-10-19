@@ -41,6 +41,94 @@
 @media(max-width:360px){.gallery-grid{grid-template-columns:1fr;}.gallery-image{aspect-ratio:16/10;}}
 @media(prefers-reduced-motion:reduce){.gallery-card,.gallery-image{transition:none!important;}.gallery-card:hover .gallery-image{transform:none;}}
 </style>
+<style id="archive-expansion-styles">
+
+/* Archive expansion: character atlas, schematic location map, incident index, lore threads, and local reading progress. */
+.route-controls{display:flex;align-items:center;justify-content:flex-end;gap:13px;flex-wrap:wrap}
+.sort-control{display:flex;align-items:center;gap:7px;color:#71717a;font-size:10px}
+.sort-control select{max-width:150px;border:1px solid var(--line);border-radius:9px;background:#111214;color:#d4d4d8;padding:7px 9px;font:inherit}
+.archive-tools{margin-top:39px;padding-top:27px;border-top:1px solid var(--line)}
+.tools-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,255px);gap:20px;align-items:end}
+.tools-heading h2{font:500 clamp(25px,3vw,34px)/1.1 Georgia,serif;letter-spacing:-.04em;margin:11px 0 0}
+.tools-lead{max-width:680px;margin:10px 0 0;color:#8c8c98;font-size:11px;line-height:1.85}
+.progress-card{border:1px solid rgba(196,181,253,.19);border-radius:14px;padding:13px;background:linear-gradient(135deg,rgba(196,181,253,.055),rgba(255,255,255,.012))}
+.progress-top,.progress-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.progress-top span{font-size:8px;font-weight:800;letter-spacing:.15em;color:#7f7f8a}.progress-top strong{font-size:10px;color:#d4d4d8}
+.progress-track{height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin:12px 0}
+.progress-track span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,#a78bfa,#6ee7b7);transition:width .25s}
+.progress-bottom{font-size:9px;color:#777782}.progress-bottom span:first-child{color:#c4b5fd}
+.tool-tabs{display:flex;gap:6px;overflow-x:auto;margin:23px 0 0;padding:5px 0 10px;scrollbar-width:thin}
+.tool-tabs button{flex:0 0 auto;border:1px solid var(--line);border-radius:10px;background:#101113;color:#858591;padding:11px 13px;font-size:10px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.tool-tabs button[aria-selected=true]{background:rgba(196,181,253,.09);border-color:rgba(196,181,253,.28);color:#e8e4ff}
+.tool-panel{padding:22px 0 0;min-width:0}
+.panel-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:15px}
+.panel-intro h3{font:500 24px/1.2 Georgia,serif;letter-spacing:-.035em;margin:7px 0 0;color:#f4f4f5}
+.panel-intro p{max-width:630px;margin:8px 0 0;color:#7e7e8a;font-size:10px;line-height:1.8}
+.panel-count{color:#777782;font:9px ui-monospace,monospace;letter-spacing:.09em;margin:0 0 10px}
+.atlas-search{display:flex;align-items:center;gap:8px;min-width:190px;border:1px solid var(--line);border-radius:11px;background:#111214;color:#777782;padding:0 10px}
+.atlas-search input{width:100%;height:38px;min-width:0;border:0;outline:0;background:transparent;color:#eee;font-size:11px}
+.character-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.character-card{min-width:0;border:1px solid var(--line);border-radius:13px;padding:13px;background:linear-gradient(140deg,rgba(255,255,255,.025),rgba(255,255,255,.008));transition:border-color .2s,transform .2s}
+.character-card:hover{border-color:rgba(196,181,253,.28);transform:translateY(-1px)}
+.character-name{font:500 17px/1.25 Georgia,serif;color:#eee;margin:0}
+.character-role{color:#c4b5fd;font-size:9px;line-height:1.6;margin-top:6px}
+.character-desc{color:#898995;font-size:10px;line-height:1.8;margin:9px 0 10px}
+.character-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#686875;font-size:8px;margin:9px 0}
+.character-links{display:flex;flex-wrap:wrap;gap:5px}
+.entry-chip{display:inline-flex;align-items:center;border:1px solid rgba(196,181,253,.15);border-radius:7px;background:rgba(196,181,253,.045);color:#beb7e5;padding:5px 7px;font-size:8px;cursor:pointer}
+.entry-chip:hover{border-color:rgba(196,181,253,.4);color:#fff}
+.character-search-button{border:0;background:none;color:#777782;text-decoration:underline;text-underline-offset:3px;font-size:9px;cursor:pointer;padding:0}
+.map-legend{display:flex;align-items:center;gap:7px;color:#8e8e99;font-size:9px;white-space:nowrap}
+.map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c4b5fd;box-shadow:0 0 11px rgba(196,181,253,.5)}
+.map-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(200px,.75fr);gap:13px;align-items:stretch}
+.map-board{position:relative;isolation:isolate;min-height:455px;overflow:hidden;border:1px solid rgba(196,181,253,.14);border-radius:16px;background:radial-gradient(ellipse at 50% 45%,rgba(99,102,241,.12),transparent 65%),radial-gradient(ellipse at 16% 75%,rgba(110,231,183,.07),transparent 48%),linear-gradient(145deg,#101116,#0b0c10)}
+.map-board:before{content:"GENSOKYO / FIELD SKETCH";position:absolute;left:14px;top:12px;color:rgba(196,181,253,.35);font:8px ui-monospace,monospace;letter-spacing:.16em;z-index:1}
+.map-board:after{content:"NOT TO SCALE";position:absolute;right:13px;bottom:12px;color:rgba(255,255,255,.2);font:8px ui-monospace,monospace;letter-spacing:.12em;z-index:1}
+.map-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.75}
+.map-lines path{fill:none;stroke:rgba(167,139,250,.23);stroke-width:1.4;stroke-dasharray:4 7}
+.map-pin{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;max-width:142px;border:1px solid rgba(196,181,253,.16);border-radius:99px;padding:7px 9px;background:rgba(13,14,19,.94);color:#9898a4;font-size:9px;line-height:1.25;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,.15);transition:color .2s,border-color .2s,background .2s}
+.map-pin .pin-dot{flex:0 0 6px;width:6px;height:6px;border-radius:50%;background:#757587}
+.map-pin[aria-pressed=true]{color:#f4f1ff;border-color:rgba(196,181,253,.62);background:rgba(52,43,83,.96);box-shadow:0 0 0 3px rgba(196,181,253,.07),0 5px 20px rgba(0,0,0,.3)}
+.map-pin[aria-pressed=true] .pin-dot{background:#c4b5fd;box-shadow:0 0 10px rgba(196,181,253,.85)}
+.map-detail{border:1px solid var(--line);border-radius:15px;background:#111214;padding:17px;min-width:0}
+.map-detail .place-group{color:#9d94ce;font-size:8px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+.map-detail h4{font:500 22px/1.2 Georgia,serif;color:#f4f4f5;margin:10px 0}
+.map-detail p{font-size:11px;line-height:1.85;color:#9a9aa6;margin:0}
+.canon-badge{display:inline-block;margin:12px 0;border:1px solid rgba(110,231,183,.17);background:rgba(110,231,183,.035);border-radius:8px;padding:7px 8px;color:#9bbdaa;font-size:8px;line-height:1.6}
+.map-detail .detail-subhead{margin:12px 0 7px;color:#757582;font-size:8px;letter-spacing:.15em;text-transform:uppercase;font-weight:800}
+.map-disclaimer{margin:12px 0 0;color:#666672;font-size:9px;line-height:1.8}
+.incident-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.incident-card,.thread-card{border:1px solid var(--line);border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.025),rgba(255,255,255,.008));padding:16px}
+.incident-top{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.incident-year{font:9px ui-monospace,monospace;color:#71717a}
+.incident-status{font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:#8dc2a9;border:1px solid rgba(110,231,183,.15);border-radius:99px;padding:5px 7px}
+.incident-card h4,.thread-card h4{font:500 19px/1.25 Georgia,serif;margin:11px 0 8px;color:#eee}
+.incident-card p,.thread-card p{color:#8c8c98;font-size:10px;line-height:1.85;margin:0}
+.incident-tags{display:flex;flex-wrap:wrap;gap:5px;margin:11px 0}
+.incident-tags span{border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:4px 6px;color:#777782;font-size:8px}
+.open-entry-link{border:0;border-bottom:1px solid rgba(196,181,253,.3);background:none;color:#c4b5fd;padding:7px 0 3px;margin-top:9px;font-size:9px;cursor:pointer;text-align:left}
+.thread-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.thread-label{display:inline-block;border:1px solid rgba(196,181,253,.17);background:rgba(196,181,253,.035);color:#bdb1e4;border-radius:7px;padding:6px 8px;font-size:8px;line-height:1.5}
+.thread-entry-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.shelf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.shelf-grid h4{margin:0 0 10px;color:#c4c4ce;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.shelf-list{display:grid;gap:7px}
+.shelf-row{display:flex;align-items:center;justify-content:space-between;gap:9px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.015);padding:11px}
+.shelf-title{font:500 13px/1.35 Georgia,serif;color:#e7e7ec;min-width:0}
+.shelf-sub{color:#737380;font-size:8px;margin-top:4px}
+.shelf-row .entry-chip{flex:0 0 auto}
+.shelf-empty{border:1px dashed rgba(255,255,255,.1);border-radius:10px;padding:14px;color:#72727e;font-size:10px;line-height:1.8}
+.archive-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.archive-action{border:1px solid var(--entry-border,rgba(255,255,255,.12));border-radius:10px;padding:9px 12px;background:var(--entry-soft,rgba(255,255,255,.02));color:#d4d4d8;font-size:10px;cursor:pointer}
+.archive-action[aria-pressed=true]{border-color:rgba(110,231,183,.3);background:rgba(110,231,183,.06);color:#a7f3d0}
+.entry-state-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.entry-state{display:inline-block;border:1px solid rgba(110,231,183,.16);background:rgba(110,231,183,.035);border-radius:6px;padding:4px 6px;color:#9ecdb6;font-size:8px}
+.entry-state.saved{border-color:rgba(196,181,253,.19);background:rgba(196,181,253,.035);color:#c4b5fd}
+@media(max-width:1000px){.character-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.map-layout{grid-template-columns:1fr}.map-board{min-height:440px}.map-detail{min-height:0}}
+@media(max-width:650px){.tools-heading{grid-template-columns:1fr}.progress-card{max-width:none}.panel-intro{align-items:stretch;flex-direction:column}.atlas-search{width:100%}.character-grid,.incident-grid,.thread-list,.shelf-grid{grid-template-columns:1fr}.map-board{min-height:390px}.map-pin{max-width:112px;padding:6px 7px;font-size:8px}.route-row{align-items:flex-start;flex-direction:column}.route-controls{width:100%;justify-content:space-between}.sort-control select{max-width:135px}.tool-tabs button{padding:10px 11px}.archive-tools{margin-top:31px;padding-top:22px}}
+@media(max-width:390px){.map-board{min-height:370px}.map-pin{max-width:94px;gap:4px;padding:5px 6px;font-size:7px}.map-pin .pin-dot{flex-basis:5px;width:5px;height:5px}.map-detail{padding:14px}.character-card{padding:12px}}
+
+</style>
 </head>
 <body>
 <header class="topbar"><div class="wrap hero">
@@ -58,6 +146,42 @@
   <section aria-labelledby="timeline-heading"><div class="timeline-head"><div><div class="small-eyebrow">◷ &nbsp; Reading path / release milestones</div><h2 class="serif" id="timeline-heading">The archive trail</h2><p>Follow story connections from the Windows-era beginning to Touhou 20, while keeping side works clearly separate from direct sequels.</p></div><div class="searchbox"><span class="search-icon">⌕</span><input id="search" type="search" placeholder="Search lore, character, title…" aria-label="Search entries, characters, and themes"><button id="search-clear" class="search-clear hidden" aria-label="Clear search">×</button></div></div>
     <div class="route-row"><span id="route-label">✣ &nbsp; Reading path / current archive</span><div class="route-controls"><label class="sort-control" for="timeline-sort">Order <select id="timeline-sort"><option value="path">Reading path</option><option value="release">Release date</option></select></label><span class="entry-count" id="route-count">06 / 06 ENTRIES</span></div></div>
     <div id="timeline" class="timeline" aria-live="polite"></div><div id="empty" class="empty hidden"><div><div style="font-size:25px;color:#71717a">⌕</div><h3 class="serif">No entries found</h3><p>Try another title, character, or theme, or turn a media filter back on.</p><button class="text-button" id="reset-view">Reset view →</button></div></div>
+    
+<section class="archive-tools" id="archive-tools" aria-labelledby="archive-tools-title">
+ <div class="tools-heading">
+  <div><div class="small-eyebrow">✧ &nbsp; Discover beyond the timeline</div><h2 class="serif" id="archive-tools-title">Gensokyo field index</h2><p class="tools-lead">Browse the characters and places currently covered, trace the major incidents, and save your reading progress. The map is an explanatory schematic, not a canon-accurate geographic survey.</p></div>
+  <div class="progress-card" aria-live="polite"><div class="progress-top"><span>YOUR READING PATH</span><strong id="progress-count">0 / 6 read</strong></div><div class="progress-track"><span id="progress-bar"></span></div><div class="progress-bottom"><span id="saved-count">0 saved</span><span>Saved on this device</span></div></div>
+ </div>
+ <div class="tool-tabs" role="tablist" aria-label="Archive explorer sections">
+  <button type="button" role="tab" data-tool-tab="characters" aria-selected="true" aria-controls="characters-panel">♙ Character atlas</button>
+  <button type="button" role="tab" data-tool-tab="map" aria-selected="false" aria-controls="map-panel">⌖ Gensokyo map</button>
+  <button type="button" role="tab" data-tool-tab="incidents" aria-selected="false" aria-controls="incidents-panel">✧ Incident archive</button>
+  <button type="button" role="tab" data-tool-tab="threads" aria-selected="false" aria-controls="threads-panel">⌘ Lore threads</button>
+  <button type="button" role="tab" data-tool-tab="shelf" aria-selected="false" aria-controls="shelf-panel">♡ Reading shelf</button>
+ </div>
+ <section class="tool-panel" id="characters-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">People, spirits, gods, and youkai</div><h3 class="serif">Character atlas</h3><p>Index entries are limited to characters attached to the stories currently in this archive, not the entire Touhou cast.</p></div><label class="atlas-search">⌕ <input type="search" id="character-search" placeholder="Find a character…" aria-label="Search the character atlas"></label></div>
+  <div id="character-count" class="panel-count"></div><div class="character-grid" id="character-grid"></div>
+ </section>
+ <section class="tool-panel hidden" id="map-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">Places and story geography</div><h3 class="serif">A constellation of places</h3><p>Choose a marker to see why the place matters and which archive entries discuss it.</p></div><span class="map-legend"><i></i> Selected location</span></div>
+  <div class="map-layout"><div class="map-board" id="map-board" aria-label="Schematic map of selected Touhou locations"><svg class="map-lines" viewBox="0 0 800 500" aria-hidden="true"><path d="M120 360 C190 315 230 250 370 210 S540 155 650 100" /><path d="M120 360 C220 370 280 300 390 295 S550 320 660 385" /><path d="M190 180 C280 195 335 250 385 295" /><path d="M385 295 C420 265 430 225 470 190 S580 130 650 100" /><path d="M385 295 C420 350 410 400 345 442" /><path d="M385 295 C480 270 560 250 650 245" /></svg></div><aside class="map-detail" id="map-detail" aria-live="polite"></aside></div>
+  <p class="map-disclaimer">Schematic only: positions and connecting lines help explain reading relationships; they are not official distances, routes, borders, or a complete world map. The Lunar Sea is shown off-map in spirit even though it shares this display.</p>
+ </section>
+ <section class="tool-panel hidden" id="incidents-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">What happened, and where to read it</div><h3 class="serif">Incident archive</h3><p>A compact record of the incidents covered by the current entries. Incident summaries are paraphrases; each opens the source article.</p></div></div>
+  <div class="incident-grid" id="incident-grid"></div>
+ </section>
+ <section class="tool-panel hidden" id="threads-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">Connections with canon labels</div><h3 class="serif">Follow the threads</h3><p>Direct plot links, recurring characters, and interpretive comparisons are kept distinct so that an interesting theory does not get mistaken for canon.</p></div></div>
+  <div class="thread-list" id="thread-list"></div>
+ </section>
+ <section class="tool-panel hidden" id="shelf-panel" role="tabpanel">
+  <div class="panel-intro"><div><div class="section-kicker">Local to this browser</div><h3 class="serif">Your reading shelf</h3><p>Bookmark entries to revisit them, and mark entries read to track your progress. No account is needed.</p></div><button type="button" class="text-button" id="clear-shelf">Clear saved progress</button></div>
+  <div class="shelf-grid"><section><h4>Saved for later</h4><div id="saved-list" class="shelf-list"></div></section><section><h4>Marked as read</h4><div id="read-list" class="shelf-list"></div></section></div>
+ </section>
+</section>
+
     <footer class="footer"><p>Unofficial fan-made guide · Touhou Project © Team Shanghai Alice and respective creators.</p><p>Current archive: mainline milestones plus selected companion works. Lore connections are labelled as direct, contextual, or interpretive when needed.</p><p>Reading-list and progress data are stored locally in this browser; clearing browser storage may reset them.</p></footer>
   </section>
 </main>
@@ -619,8 +743,8 @@ const themeVars=e=>{const t=e.theme;return `--entry-accent:${t.accent};--entry-s
 const renderPalette=e=>`<div class="palette-strip" role="img" aria-label="${esc(e.theme.label)} color palette">${e.theme.swatches.map(s=>`<span class="palette-swatch" title="${esc(s.name)}" style="--swatch:${s.hex}" aria-hidden="true"></span>`).join('')}<span class="palette-label">${esc(e.theme.label)}</span></div>`;
 function renderFilters(){ $('filters').innerHTML=Object.keys(MEDIA).map(type=>{const m=MEDIA[type];return `<button type="button" class="filter-row ${filters[type]?'active':''}" data-filter="${type}" aria-pressed="${filters[type]}"><span class="filter-left"><span class="media-icon ${type}">${icon(type)}</span><span><span class="filter-name">${m.plural}</span><span class="filter-count">${m.count} ${m.count===1?'entry':'entries'}</span></span></span><span class="check" style="${filters[type]?`background:${m.accent}`:''}">${filters[type]?'✓':''}</span></button>`}).join('');}
 function searchable(e){const story=FULL_STORIES[e.id];const articleText=story?[story.articleTitle,...story.lead,...story.sections.flatMap(sec=>[sec.heading,...(sec.paragraphs||[]),...(sec.items||[]).flatMap(x=>[x.label,x.text]),...(sec.subsections||[]).flatMap(sub=>[sub.heading,...(sub.paragraphs||[])])])].join(' '):'';return [e.code,e.title,e.originalTitle,e.summary,e.era,e.releaseDate,e.connection,...e.characters,...e.tags,articleText].join(' ').toLowerCase().includes(searchText.trim().toLowerCase())}
-function getVisible(){return TIMELINE.filter(e=>filters[e.type]&&searchable(e))}
-function renderTimeline(){const visible=getVisible();$('shown-count').textContent=`${visible.length} of ${TIMELINE.length} shown`;$('route-count').textContent=`${String(visible.length).padStart(2,'0')} / ${String(TIMELINE.length).padStart(2,'0')} ENTRIES`;$('route-label').textContent=(visible.length===TIMELINE.length&&!searchText?'✣  Full starter route':'⚑  Filtered route');$('empty').classList.toggle('hidden',visible.length!==0);$('timeline').classList.toggle('hidden',visible.length===0);$('search-clear').classList.toggle('hidden',!searchText);$('timeline').innerHTML=visible.map((e,i)=>`<article class="timeline-item" style="animation-delay:${Math.min(i,8)*45}ms;${themeVars(e)}"><div class="timeline-marker ${MEDIA[e.type].cls}" aria-hidden="true">${icon(e.type)}</div><button type="button" class="timeline-card" data-open="${e.id}" aria-label="Open lore details for ${esc(e.code)}: ${esc(e.title)}"><div class="card-meta"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${pill(e)}<span class="code">${esc(e.code)}</span></div><span class="year">${esc(e.year)}</span></div><div class="card-title-row"><div><h3 class="card-title">${esc(e.title)}</h3><div class="original-title">${esc(e.originalTitle)}</div>${renderPalette(e)}</div><span class="open-arrow" aria-hidden="true">↗</span></div><p class="summary">${esc(e.summary)}</p><div class="card-footer"><span class="footer-piece">▦ &nbsp; ${esc(e.releaseDate)}</span><span class="footer-piece ${MEDIA[e.type].cls}">↳ &nbsp; ${esc(e.readingLabel)}</span><span class="spoiler-card-label">⚠ FULL PLOT / SPOILERS</span></div></button><div class="connection"><span class="${MEDIA[e.type].cls}">➜</span><span>${esc(e.connection)}</span></div></article>`).join('')+`<div class="end-marker"><span class="end-spark">✧</span> More paths await discovery</div>`;}
+function getVisible(){const visible=TIMELINE.filter(e=>filters[e.type]&&searchable(e));if(sortMode==='release')visible.sort((a,b)=>a.releaseSort-b.releaseSort);return visible;}
+function renderTimeline(){const visible=getVisible();$('shown-count').textContent=`${visible.length} of ${TIMELINE.length} shown`;$('route-count').textContent=`${String(visible.length).padStart(2,'0')} / ${String(TIMELINE.length).padStart(2,'0')} ENTRIES`;$('route-label').textContent=(sortMode==='release'?'◷  Release-date order':(visible.length===TIMELINE.length&&!searchText?'✣  Reading path / current archive':'⚑  Filtered route'));$('empty').classList.toggle('hidden',visible.length!==0);$('timeline').classList.toggle('hidden',visible.length===0);$('search-clear').classList.toggle('hidden',!searchText);$('timeline').innerHTML=visible.map((e,i)=>`<article class="timeline-item" style="animation-delay:${Math.min(i,8)*45}ms;${themeVars(e)}"><div class="timeline-marker ${MEDIA[e.type].cls}" aria-hidden="true">${icon(e.type)}</div><button type="button" class="timeline-card" data-open="${e.id}" aria-label="Open lore details for ${esc(e.code)}: ${esc(e.title)}"><div class="card-meta"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${pill(e)}<span class="code">${esc(e.code)}</span></div><span class="year">${esc(e.year)}</span></div><div class="card-title-row"><div><h3 class="card-title">${esc(e.title)}</h3><div class="original-title">${esc(e.originalTitle)}</div>${renderPalette(e)}${renderEntryState(e)}</div><span class="open-arrow" aria-hidden="true">↗</span></div><p class="summary">${esc(e.summary)}</p><div class="card-footer"><span class="footer-piece">▦ &nbsp; ${esc(e.releaseDate)}</span><span class="footer-piece ${MEDIA[e.type].cls}">↳ &nbsp; ${esc(e.readingLabel)}</span><span class="spoiler-card-label">⚠ FULL PLOT / SPOILERS</span></div></button><div class="connection"><span class="${MEDIA[e.type].cls}">➜</span><span>${esc(e.connection)}</span></div></article>`).join('')+`<div class="end-marker"><span class="end-spark">✧</span> More paths await discovery</div>`;}
 function renderAll(){renderFilters();renderTimeline();}
 function renderStoryArticle(e){
  const story=FULL_STORIES[e.id];
@@ -651,6 +775,7 @@ function openDrawer(id,trigger){
     <h2 id="drawer-title">${esc(articleTitle)}</h2>
     <p class="drawer-original">${esc(e.originalTitle)}</p>
     <div class="details-grid"><div class="detail"><span class="${m.cls}" style="font-size:18px">▦</span><div><div class="detail-label">Release date</div><div class="detail-value">${esc(e.releaseDate)}</div></div></div><div class="detail"><span class="${m.cls}" style="font-size:18px">${icon(e.type)}</span><div><div class="detail-label">Media type</div><div class="detail-value">${esc(m.label)}</div></div></div></div>
+    <div class="archive-actions"><button type="button" class="archive-action" id="drawer-save-entry" data-drawer-save="${e.id}" aria-pressed="${shelfState.saved.includes(e.id)}">${shelfState.saved.includes(e.id)?'★ Saved to reading shelf':'☆ Save to reading shelf'}</button><button type="button" class="archive-action" id="drawer-read-entry" data-drawer-read="${e.id}" aria-pressed="${shelfState.read.includes(e.id)}">${shelfState.read.includes(e.id)?'✓ Marked as read · undo':'Mark this entry as read'}</button></div>
     ${renderStoryArticle(e)}
     <section class="drawer-section"><h3><span>♙</span> Quick character index</h3><div class="chips">${e.characters.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div></section>
     <section class="drawer-section impact-box"><h3><span class="${m.cls}">✧</span> Lore impact &amp; significance</h3><p>${esc(e.loreImpact)}</p><p class="secondary-copy">${esc(e.whyRead)}</p></section>
@@ -660,16 +785,134 @@ function openDrawer(id,trigger){
    </div></aside></div>`;
  document.body.style.overflow='hidden';$('drawer-close').addEventListener('click',closeDrawer);const dialog=document.querySelector('.drawer');dialog.focus();
 }
+
+let sortMode='path';
+let activeToolTab='characters';
+let activeLocation='hakurei';
+function readShelfState(){
+ try{
+  const raw=localStorage.getItem('gensokyoArchiveShelfV1');
+  const value=raw?JSON.parse(raw):{};
+  return {saved:Array.isArray(value.saved)?value.saved.filter(id=>TIMELINE.some(e=>e.id===id)):[],read:Array.isArray(value.read)?value.read.filter(id=>TIMELINE.some(e=>e.id===id)):[]};
+ }catch(_){return {saved:[],read:[]};}
+}
+let shelfState=readShelfState();
+function writeShelfState(){try{localStorage.setItem('gensokyoArchiveShelfV1',JSON.stringify(shelfState));}catch(_){}}
+function renderEntryState(e){
+ const out=[];
+ if(shelfState.saved.includes(e.id))out.push('<span class="entry-state saved">☆ Saved</span>');
+ if(shelfState.read.includes(e.id))out.push('<span class="entry-state">✓ Read</span>');
+ return out.length?'<div class="entry-state-row">'+out.join('')+'</div>':'';
+}
+function updateShelfStats(){
+ const total=TIMELINE.length, read=shelfState.read.length, saved=shelfState.saved.length;
+ const c=$('progress-count'), b=$('progress-bar'), s=$('saved-count');
+ if(c)c.textContent=read+' / '+total+' read';
+ if(b)b.style.width=(total?Math.min(100,read/total*100):0)+'%';
+ if(s)s.textContent=saved+' saved';
+ $('total-stat').textContent=String(total).padStart(2,'0');
+}
+function updateDrawerActionButtons(){
+ if(!selectedId)return;
+ const save=$('drawer-save-entry'), read=$('drawer-read-entry');
+ if(save){const yes=shelfState.saved.includes(selectedId);save.textContent=yes?'★ Saved to reading shelf':'☆ Save to reading shelf';save.setAttribute('aria-pressed',String(yes));}
+ if(read){const yes=shelfState.read.includes(selectedId);read.textContent=yes?'✓ Marked as read · undo':'Mark this entry as read';read.setAttribute('aria-pressed',String(yes));}
+}
+function changeShelf(kind,id){
+ if(!['saved','read'].includes(kind)||!TIMELINE.some(e=>e.id===id))return;
+ const set=new Set(shelfState[kind]);
+ if(set.has(id))set.delete(id);else set.add(id);
+ shelfState[kind]=Array.from(set);writeShelfState();
+ renderTimeline();renderShelfPanel();updateShelfStats();updateDrawerActionButtons();
+}
+function entryChip(id){
+ const e=TIMELINE.find(x=>x.id===id);if(!e)return '';
+ return '<button type="button" class="entry-chip" data-open-entry="'+esc(id)+'">'+esc(e.code)+' · '+esc(e.title)+'</button>';
+}
+function renderCharacterAtlas(){
+ const q=($('character-search').value||'').trim().toLowerCase();
+ const list=CHARACTERS.filter(c=>[c.name,c.role,c.description,...c.tags,...c.entries].join(' ').toLowerCase().includes(q));
+ $('character-count').textContent=list.length+' characters indexed (archive subset)';
+ $('character-grid').innerHTML=list.map(c=>{
+  const links=c.entries.map(entryChip).join('');
+  return '<article class="character-card"><h4 class="character-name">'+esc(c.name)+'</h4><div class="character-role">'+esc(c.role)+'</div><p class="character-desc">'+esc(c.description)+'</p><div class="character-meta"><span>'+c.entries.length+' linked '+(c.entries.length===1?'entry':'entries')+'</span><button type="button" class="character-search-button" data-search-character="'+esc(c.name)+'">Find in archive ↗</button></div><div class="character-links">'+links+'</div></article>';
+ }).join('')||'<div class="shelf-empty">No characters match that search. Try a name, species, location, or ability.</div>';
+}
+function renderMap(){
+ $('map-board').innerHTML='<svg class="map-lines" viewBox="0 0 800 500" aria-hidden="true"><path d="M120 360 C190 315 230 250 370 210 S540 155 650 100" /><path d="M120 360 C220 370 280 300 390 295 S550 320 660 385" /><path d="M190 180 C280 195 335 250 385 295" /><path d="M385 295 C420 265 430 225 470 190 S580 130 650 100" /><path d="M385 295 C420 350 410 400 345 442" /><path d="M385 295 C480 270 560 250 650 245" /></svg>'+
+  LOCATIONS.map(l=>'<button type="button" class="map-pin" data-location="'+esc(l.id)+'" aria-pressed="'+String(l.id===activeLocation)+'" style="left:'+l.x+'%;top:'+l.y+'%" title="'+esc(l.name)+'"><span class="pin-dot"></span><span>'+esc(l.name)+'</span></button>').join('');
+ renderMapDetail();
+}
+function renderMapDetail(){
+ const l=LOCATIONS.find(x=>x.id===activeLocation)||LOCATIONS[0];
+ document.querySelectorAll('.map-pin').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.location===l.id)));
+ $('map-detail').innerHTML='<div class="place-group">'+esc(l.group)+'</div><h4>'+esc(l.name)+'</h4><p>'+esc(l.description)+'</p><div class="canon-badge">'+esc(l.status)+'</div><div class="detail-subhead">Characters in this archive</div><div class="character-links">'+(l.characters.length?l.characters.map(name=>'<span class="entry-chip">'+esc(name)+'</span>').join(''):'<span class="shelf-empty">No character profile attached yet.</span>')+'</div><div class="detail-subhead">Related reading</div><div class="character-links">'+l.entries.map(entryChip).join('')+'</div>';
+}
+function renderIncidents(){
+ $('incident-grid').innerHTML=INCIDENTS.map(i=>{
+  return '<article class="incident-card"><div class="incident-top"><span class="incident-year">'+esc(i.year)+'</span><span class="incident-status">'+esc(i.status)+'</span></div><h4>'+esc(i.title)+'</h4><p>'+esc(i.summary)+'</p><div class="incident-tags">'+i.tags.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="character-links">'+i.characters.map(n=>'<span class="entry-chip">'+esc(n)+'</span>').join('')+'</div><button type="button" class="open-entry-link" data-open-entry="'+esc(i.entry)+'">Open full lore entry ↗</button></article>';
+ }).join('');
+}
+function renderThreads(){
+ $('thread-list').innerHTML=LORE_THREADS.map(t=>{
+  return '<article class="thread-card"><span class="thread-label">'+esc(t.label)+'</span><h4>'+esc(t.title)+'</h4><p>'+esc(t.text)+'</p><div class="thread-entry-links">'+t.entries.map(entryChip).join('')+'</div></article>';
+ }).join('');
+}
+function shelfRows(ids,kind){
+ if(!ids.length)return '<div class="shelf-empty">'+(kind==='saved'?'Nothing saved yet. Open a lore entry and tap “Save to reading shelf”.':'No entries marked read yet. Open a lore entry and mark it as read.')+'</div>';
+ return ids.map(id=>{
+  const e=TIMELINE.find(x=>x.id===id);
+  return '<div class="shelf-row"><div><div class="shelf-title">'+esc(e.title)+'</div><div class="shelf-sub">'+esc(e.code)+' · '+esc(e.releaseDate)+'</div></div><button type="button" class="entry-chip" data-open-entry="'+esc(id)+'">Open ↗</button></div>';
+ }).join('');
+}
+function renderShelfPanel(){
+ const order=TIMELINE.map(e=>e.id);
+ $('saved-list').innerHTML=shelfRows(order.filter(id=>shelfState.saved.includes(id)),'saved');
+ $('read-list').innerHTML=shelfRows(order.filter(id=>shelfState.read.includes(id)),'read');
+ updateShelfStats();
+}
+function updateToolTabs(){
+ document.querySelectorAll('[data-tool-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.toolTab===activeToolTab)));
+ const panels={characters:'characters-panel',map:'map-panel',incidents:'incidents-panel',threads:'threads-panel',shelf:'shelf-panel'};
+ Object.keys(panels).forEach(k=>$(panels[k]).classList.toggle('hidden',k!==activeToolTab));
+}
+function renderArchiveTools(){
+ renderCharacterAtlas();renderMap();renderIncidents();renderThreads();renderShelfPanel();updateToolTabs();
+}
+
 $('filters').addEventListener('click',event=>{const button=event.target.closest('[data-filter]');if(!button)return;const type=button.dataset.filter;filters[type]=!filters[type];renderAll();});
 $('clear-filters').addEventListener('click',()=>{filters.game=filters.print=filters.music=true;searchText='';$('search').value='';renderAll();});
 $('search').addEventListener('input',event=>{searchText=event.target.value;renderTimeline();});
+$('timeline-sort').addEventListener('change',event=>{sortMode=event.target.value;renderTimeline();});
+$('character-search').addEventListener('input',renderCharacterAtlas);
 $('search-clear').addEventListener('click',()=>{searchText='';$('search').value='';renderTimeline();$('search').focus();});
 $('reset-view').addEventListener('click',()=>{filters.game=filters.print=filters.music=true;searchText='';$('search').value='';renderAll();});
 $('filter-toggle').addEventListener('click',()=>{filterExpanded=!filterExpanded;$('filter-content').classList.toggle('hidden',!filterExpanded);$('filter-toggle').setAttribute('aria-expanded',String(filterExpanded));$('chevron').textContent=filterExpanded?'⌄':'›';});
 $('timeline').addEventListener('click',event=>{const button=event.target.closest('[data-open]');if(button)openDrawer(button.dataset.open,button);});
 $('drawer-host').addEventListener('mousedown',event=>{if(event.target.dataset.close==='1')closeDrawer();});
 document.addEventListener('keydown',event=>{if(!selectedId)return;if(event.key==='Escape'){event.preventDefault();closeDrawer();return;}if(event.key==='Tab'){const dialog=document.querySelector('.drawer');if(!dialog)return;const focusable=[...dialog.querySelectorAll('a[href],button:not([disabled])')];if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}});
+
+$('archive-tools').addEventListener('click',event=>{
+ const tab=event.target.closest('[data-tool-tab]');
+ if(tab){activeToolTab=tab.dataset.toolTab;updateToolTabs();return;}
+ const pin=event.target.closest('[data-location]');
+ if(pin){activeLocation=pin.dataset.location;renderMapDetail();return;}
+ const searchCharacter=event.target.closest('[data-search-character]');
+ if(searchCharacter){$('search').value=searchCharacter.dataset.searchCharacter;searchText=$('search').value;renderTimeline();$('timeline-heading').scrollIntoView({behavior:'smooth',block:'start'});return;}
+ const open=event.target.closest('[data-open-entry]');
+ if(open){openDrawer(open.dataset.openEntry,open);return;}
+ const clear=event.target.closest('#clear-shelf');
+ if(clear){if(confirm('Clear all saved and read progress on this device?')){shelfState={saved:[],read:[]};writeShelfState();renderTimeline();renderShelfPanel();updateDrawerActionButtons();}return;}
+});
+$('drawer-host').addEventListener('click',event=>{
+ const save=event.target.closest('[data-drawer-save]');
+ if(save){changeShelf('saved',save.dataset.drawerSave);return;}
+ const read=event.target.closest('[data-drawer-read]');
+ if(read){changeShelf('read',read.dataset.drawerRead);return;}
+});
 renderAll();
+renderArchiveTools();
+updateShelfStats();
 })();
 </script>
 </body>
