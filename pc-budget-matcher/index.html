@@ -18,6 +18,32 @@ button,input,select{font:inherit}button,a,select{cursor:pointer}a{color:inherit}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 27px}.stat{border:1px solid var(--line);border-radius:14px;background:#ffffff03;padding:15px}.stat small{display:block;color:#7d8a9c;font-size:9px;text-transform:uppercase;letter-spacing:.13em;font-weight:850}.stat strong{display:block;font-size:clamp(17px,2.3vw,25px);letter-spacing:-.04em;margin-top:6px}.stat span{display:block;color:#909cad;font-size:10px;margin-top:3px}
 .parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.part{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(155deg,#151e29,#0e141d);transition:transform .18s,border-color .18s}.part:hover{transform:translateY(-2px);border-color:#475365}.photo{height:165px;background:#f3f5f7;position:relative;display:grid;place-items:center;overflow:hidden}.photo img{width:100%;height:100%;object-fit:contain;padding:12px}.photo .fallback{display:none;position:absolute;inset:0;place-items:center;color:#52606d;font-size:35px;background:linear-gradient(135deg,#eef2f5,#ccd4dc)}.photo-note{position:absolute;bottom:6px;left:7px;background:#080c11c9;border-radius:5px;color:#d4dce5;font-size:8px;padding:4px 6px}.partbody{padding:15px;display:flex;flex-direction:column;flex:1}.partcat{font-size:9px;color:var(--lime);letter-spacing:.16em;text-transform:uppercase;font-weight:900}.part h3{font-size:14px;line-height:1.45;margin:8px 0 5px}.detail{font-size:10px;color:#95a2b3;line-height:1.65;margin:0 0 13px}.price-line{margin-top:auto;border-top:1px solid #ffffff0d;padding-top:12px;display:flex;align-items:end;justify-content:space-between;gap:8px}.price strong{display:block;font-size:19px;letter-spacing:-.03em}.price small{font-size:9px;color:#8996a8}.deal{display:inline-block;text-decoration:none;border:1px solid #c8fb6848;color:var(--lime);font-size:10px;font-weight:850;padding:9px 10px;border-radius:8px;white-space:nowrap}.deal:hover{background:#c8fb6812}
 .bottomgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.panel{border:1px solid var(--line);border-radius:17px;padding:20px;background:#ffffff03}.panel h3{font-size:14px;margin:0}.panel>p{font-size:10px;color:var(--muted);margin:5px 0 18px}.barrow{display:grid;grid-template-columns:77px 1fr 44px;gap:10px;align-items:center;font-size:10px;margin:14px 0}.barlabel{color:#aab6c4}.track{height:6px;background:#26313c;border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--lime);border-radius:99px}.rowline{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#aab6c4;padding:10px 0;border-bottom:1px solid #ffffff0d}.rowline strong{color:var(--text);text-align:right}.footer{display:flex;justify-content:space-between;gap:25px;margin-top:27px;border-top:1px solid var(--line);padding-top:18px;color:#778497;font-size:10px;line-height:1.7}.footer strong{color:#aeb8c5}
+
+.market-snapshot{margin-top:26px;border:1px solid var(--line);border-radius:20px;padding:20px;background:linear-gradient(145deg,#131c26,#0c1118)}
+.market-head{display:flex;justify-content:space-between;align-items:start;gap:14px;margin-bottom:8px}
+.market-head h2{font-size:20px;letter-spacing:-.04em;margin:0}
+.market-head p{font-size:11px;color:var(--muted);margin:5px 0 0;line-height:1.7}
+.market-stamp{display:inline-flex;align-items:center;gap:6px;font-size:9px;color:#c8fb68;border:1px solid #c8fb6835;background:#c8fb680d;border-radius:999px;padding:7px 10px;white-space:nowrap}
+.market-note{font-size:10px;color:#a5b1c0;line-height:1.75;padding:11px 13px;margin:14px 0;border-left:2px solid var(--lime);background:#ffffff04}
+.offergrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.offer{min-width:0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#0d131b;display:flex;flex-direction:column}
+.offer-photo{height:125px;display:grid;place-items:center;background:#f0f3f6;overflow:hidden}
+.offer-photo img{width:100%;height:100%;object-fit:contain;padding:10px}
+.offerbody{padding:12px;display:flex;flex-direction:column;flex:1}
+.offercat{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);font-weight:900}
+.offer h3{font-size:12px;line-height:1.5;margin:6px 0}
+.offer-retailer{font-size:10px;color:#a9b6c6;margin:0}
+.offer-price{font-size:20px;font-weight:900;letter-spacing:-.04em;margin:8px 0 2px}
+.offer-status{font-size:9px;color:#aebaca;line-height:1.6;min-height:28px}
+.offer-foot{margin-top:auto;padding-top:10px}
+.offer-link{display:block;text-align:center;text-decoration:none;border:1px solid #c8fb6844;color:var(--lime);border-radius:8px;font-size:10px;font-weight:850;padding:8px}
+.offer-link:hover{background:#c8fb6810}
+.market-off{font-size:10px;color:#8e9aab}
+.sharebtn{background:transparent;color:var(--lime);border:1px solid #c8fb6850;border-radius:10px;padding:9px 12px;font-size:10px;font-weight:850;white-space:nowrap}
+.sharebtn:hover{background:#c8fb6810}
+@media(max-width:950px){.offergrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.market-snapshot{padding:14px}.market-head{flex-direction:column}.offer-photo{height:112px}.offerbody{padding:10px}.offer-price{font-size:17px}.sharebtn{width:100%}}
+
 @media(max-width:950px){.hero{grid-template-columns:1fr;gap:22px}.parts{grid-template-columns:repeat(2,minmax(0,1fr))}.photo{height:155px}}
 @media(max-width:620px){.wrap{padding:15px 13px 35px}.hero{padding-top:27px}.builder{padding:18px}.pill{font-size:9px;padding:7px 8px}.perfrow{align-items:flex-start;flex-direction:column}.perfbadge{display:flex;align-items:center;gap:10px;text-align:left;padding:9px 12px}.perfbadge span{margin:0}.stats{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:13px}.parts{gap:9px}.photo{height:120px}.partbody{padding:11px}.part h3{font-size:12px}.price strong{font-size:16px}.deal{padding:8px 7px;font-size:9px}.bottomgrid{grid-template-columns:1fr}.sectionhead{align-items:flex-start}.tag{white-space:normal;text-align:center;max-width:120px}.footer{flex-direction:column;gap:8px}}
 </style>
@@ -52,7 +78,7 @@ button,input,select{font:inherit}button,a,select{cursor:pointer}a{color:inherit}
 </section>
 <div id="noBuild" class="notice" style="display:none"></div>
 <section id="results" class="results">
-<div class="sectionhead"><div><h2>Your matched build</h2><p>Parts are selected for balanced performance and basic platform compatibility.</p></div><span class="tag" id="catalogLabel">REFERENCE ESTIMATES</span></div>
+<div class="sectionhead"><div><h2>Your matched build</h2><p>Parts are selected for balanced performance and basic platform compatibility.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button type="button" class="sharebtn" id="shareBuild">Share this build ↗</button><span class="tag" id="catalogLabel">REFERENCE ESTIMATES</span></div></div>
 <div class="notice"><span>ⓘ</span><div><b>Not a live quote.</b> Prices shown here are planning estimates, not verified store offers. The “Find current offers” links open searches for the selected part; the final price, seller, warranty, stock, shipping, and exact model must be checked on the store page.</div></div>
 <div class="perf"><div class="perfrow"><div><small>✦ Performance capability</small><h2 id="performanceTitle">1080p Competitive Gaming</h2><p id="performanceText">A build balanced around the graphics card.</p></div><div class="perfbadge"><strong id="performanceShort">1080p</strong><span id="performanceLevel">Gaming target</span></div></div></div>
 <div class="stats"><div class="stat"><small>Reference parts total</small><strong id="total">—</strong><span>Not store-confirmed</span></div><div class="stat"><small>Budget remaining</small><strong id="remaining">—</strong><span>Before tax and delivery</span></div><div class="stat"><small>Budget used</small><strong id="used">—</strong><span>Of the entered budget</span></div><div class="stat"><small>Graphics card</small><strong id="gpuSpend">—</strong><span id="gpuName">Largest gaming influence</span></div></div>
@@ -60,6 +86,17 @@ button,input,select{font:inherit}button,a,select{cursor:pointer}a{color:inherit}
 <div class="parts" id="parts"></div>
 <div class="bottomgrid"><section class="panel"><h3>Where the budget goes</h3><p>Share of the reference parts estimate by category.</p><div id="bars"></div></section><section class="panel"><h3>Compatibility summary</h3><p>Checks to review before ordering parts.</p><div class="rowline"><span>CPU socket / motherboard</span><strong id="socket">—</strong></div><div class="rowline"><span>Memory generation</span><strong id="memory">—</strong></div><div class="rowline"><span>Power supply target</span><strong id="psu">—</strong></div><div class="rowline"><span>Selected graphics card</span><strong id="gpuSummary">—</strong></div><div class="rowline"><span>Parts subtotal estimate</span><strong id="summaryTotal">—</strong></div><p class="fine" style="margin-top:14px">Before purchase, verify the exact motherboard BIOS, case dimensions, GPU length, cooler clearance, PSU connectors and manufacturer requirements.</p></section></div>
 </section>
+
+<section class="market-snapshot" id="market-snapshot">
+  <div class="market-head">
+    <div><div class="eyebrow">Local market reality check</div><h2>Malaysia retailer price snapshots</h2><p>Real product listings with direct seller pages and listing photos. These are examples, not a fully compatible build and not necessarily the parts selected above.</p></div>
+    <span class="market-stamp">● Sources checked 29 Oct 2026</span>
+  </div>
+  <div class="market-note"><strong style="color:var(--lime)">Important:</strong> these are prices and stock states observed on the seller pages on the date above, not a live store API. They can change at any time. Some sellers list unusually high or sold-out products, so review the exact SKU, stock, shipping, warranty and final checkout total. Retailer prices below remain in RM even when the build currency is changed.</div>
+  <div class="offergrid" id="marketOffers"></div>
+  <p class="market-off">Retailer pages are third-party sites. PC Budget Matcher does not guarantee their stock, prices, returns or product descriptions. No offers are purchased or reserved by this site.</p>
+</section>
+
 <footer class="footer"><div><strong>Accuracy note.</strong> Static public version: no account or API key is needed. It does not scrape or claim live prices on this page; retailer searches are opened when you tap a link. Photo thumbnails are representative. Local pricing can differ substantially from USD catalog assumptions, including because of stock, tax, shipping, and regional distribution.</div><div>PC BUDGET MATCHER<br><span style="color:var(--lime)">PUBLIC WEB EDITION</span></div></footer>
 </div>
 <script>
@@ -68,16 +105,28 @@ var FALLBACK_RATES={USD:1,MYR:4.25,SGD:1.29,EUR:.92,GBP:.78,AUD:1.53,CAD:1.39,JP
 var INFO={USD:["$","en-US","United States"],MYR:["RM","en-MY","Malaysia"],SGD:["S$","en-SG","Singapore"],EUR:["€","de-DE","Europe"],GBP:["£","en-GB","United Kingdom"],AUD:["A$","en-AU","Australia"],CAD:["C$","en-CA","Canada"],JPY:["¥","ja-JP","Japan"],CNY:["¥","zh-CN","China"],INR:["₹","en-IN","India"],IDR:["Rp","id-ID","Indonesia"],PHP:["₱","en-PH","Philippines"],THB:["฿","th-TH","Thailand"],KRW:["₩","ko-KR","South Korea"],VND:["₫","vi-VN","Vietnam"],AED:["د.إ","en-AE","United Arab Emirates"],SAR:["﷼","en-SA","Saudi Arabia"],NZD:["NZ$","en-NZ","New Zealand"],CHF:["CHF","de-CH","Switzerland"]};
 var rates=Object.assign({},FALLBACK_RATES),currency="MYR",budgetUsd=800,buildNow=null;
 var IMG={
-cpu:"https://www.wiredzone.it/75250-medium_default/amd-ryzen-5-7600-38-ghz-raphael-am5-amd-wraith-stealth-boxed.jpg",
-gpu:"https://rptechindia.com/media/catalog/product/cache/7f1aadec531eaed88722b427568d7ce1/5/0/5070.png",
-board:"https://ddtech.mx/assets/uploads/a6ef14de0e018595544d683418f264a7.jpg",
-ram:"https://media.kingston.com/kingston/product/FURY_Beast_Black_EXPO_DDR5_2_angle-sm.jpg",
-ssd:"https://img-resizer.cyberport.de/cp/images/1368x1368/PI_398346066",
-psu:"https://img.ep-cdn.com/i/500/500/gx/gxqljmdauwhknyetcrpo/corsair-napajanje-rm850e-850w-atx-3-1-pcie-5-1-80-gold-modularno-crna-cene.jpg",
-case:"https://hexus.net/media/uploaded/2020/9/c208dc0a-eb9f-4e63-b051-6d78a4efb03b.png",
-cooler:"https://compx.ua/image/catalog/products/72/361612d7-d70a-11ee-8f93-001b21ea407b.jpg"
+cpu:"https://ibuypc.com.my/wp-content/uploads/2026/06/RYZEN-5-7600-TRAY-1-500x500.jpg",
+gpu:"https://medusa-production-06bf.up.railway.app/public/assets/fe2794db-01M57W5E81D1YYY37ZX5GRPM17.png",
+board:"https://static.wixstatic.com/media/131a7a_1fb42f2c7eb245be92beac62a617219e~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+ram:"https://ibuypc.com.my/wp-content/uploads/2026/06/RIPJAWS-M5-NEO-RGB-6000-500x500.jpg",
+ssd:"https://ibuypc.com.my/wp-content/uploads/2026/08/SPATIUM-M480-PRO-300x300.jpg",
+psu:"https://static.wixstatic.com/media/131a7a_ecc3d999248548a59d5df35233ec2ca6~mv2.png/v1/fit/w_500,h_500,q_90/file.png",
+case:"https://ibuypc.com.my/wp-content/uploads/2026/09/XERON-NEX-C33-500x500.jpg",
+cooler:"https://ibuypc.com.my/wp-content/uploads/2026/07/ASSASSIN-X-120-REFINED-SE-ARGB-BLACK-500x500.jpg"
 };
 var ICON={cpu:"▣",gpu:"▤",board:"⌘",ram:"▥",ssd:"▤",psu:"ϟ",case:"▱",cooler:"✺"};
+
+var LOCAL_OFFERS=[
+{cat:"Processor",name:"AMD Ryzen 5 7600 (AM5)",price:679,store:"IBUYPC",status:"Sold out on the checked page",url:"https://ibuypc.com.my/product/amd-ryzen-5-7600-6-cores-12-threads-am5/",img:"https://ibuypc.com.my/wp-content/uploads/2026/06/RYZEN-5-7600-TRAY-1-500x500.jpg"},
+{cat:"Graphics card",name:"ZOTAC GeForce RTX 5070 Twin Edge OC 12GB",price:4199,store:"Synthotech Malaysia",status:"Listing reported 10 in stock",url:"https://synthotechmy.com/products/zotac-gaming-geforce-rtx-5070-twin-edge-oc-12gb-gddr7-00h10p",img:"https://medusa-production-06bf.up.railway.app/public/assets/fe2794db-01M57W5E81D1YYY37ZX5GRPM17.png"},
+{cat:"Motherboard",name:"MSI B650M Gaming WiFi",price:499,store:"E Cytech",status:"Out of stock on the checked page",url:"https://www.ecytech.com.my/product-page/msi-b650m-gaming-wifi",img:"https://static.wixstatic.com/media/131a7a_1fb42f2c7eb245be92beac62a617219e~mv2.png/v1/fit/w_500,h_500,q_90/file.png"},
+{cat:"Memory",name:"G.Skill Ripjaws M5 Neo DDR5 32GB (2×16GB)",price:2399,store:"IBUYPC",status:"Listed with Add to Cart; recheck final availability",url:"https://ibuypc.com.my/product/g-skill-ripjaws-m5-neo-ddr5-32gb-2x-16gb-6000mt-s-udimm-ram/",img:"https://ibuypc.com.my/wp-content/uploads/2026/06/RIPJAWS-M5-NEO-RGB-6000-500x500.jpg"},
+{cat:"Storage",name:"MSI Spatium M480 Pro 1TB Gen4 NVMe SSD",price:999,store:"IBUYPC",status:"Sale price shown in the retailer's NVMe category; verify stock",url:"https://ibuypc.com.my/product-category/gear-accessories/nvme/",img:"https://ibuypc.com.my/wp-content/uploads/2026/08/SPATIUM-M480-PRO-300x300.jpg"},
+{cat:"Power supply",name:"MSI MAG A650GL 650W 80 Plus Gold",price:269,store:"E Cytech",status:"Listing showed Add to Cart",url:"https://www.ecytech.com.my/product-page/msi-mag-a650gl",img:"https://static.wixstatic.com/media/131a7a_ecc3d999248548a59d5df35233ec2ca6~mv2.png/v1/fit/w_500,h_500,q_90/file.png"},
+{cat:"Case",name:"Xeron Nex C33 mATX Case — Black",price:199,store:"IBUYPC",status:"Listed with Add to Cart",url:"https://ibuypc.com.my/product/xeron-nex-c33-matx-case-black/",img:"https://ibuypc.com.my/wp-content/uploads/2026/09/XERON-NEX-C33-500x500.jpg"},
+{cat:"CPU cooler",name:"Thermalright Assassin X 120 Refined SE ARGB",price:70,store:"IBUYPC",status:"Listed with Add to Cart",url:"https://ibuypc.com.my/product/thermalright-assassin-x-120-refined-se-argb-black-cpu-cooler/",img:"https://ibuypc.com.my/wp-content/uploads/2026/07/ASSASSIN-X-120-REFINED-SE-ARGB-BLACK-500x500.jpg"}
+];
+
 var C={
 cpu:[
 {id:"5600",name:"AMD Ryzen 5 5600",price:99,score:48,socket:"AM4",mem:"DDR4",cool:1,coolerIncluded:true},
@@ -183,8 +232,17 @@ var img=dataUrls[p.category];var search="";var region=INFO[currency][2];
 return '<article class="part"><div class="photo"><img src="'+safe(img)+'" alt="Representative '+safe(p.label)+' hardware photo; not necessarily the exact selected model" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\'"><div class="fallback">'+(ICON[p.category]||"◈")+'</div><span class="photo-note">Illustrative photo · model may differ</span></div><div class="partbody"><div class="partcat">'+safe(p.label)+'</div><h3>'+safe(p.name)+'</h3><p class="detail">'+safe(p.detail||defaultDetail(p))+'</p><div class="price-line"><div class="price"><strong>'+money(p.price)+'</strong><small>Reference estimate</small></div><a class="deal" href="'+safe(shoppingUrl(p))+'" target="_blank" rel="noopener noreferrer">Find current offers ↗</a></div></div></article>'
 }).join("");
 var sorted=res.parts.map(function(p){return {p:p,share:p.price/res.total*100}});$("bars").innerHTML=sorted.map(function(x){return '<div class="barrow"><span class="barlabel">'+safe(x.p.label)+'</span><div class="track"><div class="fill" style="width:'+Math.min(100,x.share)+'%"></div></div><span>'+x.share.toFixed(1)+'%</span></div>'}).join("");
-$("catalogLabel").textContent="REFERENCE ESTIMATES · "+new Date().toISOString().slice(0,10)
+$("catalogLabel").textContent="REFERENCE ESTIMATES · "+new Date().toISOString().slice(0,10); drawMarketSnapshot();
 }
+
+function drawMarketSnapshot(){
+var target=$("marketOffers");
+if(!target)return;
+target.innerHTML=LOCAL_OFFERS.map(function(o){
+return '<article class="offer"><div class="offer-photo"><img src="'+safe(o.img)+'" alt="'+safe(o.name)+' product photo from '+safe(o.store)+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'"></div><div class="offerbody"><div class="offercat">'+safe(o.cat)+'</div><h3>'+safe(o.name)+'</h3><p class="offer-retailer">'+safe(o.store)+'</p><div class="offer-price">RM '+Number(o.price).toLocaleString("en-MY")+'</div><div class="offer-status">'+safe(o.status)+'</div><div class="offer-foot"><a class="offer-link" href="'+safe(o.url)+'" target="_blank" rel="noopener noreferrer">Check seller listing ↗</a></div></div></article>'
+}).join("");
+}
+
 function defaultDetail(p){
 if(p.category==="cpu")return p.score+" reference CPU tier · "+p.socket+" socket";
 if(p.category==="gpu")return p.watts+"W board-power class · "+p.score+" reference performance score";
@@ -201,11 +259,28 @@ budgetUsd=Math.max(500,Math.min(3000,value/(rates[currency]||1)));
 $("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));
 updateBudgetLabels();drawBuild()
 }
+
+function savePreferences(){
+try{localStorage.setItem("pc-budget-matcher-settings",JSON.stringify({currency:currency,budgetUsd:budgetUsd}))}catch(e){}
+}
+async function shareCurrentBuild(){
+var sharedUrl=new URL(window.location.href);
+sharedUrl.searchParams.set("currency",currency);
+sharedUrl.searchParams.set("budget",String(Math.round(budgetUsd*(rates[currency]||1))));
+sharedUrl.hash="results";
+var url=sharedUrl.toString();
+try{
+if(navigator.share){await navigator.share({title:"My PC Budget Matcher build",text:"Check out this PC build budget.",url:url});return}
+if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(url);$("shareBuild").textContent="Link copied ✓";return}
+window.prompt("Copy your build link:",url);
+}catch(e){}
+}
+
 $("builder").addEventListener("submit",function(e){e.preventDefault();runBudgetFromInput();$("results").scrollIntoView({behavior:"smooth",block:"start"})});
 $("budget").addEventListener("change",runBudgetFromInput);
-$("slider").addEventListener("input",function(){budgetUsd=Number($("slider").value)/(rates[currency]||1);$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild()});
-$("currency").addEventListener("change",function(){currency=$("currency").value;$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild()});
-document.querySelectorAll(".preset").forEach(function(b){b.addEventListener("click",function(){budgetUsd=Number(b.dataset.usd);$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild()})});
+$("slider").addEventListener("input",function(){budgetUsd=Number($("slider").value)/(rates[currency]||1);$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild();savePreferences()});
+$("currency").addEventListener("change",function(){currency=$("currency").value;$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild();savePreferences()});
+document.querySelectorAll(".preset").forEach(function(b){b.addEventListener("click",function(){budgetUsd=Number(b.dataset.usd);$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild();savePreferences()})});
 async function loadRates(){
 try{var response=await fetch("https://open.er-api.com/v6/latest/USD",{cache:"no-store"});if(!response.ok)throw new Error("rates unavailable");var data=await response.json();if(data.result!=="success"||!data.rates)throw new Error("rates unavailable");
 Object.keys(FALLBACK_RATES).forEach(function(k){if(Number.isFinite(data.rates[k])&&data.rates[k]>0)rates[k]=data.rates[k]});
@@ -213,7 +288,22 @@ $("rateHint").textContent=data.time_last_update_utc?"Exchange rates updated "+ne
 }catch(e){rates=Object.assign({},FALLBACK_RATES);$("rateHint").textContent="Approximate rates · offline fallback"}
 $("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));updateBudgetLabels();drawBuild()
 }
-updateBudgetLabels();drawBuild();loadRates();
+
+try{
+var stored=JSON.parse(localStorage.getItem("pc-budget-matcher-settings")||"null");
+if(stored&&INFO[stored.currency]&&Number.isFinite(Number(stored.budgetUsd))&&Number(stored.budgetUsd)>0){currency=stored.currency;budgetUsd=Math.max(500,Math.min(3000,Number(stored.budgetUsd)))}
+}catch(e){}
+try{
+var query=new URLSearchParams(window.location.search);
+var queryCurrency=query.get("currency"),queryBudget=Number(query.get("budget"));
+if(queryCurrency&&INFO[queryCurrency])currency=queryCurrency;
+if(queryBudget>0&&Number.isFinite(queryBudget))budgetUsd=Math.max(500,Math.min(3000,queryBudget/(FALLBACK_RATES[currency]||1)));
+}catch(e){}
+$("currency").value=currency;
+$("budget").value=String(Math.round(budgetUsd*(rates[currency]||1)));
+$("shareBuild").addEventListener("click",shareCurrentBuild);
+$("budget").addEventListener("change",savePreferences);
+updateBudgetLabels();drawBuild();loadRates();savePreferences();
 </script>
 </body>
 </html>
