@@ -137,7 +137,7 @@ function shoppingUrl(part){var region=INFO[currency][2]||"Malaysia";return "http
 function minimalParts(cpu,gpu){
 var mb=C.board.filter(function(x){return x.socket===cpu.socket&&x.mem===cpu.mem}).sort(function(a,b){return a.price-b.price})[0];
 var ram=C.ram.filter(function(x){return x.mem===cpu.mem&&x.gb===16})[0];
-var ssd=C.ssd[0];var psu=C.psu.filter(function(x){return x.watt>=gpu.psu}).sort(function(a,b){return a.price-b.price)[0];
+var ssd=C.ssd[0];var psu=C.psu.filter(function(x){return x.watt>=gpu.psu}).sort(function(a,b){return a.price-b.price})[0];
 var kase=C.case[0];var cooler=cpu.coolerIncluded?C.cooler[0]:(cpu.cool>=3?C.cooler[2]:C.cooler[1]);
 return [cpu,gpu,mb,ram,ssd,psu,kase,cooler].map(function(p,i){return Object.assign({category:CATS[i][0],label:CATS[i][1]},p)})}
 function total(parts){return parts.reduce(function(sum,p){return sum+p.price},0)}
