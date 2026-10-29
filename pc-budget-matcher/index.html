@@ -154,7 +154,7 @@ ram:[
 {id:"ddr4-16",name:"16GB (2×8GB) DDR4 Kit",price:120,mem:"DDR4",gb:16,detail:"DDR4 · 16GB dual-channel kit. Market-adjusted planning estimate; compare exact kit and seller before buying."},
 {id:"ddr4-32",name:"32GB (2×16GB) DDR4 Kit",price:180,mem:"DDR4",gb:32,detail:"DDR4 · 32GB kit. Pricing varies by speed, timings, brand and availability; this is not a live quote."},
 {id:"ddr4-64",name:"64GB (2×32GB) DDR4 Kit",price:300,mem:"DDR4",gb:64,detail:"DDR4 · 64GB kit. Higher-capacity memory is priced above the old baseline; check the exact kit and local stock."},
-{id:"ddr5-16",name:"16GB DDR5 Kit",price:300,mem:"DDR5",gb:16,detail:"DDR5 · 16GB. Market-adjusted estimate: a Malaysian Corsair Vengeance 16GB listing was RM1,309 when checked; variant and stock can differ."},
+{id:"ddr5-16",name:"16GB DDR5 Module (single stick)",price:300,mem:"DDR5",gb:16,detail:"DDR5 · single 16GB module, not a dual-channel kit. Market-adjusted estimate: a Malaysian Corsair Vengeance 16GB listing was RM1,309 when checked; verify variant and stock."},
 {id:"ddr5-32",name:"32GB (2×16GB) DDR5 Kit",price:500,mem:"DDR5",gb:32,detail:"DDR5 · 32GB dual-channel kit. This estimate reflects the current higher-price market; a checked G.Skill Ripjaws 32GB listing was RM2,399."},
 {id:"ddr5-64",name:"64GB (2×32GB) DDR5 Kit",price:1035,mem:"DDR5",gb:64,detail:"DDR5 · 64GB dual-channel kit. High-capacity pricing is elevated; a checked TeamGroup T-Create Expert 64GB listing was RM4,399."}],
 ssd:[
@@ -185,9 +185,9 @@ function money(usd){var amount=usd*(rates[currency]||1);try{return new Intl.Numb
 function curAmount(usd){return Math.round(usd*(rates[currency]||1))}
 function valueOf(input){return Number(input)/(rates[currency]||1)}
 function shoppingUrl(part){var region=INFO[currency][2]||"Malaysia";return "https://www.google.com/search?tbm=shop&q="+encodeURIComponent(part.name+" "+region)}
-function minimalParts(cpu,gpu){
+function minimalParts(cpu,gpu,limit){
 var mb=C.board.filter(function(x){return x.socket===cpu.socket&&x.mem===cpu.mem}).sort(function(a,b){return a.price-b.price})[0];
-var ram=C.ram.filter(function(x){return x.mem===cpu.mem&&x.gb===16})[0];
+var targetRamGb=limit>=1100?32:16;var ram=C.ram.filter(function(x){return x.mem===cpu.mem&&x.gb===targetRamGb}).sort(function(a,b){return a.price-b.price})[0]||C.ram.filter(function(x){return x.mem===cpu.mem&&x.gb===16})[0];
 var ssd=C.ssd[0];var psu=C.psu.filter(function(x){return x.watt>=gpu.psu}).sort(function(a,b){return a.price-b.price})[0];
 var kase=C.case[0];var cooler=cpu.coolerIncluded?C.cooler[0]:(cpu.cool>=3?C.cooler[2]:C.cooler[1]);
 return [cpu,gpu,mb,ram,ssd,psu,kase,cooler].map(function(p,i){return Object.assign({category:CATS[i][0],label:CATS[i][1]},p)})}
@@ -195,7 +195,7 @@ function total(parts){return parts.reduce(function(sum,p){return sum+p.price},0)
 function generateBuild(limit){
 var best=null;
 C.cpu.forEach(function(cpu){C.gpu.forEach(function(gpu){
-var parts=minimalParts(cpu,gpu);var sum=total(parts);if(sum>limit)return;
+var parts=minimalParts(cpu,gpu,limit);var sum=total(parts);if(sum>limit)return;
 var balance=Math.max(0,gpu.score-cpu.score-30)*.32+Math.max(0,cpu.score-gpu.score-45)*.12;
 var score=gpu.score*.66+cpu.score*.34-balance+Math.min(sum/limit,1)*9;
 if(!best||score>best.score)best={parts:parts,score:score};
