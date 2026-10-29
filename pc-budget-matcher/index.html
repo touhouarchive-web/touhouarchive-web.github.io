@@ -79,7 +79,7 @@ button,input,select{font:inherit}button,a,select{cursor:pointer}a{color:inherit}
 <div id="noBuild" class="notice" style="display:none"></div>
 <section id="results" class="results">
 <div class="sectionhead"><div><h2>Your matched build</h2><p>Parts are selected for balanced performance and basic platform compatibility.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button type="button" class="sharebtn" id="shareBuild">Share this build ↗</button><span class="tag" id="catalogLabel">REFERENCE ESTIMATES</span></div></div>
-<div class="notice"><span>ⓘ</span><div><b>Not a live quote.</b> Prices shown here are planning estimates, not verified store offers. The “Find current offers” links open searches for the selected part; the final price, seller, warranty, stock, shipping, and exact model must be checked on the store page.</div></div>
+<div class="notice"><span>ⓘ</span><div><b>Not a live quote.</b> RAM prices have been raised to market-adjusted reference levels using Malaysian listings checked on 29 Oct 2026, instead of the old pre-surge baseline. Memory prices vary widely by kit and seller; the source-linked market cards below show examples. Other component prices remain planning estimates. Check exact price, capacity, stock, warranty and shipping with the seller before buying.</div></div>
 <div class="perf"><div class="perfrow"><div><small>✦ Performance capability</small><h2 id="performanceTitle">1080p Competitive Gaming</h2><p id="performanceText">A build balanced around the graphics card.</p></div><div class="perfbadge"><strong id="performanceShort">1080p</strong><span id="performanceLevel">Gaming target</span></div></div></div>
 <div class="stats"><div class="stat"><small>Reference parts total</small><strong id="total">—</strong><span>Not store-confirmed</span></div><div class="stat"><small>Budget remaining</small><strong id="remaining">—</strong><span>Before tax and delivery</span></div><div class="stat"><small>Budget used</small><strong id="used">—</strong><span>Of the entered budget</span></div><div class="stat"><small>Graphics card</small><strong id="gpuSpend">—</strong><span id="gpuName">Largest gaming influence</span></div></div>
 <div class="sectionhead"><div><h2>Parts list</h2><p>Product photos are representative; the exact selected model may look different.</p></div><span class="tag" id="platform">AM5 · DDR5</span></div>
@@ -124,7 +124,9 @@ var LOCAL_OFFERS=[
 {cat:"Storage",name:"MSI Spatium M480 Pro 1TB Gen4 NVMe SSD",price:999,store:"IBUYPC",status:"Sale price shown in the retailer's NVMe category; verify stock",url:"https://ibuypc.com.my/product-category/gear-accessories/nvme/",img:"https://ibuypc.com.my/wp-content/uploads/2026/08/SPATIUM-M480-PRO-300x300.jpg"},
 {cat:"Power supply",name:"MSI MAG A650GL 650W 80 Plus Gold",price:269,store:"E Cytech",status:"Listing showed Add to Cart",url:"https://www.ecytech.com.my/product-page/msi-mag-a650gl",img:"https://static.wixstatic.com/media/131a7a_ecc3d999248548a59d5df35233ec2ca6~mv2.png/v1/fit/w_500,h_500,q_90/file.png"},
 {cat:"Case",name:"Xeron Nex C33 mATX Case — Black",price:199,store:"IBUYPC",status:"Listed with Add to Cart",url:"https://ibuypc.com.my/product/xeron-nex-c33-matx-case-black/",img:"https://ibuypc.com.my/wp-content/uploads/2026/09/XERON-NEX-C33-500x500.jpg"},
-{cat:"CPU cooler",name:"Thermalright Assassin X 120 Refined SE ARGB",price:70,store:"IBUYPC",status:"Listed with Add to Cart",url:"https://ibuypc.com.my/product/thermalright-assassin-x-120-refined-se-argb-black-cpu-cooler/",img:"https://ibuypc.com.my/wp-content/uploads/2026/07/ASSASSIN-X-120-REFINED-SE-ARGB-BLACK-500x500.jpg"}
+{cat:"CPU cooler",name:"Thermalright Assassin X 120 Refined SE ARGB",price:70,store:"IBUYPC",status:"Listed with Add to Cart",url:"https://ibuypc.com.my/product/thermalright-assassin-x-120-refined-se-argb-black-cpu-cooler/",img:"https://ibuypc.com.my/wp-content/uploads/2026/07/ASSASSIN-X-120-REFINED-SE-ARGB-BLACK-500x500.jpg"},
+{cat:"Memory",name:"Corsair Vengeance DDR5 5600 CL40 16GB",price:1309,store:"ALL IT Hypermarket",status:"RM1,309 displayed; listing has multiple capacities—verify exact variant and stock",url:"https://www.allithypermarket.com.my/products/corsair-vengeance-ddr5-5600mt-s-ram-black-rgb-16gb",img:"https://www.allithypermarket.com.my/cdn/shop/files/Vengeance_DDR5_16GB_l_32GB.jpg?v=1784020345&width=720"},
+{cat:"Memory",name:"TeamGroup T-Create Expert DDR5-6000 CL34 64GB (2×32GB)",price:4399,store:"ALL IT Hypermarket",status:"RM4,399 displayed; verify exact variant, availability and checkout total",url:"https://www.allithypermarket.com.my/products/teamgroup-t-create-expert-ddr5-6000mhz-cl34-desktop-ram-64gb32gbx2",img:"https://www.allithypermarket.com.my/cdn/shop/files/202610060928378f89500673bbec35d5cd2b42398babac.jpg?v=1791278963&width=720"}
 ];
 
 var C={
@@ -149,12 +151,12 @@ board:[
 {id:"b650wifi",name:"B650 Wi-Fi ATX Motherboard",price:149,socket:"AM5",mem:"DDR5",tier:"Recommended"},
 {id:"x870",name:"X870 ATX Motherboard",price:229,socket:"AM5",mem:"DDR5",tier:"Enthusiast"}],
 ram:[
-{id:"ddr4-16",name:"16GB (2×8GB) DDR4 Kit",price:35,mem:"DDR4",gb:16},
-{id:"ddr4-32",name:"32GB (2×16GB) DDR4 Kit",price:49,mem:"DDR4",gb:32},
-{id:"ddr4-64",name:"64GB (2×32GB) DDR4 Kit",price:95,mem:"DDR4",gb:64},
-{id:"ddr5-16",name:"16GB DDR5 Kit",price:49,mem:"DDR5",gb:16},
-{id:"ddr5-32",name:"32GB (2×16GB) DDR5 Kit",price:79,mem:"DDR5",gb:32},
-{id:"ddr5-64",name:"64GB (2×32GB) DDR5 Kit",price:139,mem:"DDR5",gb:64}],
+{id:"ddr4-16",name:"16GB (2×8GB) DDR4 Kit",price:120,mem:"DDR4",gb:16,detail:"DDR4 · 16GB dual-channel kit. Market-adjusted planning estimate; compare exact kit and seller before buying."},
+{id:"ddr4-32",name:"32GB (2×16GB) DDR4 Kit",price:180,mem:"DDR4",gb:32,detail:"DDR4 · 32GB kit. Pricing varies by speed, timings, brand and availability; this is not a live quote."},
+{id:"ddr4-64",name:"64GB (2×32GB) DDR4 Kit",price:300,mem:"DDR4",gb:64,detail:"DDR4 · 64GB kit. Higher-capacity memory is priced above the old baseline; check the exact kit and local stock."},
+{id:"ddr5-16",name:"16GB DDR5 Kit",price:300,mem:"DDR5",gb:16,detail:"DDR5 · 16GB. Market-adjusted estimate: a Malaysian Corsair Vengeance 16GB listing was RM1,309 when checked; variant and stock can differ."},
+{id:"ddr5-32",name:"32GB (2×16GB) DDR5 Kit",price:500,mem:"DDR5",gb:32,detail:"DDR5 · 32GB dual-channel kit. This estimate reflects the current higher-price market; a checked G.Skill Ripjaws 32GB listing was RM2,399."},
+{id:"ddr5-64",name:"64GB (2×32GB) DDR5 Kit",price:1035,mem:"DDR5",gb:64,detail:"DDR5 · 64GB dual-channel kit. High-capacity pricing is elevated; a checked TeamGroup T-Create Expert 64GB listing was RM4,399."}],
 ssd:[
 {id:"ssd1",name:"1TB PCIe 4.0 NVMe SSD",price:49,tb:1},
 {id:"ssd2",name:"2TB PCIe 4.0 NVMe SSD",price:89,tb:2},
